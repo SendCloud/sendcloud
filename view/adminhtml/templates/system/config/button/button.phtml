@@ -9,14 +9,14 @@
         'jquery',
         'prototype'
     ], function($){
-        console.log('<?php echo $block->getAjaxCheckUrl() ?>');
         $('#connectToSendcloud').click(function () {
             $.ajax({
-                url: "http://192.168.70.70/backend/creativeict_autoconnect/autoconnect/index/",
+                url: "<?php echo $block->getAjaxCheckUrl() ?>",
                 method: 'POST',
                 data: {form_key: window.FORM_KEY},
                 success: function (response) {
-                    console.log(response)
+                    console.log(response.url)
+                    window.open(response.url,'_blank');
                 }
             })
 

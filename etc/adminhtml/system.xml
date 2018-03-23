@@ -8,7 +8,7 @@
             <class>separator-top</class>
             <label>Sendcloud</label>
             <tab>sales</tab>
-            <resource>CreativeICT_Sendcloud::sendcloud_config</resource>
+            <resource>CreativeICT_SendCloud::sendcloud_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>General Configuration</label>
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
@@ -16,7 +16,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="listbutton" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>CreativeICT\Sendcloud\Block\System\Config\Form\Button</frontend_model>
+                    <frontend_model>CreativeICT\SendCloud\Block\System\Config\Form\Button</frontend_model>
                 </field>
             </group>
         </section>

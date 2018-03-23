@@ -6,7 +6,7 @@
  * Time: 21:45
  */
 
-namespace CreativeICT\Sendcloud\Model\Carrier;
+namespace CreativeICT\SendCloud\Model\Carrier;
 
 
 use Magento\Quote\Model\Quote\Address\RateRequest;

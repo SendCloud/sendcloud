@@ -9,7 +9,7 @@
 namespace CreativeICT\SendCloud\Model;
 
 
-use CreativeICT\Sendcloud\Api\ServicePointInterface;
+use CreativeICT\SendCloud\Api\ServicePointInterface;
 
 class ServicePoint implements ServicePointInterface
 {
