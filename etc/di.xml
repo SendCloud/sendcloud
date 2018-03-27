@@ -2,4 +2,19 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="CreativeICT\SendCloud\Api\ServicePointInterface" type="CreativeICT\SendCloud\Model\ServicePoint" />
     <preference for="CreativeICT\SendCloud\Api\SettingsInterface" type="CreativeICT\SendCloud\Model\Settings"/>
+
+    <type name="CreativeICT\SendCloud\Logger\SendCloudHandler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="CreativeICT\SendCloud\Logger\SendCloudLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">SendCloud Logger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">CreativeICT\SendCloud\Logger\SendCloudHandler</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
