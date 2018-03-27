@@ -5,7 +5,7 @@ namespace CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect;
 use Magento\Authorization\Model\RoleFactory;
 use Magento\Authorization\Model\RulesFactory;
 use Magento\User\Model\UserFactory;
-use Psr\Log\LoggerInterface;
+use CreativeICT\SendCloud\Logger\SendCloudLogger;
 use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
 use Magento\Authorization\Model\UserContextInterface;
 
@@ -38,7 +38,7 @@ class AutoGenerateApiUser
      */
     public function __construct(
         UserFactory $userFactory,
-        LoggerInterface $logger,
+        SendCloudLogger $logger,
         RoleFactory $roleFactory,
         RulesFactory $rulesFactory
     )

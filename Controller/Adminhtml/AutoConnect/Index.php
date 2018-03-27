@@ -6,6 +6,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use \Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Math\Random;
+use CreativeICT\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class Index
@@ -23,6 +24,9 @@ class Index extends Action
     /** @var Random  */
     private $mathRandom;
 
+    /** @var SendCloudLogger  */
+    private $logger;
+
     /**
      * Index constructor.
      *
@@ -30,17 +34,20 @@ class Index extends Action
      * @param PageFactory $resultPageFactory
      * @param AutoGenerateApiUser $autoGenerateApiUser
      * @param Random $mathRandom
+     * @param SendCloudLogger $logger
      */
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
         AutoGenerateApiUser $autoGenerateApiUser,
-        Random $mathRandom
+        Random $mathRandom,
+        SendCloudLogger $logger
     )
     {
         $this->resultPageFactory = $resultPageFactory;
         $this->autoGenerateApiUser = $autoGenerateApiUser;
         $this->mathRandom = $mathRandom;
+        $this->logger = $logger;
 
         parent::__construct($context);
     }
