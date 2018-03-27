@@ -47,14 +47,16 @@ class Settings implements SettingsInterface
      * @api
      * @param string $script_url
      * @return string
+     * @throws Exception
      */
     public function setScriptUrl($script_url)
     {
         try {
             $this->configWriter->save('creativeict/sendcloud/script_url', $script_url, $scope = $this->scopeConfig::SCOPE_TYPE_DEFAULT, $scopeId = 0);
+
             return $script_url;
         } catch (Exception $ex) {
-            $this->logger->addErrorlog('error', $ex->getMessage());
+            $this->logger->debug('error', $ex->getMessage());
             throw new Exception($ex->getMessage());
         }
 
