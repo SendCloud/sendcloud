@@ -13,13 +13,34 @@ use CreativeICT\SendCloud\Api\ServicePointInterface;
 
 class ServicePoint implements ServicePointInterface
 {
-
+    /**
+     * @return string
+     */
     public function activate()
     {
         return "activate";
     }
 
+    /**
+     * @return string
+     */
     public function deactivate()
+    {
+        return "deactivate";
+    }
+
+    /**
+     * @return string
+     */
+    public function shippingEmailActivate()
+    {
+        return "activate";
+    }
+
+    /**
+     * @return string
+     */
+    public function shippingEmailDeactivate()
     {
         return "deactivate";
     }
