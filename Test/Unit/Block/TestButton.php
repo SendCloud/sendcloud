@@ -8,26 +8,41 @@
 
 namespace CreativeICT\SendCloud\Test\Unit\Block;
 
-use CreativeICT\SendCloud\Block\System\Config\Form\Button as Target;
-
 class TestButton extends \PHPUnit\Framework\TestCase
 {
+    private $button;
+    private $urlInterface;
+    const WEBSHOP_URL = 'https://www.webshop.nl/admin/creativeict_autoconnect/autoconnect/index';
+
     protected function setUp()
     {
         $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $this->contextMock = $this->getMockBuilder('\Magento\Backend\Block\Template\Context')
+
+        $this->urlInterface = $this->getMockBuilder('Magento\Framework\UrlInterface')
             ->disableOriginalConstructor()
-            ->setMethods(['getUrl'])
+            ->enableOriginalClone()
             ->getMock();
-        $this->url = $this->getMockBuilder('\Magento\Framework\UrlInterface')
+
+        $this->contextMock = $this->getMockBuilder('Magento\Backend\Block\Template\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->button = new Target($this->contextMock);
+
+        $this->contextMock->method('getUrlBuilder')
+            ->willReturn($this->urlInterface);
+
+
+        $this->urlInterface->expects($this->once())
+            ->method('getUrl')
+            ->willReturn(self::WEBSHOP_URL);
+
+
+        $this->button = $this->objectManager->getObject('CreativeICT\SendCloud\Block\System\Config\Form\Button', [
+            'context' => $this->contextMock,
+        ]);
     }
 
     public function testGetAjaxCheckUrl()
     {
-        $this->url->method('getUrl')->will($this->returnValue('test'));
-        $this->assertEquals($this->button->getAjaxCheckUrl(), 'test');
+        $this->assertEquals(self::WEBSHOP_URL, $this->button->getAjaxCheckUrl());
     }
 }
