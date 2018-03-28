@@ -57,15 +57,10 @@ class Index extends Action
      */
     public function execute()
     {
-        try {
-            $password = $this->generatePassword();
-        } catch (\Exception $ex) {
-            $this->logger->debug($ex->getMessage());
-        }
-
+        $password = $this->generatePassword();
         $apiUserInfo = $this->autoGenerateApiUser->getApiUser($password);
 
-        if (!isset($apiUserInfo['userId'])) {
+        if (!$apiUserInfo) {
             $apiUserInfo = $this->autoGenerateApiUser->createApiUser($password);
         }
 
@@ -82,7 +77,6 @@ class Index extends Action
     }
 
     /**
-     * Base url ophalen in plaats van hardcoded
      * @param $apiUserInfo
      *
      * @return string
@@ -109,12 +103,17 @@ class Index extends Action
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function generatePassword($length = 10)
+    private function generatePassword()
     {
-        $chars = Random::CHARS_LOWERS . Random::CHARS_UPPERS . Random::CHARS_DIGITS;
+        $length = 10;
 
-        $password = $this->mathRandom->getRandomString($length, $chars);
+        try {
+            $chars = Random::CHARS_LOWERS . Random::CHARS_UPPERS . Random::CHARS_DIGITS;
+            $password = $this->mathRandom->getRandomString($length, $chars);
 
-        return $password;
+            return $password;
+        } catch (\Exception $ex) {
+            $this->logger->debug($ex->getMessage());
+        }
     }
 }

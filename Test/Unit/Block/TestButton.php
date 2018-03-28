@@ -8,16 +8,18 @@
 
 namespace CreativeICT\SendCloud\Test\Unit\Block;
 
-class TestButton extends \PHPUnit\Framework\TestCase
+use CreativeICT\SendCloud\Test\Unit\Generic;
+
+class TestButton extends Generic
 {
     private $button;
     private $urlInterface;
+
     const WEBSHOP_URL = 'https://www.webshop.nl/admin/creativeict_autoconnect/autoconnect/index';
 
     protected function setUp()
     {
-        $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-
+        parent::setUp();
         $this->urlInterface = $this->getMockBuilder('Magento\Framework\UrlInterface')
             ->disableOriginalConstructor()
             ->enableOriginalClone()
@@ -30,11 +32,9 @@ class TestButton extends \PHPUnit\Framework\TestCase
         $this->contextMock->method('getUrlBuilder')
             ->willReturn($this->urlInterface);
 
-
         $this->urlInterface->expects($this->once())
             ->method('getUrl')
             ->willReturn(self::WEBSHOP_URL);
-
 
         $this->button = $this->objectManager->getObject('CreativeICT\SendCloud\Block\System\Config\Form\Button', [
             'context' => $this->contextMock,

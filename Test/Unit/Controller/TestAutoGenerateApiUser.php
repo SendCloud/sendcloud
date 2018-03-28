@@ -1,24 +1,16 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: wessel
- * Date: 24-02-18
- * Time: 14:35
- */
-
 namespace CreativeICT\SendCloud\Test\Unit\Controller;
 
 use CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\AutoGenerateApiUser;
+use CreativeICT\SendCloud\Test\Unit\Generic;
 
-class AutoGenerateApiUserTest extends \PHPUnit\Framework\TestCase
+class AutoGenerateApiUserTest extends Generic
 {
     const PASSWORD = 'test1234';
+    const USERNAME = 'sendcloud';
 
-    /** @var \CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\Index */
-    private $connect;
-
-    /** @var \Magento\User\Model\UserFactory*/
+    /** @var \Magento\User\Model\UserFactory */
     private $mockUserFactory;
 
     /** @var \Magento\Authorization\Model\RoleFactory */
@@ -29,74 +21,73 @@ class AutoGenerateApiUserTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
-        $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        parent::setUp();
 
-        $this->mockUserFactory = $this->getMockBuilder(
-            '\Magento\User\Model\UserFactory'
-        )
+        $this->mockUserFactory = $this->getMockBuilder('Magento\User\Model\UserFactory')
             ->disableOriginalConstructor()
-            ->setMethods(['create', 'setData', 'setRoleId', 'save', 'getUserName', 'getId', 'getData'])
+            ->setMethods(['create', 'setData', 'save', 'getUserName', 'getId', 'loadByUsername', 'setUsername', 'setPassword'])
             ->getMock();
 
-        $this->mockRoleFactory = $this->getMockBuilder(
-            '\Magento\Authorization\Model\RoleFactory'
-        )
+        $this->mockRoleFactory = $this->getMockBuilder('\Magento\Authorization\Model\RoleFactory')
             ->disableOriginalConstructor()
             ->setMethods(['create', 'setData', 'save', 'getId', 'setResources'])
             ->getMock();
 
-        $this->mockRulesFactory = $this->getMockBuilder(
-            '\Magento\Authorization\Model\RulesFactory'
-        )
+        $this->mockRulesFactory = $this->getMockBuilder('\Magento\Authorization\Model\RulesFactory')
             ->disableOriginalConstructor()
-            ->setMethods(['create', 'setData', 'save', 'setRoleId', 'getId', 'setResources', 'saveRel'])
+            ->setMethods(['create', 'setRoleId', 'setData', 'saveRel'])
             ->getMock();
 
-        $this->connect = $this->getMockClass(
-            '\CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\Index',
-            ['generatePassword'],
-            [],
-            '',
-            false
-        );
+        $this->sendCloudLogger = $this->getMockBuilder('CreativeICT\SendCloud\Logger\SendCloudLogger')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        //$this->connect->method('generatePassword')->willReturn(self::PASSWORD);
-        $this->autoGenerateApiUser = $this->objectManager->getObject(AutoGenerateApiUser::class,
-            [
-                'userFactory' => $this->mockUserFactory,
-                'roleFactory' => $this->mockRoleFactory,
-                'rulesFactory' => $this->mockRulesFactory
-            ]
+        $this->mockUserFactory->method('create')
+            ->willReturn($this->mockUserFactory);
+
+        $this->mockRoleFactory->method('create')
+            ->willReturn($this->mockRoleFactory);
+
+        $this->mockRulesFactory->method('create')
+            ->willReturn($this->mockRulesFactory);
+
+        /** @var AutoGenerateApiUser autoGenerateApiUser */
+        $this->autoGenerateApiUser = new AutoGenerateApiUser(
+            $this->mockUserFactory,
+            $this->sendCloudLogger,
+            $this->mockRoleFactory,
+            $this->mockRulesFactory
         );
-        //$this->autoGenerateApiUser = new AutoGenerateApiUser($mockUserFactory, $mockRoleFactory, $mockRulesFactory);
 
     }
 
     public function testCreateApiUser()
     {
-        $apiUserInfo = [
-            'username'  => 'sendcloud',
-            'firstname' => 'rob',
-            'lastname'    => 'api',
-            'email'     => 'sendcloud@api.com',
-            'password'  => self::PASSWORD,
-            'interface_locale' => 'en_US',
-            'is_active' => 1
-        ];
+        $this->mockUserFactory->method('setData')
+            ->willReturn($this->mockUserFactory);
 
-        $this->mockUserFactory->method('create')->willReturn($this->mockUserFactory);
-        $this->mockUserFactory->expects($this->once())->method('setData')->with($apiUserInfo);
-        var_dump($this->mockUserFactory->getUserName());
+        $this->mockRulesFactory->method('setRoleId')
+            ->willReturn($this->mockRulesFactory);
 
-        $this->mockUserFactory->method('setData')->willReturn($this->mockUserFactory);
-        $this->mockRoleFactory->method('create')->willReturn($this->mockRoleFactory);
-        $this->mockRulesFactory->method('create')->willReturn($this->mockRulesFactory);
-        $this->mockRulesFactory->method('setRoleId')->willReturn($this->mockRulesFactory);
-        $this->mockRoleFactory->method('getId')->willReturn(1);
-        $this->mockRulesFactory->method('setData')->willReturn($this->mockRulesFactory);
+        $this->mockRoleFactory->method('getId')
+            ->willReturn(2);
 
-        var_dump($this->autoGenerateApiUser->createApiUser(self::PASSWORD));
+        $this->mockRulesFactory->method('setData')
+            ->willReturn($this->mockRulesFactory);
+
+
         $this->autoGenerateApiUser->createApiUser(self::PASSWORD);
-        //$this->assertEquals("Test", $this->autoGenerateApiUser->getApiUser());
+
+        $this->assertEquals(self::USERNAME, $this->autoGenerateApiUser->createApiUser(self::PASSWORD)['username']);
+        $this->assertEquals(self::PASSWORD, $this->autoGenerateApiUser->createApiUser(self::PASSWORD)['password']);
+    }
+
+    public function testGetApiUser()
+    {
+        $this->mockUserFactory->method('loadByUsername')
+            ->willReturn($this->mockUserFactory);
+
+        $this->assertEquals(self::USERNAME, $this->autoGenerateApiUser->getApiUser(self::PASSWORD)['username']);
+        $this->assertEquals(self::PASSWORD, $this->autoGenerateApiUser->getApiUser(self::PASSWORD)['password']);
     }
 }

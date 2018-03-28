@@ -2,10 +2,11 @@
 
 namespace CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect;
 
+use CreativeICT\SendCloud\Logger\SendCloudLogger;
 use Magento\Authorization\Model\RoleFactory;
 use Magento\Authorization\Model\RulesFactory;
+use Magento\Setup\Exception;
 use Magento\User\Model\UserFactory;
-//use CreativeICT\SendCloud\Logger\SendCloudLogger;
 use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
 use Magento\Authorization\Model\UserContextInterface;
 
@@ -19,8 +20,21 @@ class AutoGenerateApiUser
     /** @var UserFactory  */
     private $userFactory;
 
-//    /** @var LoggerInterface  */
-//    private $logger;
+    private $logger;
+
+    /**
+     * Allowed resources for role
+     */
+    private $resource = [
+        'Magento_Sales::sales',
+        'Magento_Sales::sales_operation',
+        'Magento_Sales::sales_order',
+        'Magento_Sales::actions',
+        'Magento_Sales::actions_view',
+        'Magento_Sales::actions_edit',
+        'Magento_Sales::shipment'
+    ];
+
 
     /** @var RoleFactory  */
     private $roleFactory;
@@ -39,20 +53,22 @@ class AutoGenerateApiUser
      */
     public function __construct(
         UserFactory $userFactory,
-//        SendCloudLogger $logger,
+        SendCloudLogger $logger,
         RoleFactory $roleFactory,
         RulesFactory $rulesFactory
     )
     {
         $this->userFactory = $userFactory;
-//        $this->logger = $logger;
+        $this->logger = $logger;
         $this->roleFactory = $roleFactory;
         $this->rulesFactory = $rulesFactory;
     }
 
     /**
      * @param $password
-     * @return array
+     *
+     * @return array|bool
+     * @throws Exception
      */
     public function getApiUser($password)
     {
@@ -60,19 +76,19 @@ class AutoGenerateApiUser
         $apiUser = $userFactory->loadByUsername('sendcloud');
 
         if (!$apiUser) {
-            $apiUser = false;
-        } else {
-            try {
-                $apiUser->setPassword($password);
-                $apiUser->save();
-            } catch (\Exception $ex) {
-//                $this->logger->debug($ex->getMessage());
-            }
+            return false;
+        }
+
+        try {
+            $apiUser->setPassword($password);
+            $apiUser->save();
+        } catch (\Exception $ex) {
+            $this->logger->debug($ex->getMessage());
+            throw new Exception($ex->getMessage());
         }
 
         $apiUserArray = [
-            'username' => $apiUser->getUserName(),
-            'userId' => $apiUser->getId(),
+            'username' => 'sendcloud',
             'password' => $password
         ];
 
@@ -96,7 +112,6 @@ class AutoGenerateApiUser
      */
     private function generateApiUser($password)
     {
-        // TODO: Zoek een andere manier om deze gegeven te verkrijgen. Dus niet als string
         $apiUserInfo = [
             'username'  => 'sendcloud',
             'firstname' => 'rob',
@@ -104,26 +119,22 @@ class AutoGenerateApiUser
             'email'     => 'sendcloud@api.com',
             'password'  => $password,
             'interface_locale' => 'en_US',
+            'role_id' => $this->generateApiRole()->getId(),
             'is_active' => 1
         ];
 
-        $userFactory = $this->userFactory->create();
-        $apiUser = $userFactory->setData($apiUserInfo);
-        $roleID = $this->generateApiRole()->getId();
-
-        $apiUser->setData('role_id', $roleID);
-        //$apiUser->setRoleId($roleID);
-
         try{
+            $userFactory = $this->userFactory->create();
+            $apiUser = $userFactory->setData($apiUserInfo);
             $apiUser->save();
         } catch (\Exception $ex) {
-//            $this->logger->debug($ex->getMessage());
+            $this->logger->debug($ex->getMessage());
+            throw new Exception($ex->getMessage());
         }
 
         $apiUserArray = [
-            'username' => $apiUser->getUserName(),
-            'userId' => $apiUser->getId(),
-            'password' => $password
+            'username' => $apiUserInfo['username'],
+            'password' => $apiUserInfo['password']
         ];
 
         return $apiUserArray;
@@ -132,7 +143,7 @@ class AutoGenerateApiUser
     /**
      * Create Api Role
      *
-     * @return \Magento\Authorization\Model\Role
+     * @return void
      */
     private function generateApiRole()
     {
@@ -142,31 +153,20 @@ class AutoGenerateApiUser
             'role_type' => RoleGroup::ROLE_TYPE,
             'user_type' => UserContextInterface::USER_TYPE_ADMIN
         );
-        /**
-         * Create role
-         */
+
         try {
             $role = $this->roleFactory->create();
             $role->setData($roleData);
             $role->save();
         } catch (\Exception $ex) {
-//            $this->logger->debug($ex->getMessage());
+            $this->logger->debug($ex->getMessage());
+            throw new Exception($ex->getMessage());
         }
 
-        /**
-         * Allowed resources for role
-         */
-        $resource = [
-            'Magento_Sales::sales',
-            'Magento_Sales::sales_operation',
-            'Magento_Sales::sales_order',
-            'Magento_Sales::actions',
-            'Magento_Sales::actions_view',
-            'Magento_Sales::actions_edit',
-            'Magento_Sales::shipment'
-        ];
-
-        $this->rulesFactory->create()->setRoleId($role->getId())->setData('resource', $resource)->saveRel();
+        $this->rulesFactory->create()
+            ->setRoleId($role->getId())
+            ->setData('resource', $this->resource)
+            ->saveRel();
 
         return $role;
     }
