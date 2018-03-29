@@ -3,42 +3,42 @@
     <route url="/V1/service-point/activate" method="GET">
         <service class="CreativeICT\SendCloud\Api\ServicePointInterface" method="activate"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/V1/service-point/deactivate" method="GET">
         <service class="CreativeICT\SendCloud\Api\ServicePointInterface" method="deactivate"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/V1/shipping-email/activate" method="GET">
         <service class="CreativeICT\SendCloud\Api\ServicePointInterface" method="shippingEmailActivate"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/V1/shipping-email/deactivate" method="GET">
         <service class="CreativeICT\SendCloud\Api\ServicePointInterface" method="shippingEmailDeactivate"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/v1/sendcloud-information" method="GET">
         <service class="CreativeICT\SendCloud\Api\SettingsInterface" method="getModuleInformation"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/v1/script-url/add/:script_url" method="GET">
         <service class="CreativeICT\SendCloud\Api\SettingsInterface" method="setScriptUrl"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 </routes>
