@@ -59,7 +59,5 @@ class Settings implements SettingsInterface
             $this->logger->debug('error', $ex->getMessage());
             throw new Exception($ex->getMessage());
         }
-
-
     }
 }
