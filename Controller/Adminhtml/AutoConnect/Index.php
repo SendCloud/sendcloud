@@ -54,6 +54,7 @@ class Index extends Action
 
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @throws \Magento\Setup\Exception
      */
     public function execute()
     {
@@ -99,9 +100,7 @@ class Index extends Action
     /**
      * Generate random password
      *
-     * @param int $length
      * @return string
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function generatePassword()
     {

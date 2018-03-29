@@ -46,10 +46,9 @@ class AutoGenerateApiUser
      * AutoGenerateApiUser constructor.
      *
      * @param UserFactory $userFactory
+     * @param SendCloudLogger $logger
      * @param RoleFactory $roleFactory
      * @param RulesFactory $rulesFactory
-     * @param User $userResource
-     * @param Role $roleResource
      */
     public function __construct(
         UserFactory $userFactory,
@@ -75,10 +74,9 @@ class AutoGenerateApiUser
         $userFactory = $this->userFactory->create();
         $apiUser = $userFactory->loadByUsername('sendcloud');
 
-        if (!$apiUser) {
+        if (!$apiUser->getUsername()) {
             return false;
         }
-
         try {
             $apiUser->setPassword($password);
             $apiUser->save();
@@ -98,19 +96,9 @@ class AutoGenerateApiUser
     /**
      * @param $password
      * @return mixed
+     * @throws Exception
      */
     public function createApiUser($password)
-    {
-        $apiUserArray = $this->generateApiUser($password);
-
-        return $apiUserArray;
-    }
-
-    /**
-     * @param $password
-     * @return mixed
-     */
-    private function generateApiUser($password)
     {
         $apiUserInfo = [
             'username'  => 'sendcloud',
@@ -143,7 +131,8 @@ class AutoGenerateApiUser
     /**
      * Create Api Role
      *
-     * @return void
+     * @return \Magento\Authorization\Model\Role
+     * @throws Exception
      */
     private function generateApiRole()
     {
