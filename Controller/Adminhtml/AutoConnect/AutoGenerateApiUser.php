@@ -154,7 +154,7 @@ class AutoGenerateApiUser
 
         $this->rulesFactory->create()
             ->setRoleId($role->getId())
-            ->setData('resource', $this->resource)
+            ->setData('resources', $this->resource)
             ->saveRel();
 
         return $role;
