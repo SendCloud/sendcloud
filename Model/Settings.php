@@ -53,11 +53,11 @@ class Settings implements SettingsInterface
     {
         try {
             $this->configWriter->save('creativeict/sendcloud/script_url', $script_url, $scope = $this->scopeConfig::SCOPE_TYPE_DEFAULT, $scopeId = 0);
-
-            return $script_url;
         } catch (Exception $ex) {
             $this->logger->debug('error', $ex->getMessage());
             throw new Exception($ex->getMessage());
         }
+
+        return true;
     }
 }

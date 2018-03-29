@@ -32,6 +32,6 @@ class TestSettings extends Generic
 
     public function testSetScriptUrl()
     {
-        $this->assertEquals(self::SCRIPT_URL, $this->settings->setScriptUrl(self::SCRIPT_URL));
+        $this->assertEquals(true, $this->settings->setScriptUrl(self::SCRIPT_URL));
     }
 }
