@@ -27,6 +27,7 @@ class OrderLoadAfter implements ObserverInterface
 
     private function getOrderExtensionDependency()
     {
+        // TODO: Volgens mij hoeft dit niet via de bject manager. Je kan hem volgens mij gewoon mee geven in de construct
         $orderExtension = \Magento\Framework\App\ObjectManager::getInstance()->get(
             '\Magento\Sales\Api\Data\OrderExtension'
         );
