@@ -63,7 +63,7 @@ class SendCloud extends \Magento\Shipping\Model\Carrier\AbstractCarrier implemen
         /** @var \Magento\Shipping\Model\Rate\Result $result */
         $result = $this->_rateResultFactory->create();
 
-        /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $method */
+        /** @var \Magento\Quote\Api\Data\ShippingMethodInterface $method */
         $method = $this->_rateMethodFactory->create();
 
         $method->setCarrier($this->_code);

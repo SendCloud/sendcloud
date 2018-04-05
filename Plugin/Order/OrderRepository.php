@@ -61,6 +61,7 @@ class OrderRepository
             $extensionAttributes->setSendcloudServicePointHouseNumber($order->getData('sendcloud_service_point_house_number'));
             $extensionAttributes->setSendcloudServicePointZipCode($order->getData('sendcloud_service_point_zip_code'));
             $extensionAttributes->setSendcloudServicePointCity($order->getData('sendcloud_service_point_city'));
+            $extensionAttributes->setSendcloudServicePointCountry($order->getData('sendcloud_service_point_country'));
         } catch (NoSuchEntityException $e) {
             return $this;
         }

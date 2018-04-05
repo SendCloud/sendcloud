@@ -99,9 +99,12 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 $setup->getTable($tableName),
                 'sendcloud_service_point_country',
                 [
-
+                    'type' => Table::TYPE_TEXT,
+                    'length' => 255,
+                    'nullable' => true,
+                    'comment' => 'service point country'
                 ]
-        )
+            );
 
         return $setup;
     }
