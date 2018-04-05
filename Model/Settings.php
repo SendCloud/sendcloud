@@ -6,6 +6,8 @@ use CreativeICT\SendCloud\Logger\SendCloudLogger;
 use Exception;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\Controller\ResultFactory;
 
 class Settings implements SettingsInterface
 {
@@ -23,6 +25,7 @@ class Settings implements SettingsInterface
      * @param WriterInterface $configWriter
      * @param ScopeConfigInterface $scopeConfig
      * @param SendCloudLogger $logger
+     * @param JsonFactory $resultJsonFactory
      */
     public function __construct(
         WriterInterface $configWriter,
@@ -54,10 +57,11 @@ class Settings implements SettingsInterface
         try {
             $this->configWriter->save('creativeict/sendcloud/script_url', $script_url, $scope = $this->scopeConfig::SCOPE_TYPE_DEFAULT, $scopeId = 0);
         } catch (Exception $ex) {
-            $this->logger->debug('error', $ex->getMessage());
-            throw new Exception($ex->getMessage());
+            $this->logger->debug($ex->getMessage());
+
+            return json_encode(array('error' => 'Script url is not set'));
         }
 
-        return true;
+        return json_encode(array('succes' => 'Script url is set'));
     }
 }
