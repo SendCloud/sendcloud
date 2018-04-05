@@ -17,4 +17,8 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Sales\Model\OrderRepository">
+        <plugin sortOrder="1" name="CreativeICT_SendCloud::OrderRepository" type="\CreativeICT\SendCloud\Plugin\Order\OrderRepository"/>
+    </type>
 </config>

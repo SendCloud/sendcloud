@@ -95,6 +95,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'comment' => 'service point city'
                 ]
             );
+        $connection->addColumn(
+                $setup->getTable($tableName),
+                'sendcloud_service_point_country',
+                [
+
+                ]
+        )
 
         return $setup;
     }
