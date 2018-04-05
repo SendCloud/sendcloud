@@ -19,6 +19,9 @@ class AutoGenerateApiUserTest extends Generic
     /** @var \Magento\Authorization\Model\RulesFactory */
     private $mockRulesFactory;
 
+    /** @var AutoGenerateApiUser */
+    private $autoGenerateApiUser;
+
     protected function setUp()
     {
         parent::setUp();
@@ -86,6 +89,9 @@ class AutoGenerateApiUserTest extends Generic
     {
         $this->mockUserFactory->method('loadByUsername')
             ->willReturn($this->mockUserFactory);
+        $this->mockUserFactory->method('getUsername')
+            ->willReturn(self::USERNAME);
+
 
         $this->assertEquals(self::USERNAME, $this->autoGenerateApiUser->getApiUser(self::PASSWORD)['username']);
         $this->assertEquals(self::PASSWORD, $this->autoGenerateApiUser->getApiUser(self::PASSWORD)['password']);
