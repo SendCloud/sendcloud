@@ -11,7 +11,7 @@ interface SettingsInterface
     /**
      * @api
      * @param string $script_url
-     * @return string
+     * @return this
      */
     public function setScriptUrl($script_url);
 }

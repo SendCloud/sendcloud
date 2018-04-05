@@ -49,7 +49,7 @@ class Settings implements SettingsInterface
     /**
      * @api
      * @param string $script_url
-     * @return string
+     * @return array
      * @throws Exception
      */
     public function setScriptUrl($script_url)
@@ -59,9 +59,9 @@ class Settings implements SettingsInterface
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
 
-            return json_encode(array('error' => 'Script url is not set'));
+            return array('message' => array('error' => 'Script url is not set'));
         }
 
-        return json_encode(array('succes' => 'Script url is set'));
+        return array('message' => array('succes' => 'Script url is set'));
     }
 }
