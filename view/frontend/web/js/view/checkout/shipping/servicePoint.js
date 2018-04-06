@@ -2,14 +2,15 @@ define([
     'jquery',
     'ko',
     'uiComponent',
-    'Magento_Checkout/js/model/quote',
-    'https://embed.sendcloud.sc/spp/1.0.0/api.min.js'
+    'Magento_Checkout/js/model/quote'
 ], function ($, ko, Component, quote) {
     'use strict';
     var self = this;
+
     return Component.extend({
         defaults: {
-            template: 'CreativeICT_SendCloud/checkout/shipping/servicePoint'
+            template: 'CreativeICT_SendCloud/checkout/shipping/servicePoint',
+            scriptUrl: ''
         },
         initObservable: function () {
             this.selectedMethod = ko.computed(function() {
@@ -18,6 +19,10 @@ define([
 
                 return selectedMethod;
             }, this);
+            var sendCloudScript = document.createElement('script');
+
+            sendCloudScript.setAttribute('src', this.scriptUrl);
+            document.head.appendChild(sendCloudScript);
 
             return this;
         },

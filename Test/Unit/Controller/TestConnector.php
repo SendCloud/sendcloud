@@ -3,10 +3,10 @@
 namespace CreativeICT\SendCloud\Test\Unit\Controller;
 
 
-use CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\Index;
+use CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\Connector;
 use CreativeICT\SendCloud\Test\Unit\Generic;
 
-class TestIndex extends Generic
+class TestConnector extends Generic
 {
     private $controller;
 

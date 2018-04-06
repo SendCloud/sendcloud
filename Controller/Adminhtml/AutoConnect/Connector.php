@@ -13,7 +13,7 @@ use CreativeICT\SendCloud\Logger\SendCloudLogger;
  *
  * @package CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect
  */
-class Index extends Action
+class Connector extends Action
 {
     /** @var PageFactory  */
     private $resultPageFactory;
