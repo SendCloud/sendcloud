@@ -19,6 +19,25 @@
     </type>
 
     <type name="Magento\Sales\Model\OrderRepository">
-        <plugin sortOrder="1" name="CreativeICT_SendCloud::OrderRepository" type="\CreativeICT\SendCloud\Plugin\Order\OrderRepository"/>
+        <plugin sortOrder="1" name="CreativeICT_SendCloud::OrderRepository" type="CreativeICT\SendCloud\Plugin\Order\OrderRepository"/>
     </type>
+
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin sortOrder="1" name="CreativeICT_SendCloud::ShippingInformationManagement" type="CreativeICT\SendCloud\Plugin\BeforeSaveShippingInformation"/>
+    </type>
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="sendcloud_service_point_id" xsi:type="string">sales_order.sendcloud_service_point_id</item>
+                <item name="sendcloud_service_point_name" xsi:type="string">sales_order.sendcloud_service_point_name</item>
+                <item name="sendcloud_service_point_street" xsi:type="string">sales_order.sendcloud_service_point_street</item>
+                <item name="sendcloud_service_point_house_number" xsi:type="string">sales_order.sendcloud_service_point_house_number</item>
+                <item name="sendcloud_service_point_zip_code" xsi:type="string">sales_order.sendcloud_service_point_zip_code</item>
+                <item name="sendcloud_service_point_city" xsi:type="string">sales_order.sendcloud_service_point_city</item>
+                <item name="sendcloud_service_point_country" xsi:type="string">sales_order.sendcloud_service_point_country</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
 </config>

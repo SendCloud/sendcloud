@@ -30,6 +30,8 @@ define([
             var zipCode = $('[name="postcode"]').val(),
                 countryCode = $('[name="country_id"]').val();
 
+            zipCode = zipCode.replace(' ', '');
+
             this.openServicePointPicker(zipCode, countryCode);
         },
         openServicePointPicker: function (zipCode, countryCode) {
@@ -57,6 +59,16 @@ define([
                     $('#servicePointZipCode').html(servicePointObject.postal_code);
                     $('#servicePointCity').html(servicePointObject.city);
                     $('#servicePointPhone').html(servicePointObject.phone);
+                    //console.log(servicePointObject.formatted_opening_times);
+
+                    $('input[name="sendcloud_service_point_id"]').val(servicePointObject.id);
+                    $('input[name="sendcloud_service_point_name"]').val(servicePointObject.name);
+                    $('input[name="sendcloud_service_point_street"]').val(servicePointObject.street);
+                    $('input[name="sendcloud_service_point_house_number"]').val(servicePointObject.house_number);
+                    $('input[name="sendcloud_service_point_zip_code"]').val(servicePointObject.postal_code);
+                    $('input[name="sendcloud_service_point_city"]').val(servicePointObject.city);
+                    $('input[name="sendcloud_service_point_country"]').val(servicePointObject.country);
+
                 },
                 function(errors) {
                     errors.forEach(function(error) {

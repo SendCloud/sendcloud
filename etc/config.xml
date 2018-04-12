@@ -16,6 +16,7 @@
                 <price>15.00</price>
                 <title>Sendcloud</title>
                 <type>I</type>
+                <sort_order>500</sort_order>
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
             </sendcloud>
         </carriers>

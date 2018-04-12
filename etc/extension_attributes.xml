@@ -9,4 +9,13 @@
         <attribute code="sendcloud_service_point_city" type="string"/>
         <attribute code="sendcloud_service_point_country" type="string"/>
     </extension_attributes>
+    <extension_attributes for="Magento\Checkout\Api\Data\ShippingInformationInterface">
+        <attribute code="sendcloud_service_point_id" type="int"/>
+        <attribute code="sendcloud_service_point_name" type="string"/>
+        <attribute code="sendcloud_service_point_street" type="string"/>
+        <attribute code="sendcloud_service_point_house_number" type="string"/>
+        <attribute code="sendcloud_service_point_zip_code" type="string"/>
+        <attribute code="sendcloud_service_point_city" type="string"/>
+        <attribute code="sendcloud_service_point_country" type="string"/>
+    </extension_attributes>
 </config>
