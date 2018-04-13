@@ -43,6 +43,7 @@ define([
 
                 openingTimes = serviceObject.formatted_opening_times;
 
+                $('#servicePointOpeningTimes').html('<strong>'+ $.mage.__("Opening hours") + '</strong>');
                 $('#servicePointOpeningTimes ul').html('');
 
                 $.each(openingTimes, function (key, value) {
