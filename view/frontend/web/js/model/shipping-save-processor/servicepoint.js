@@ -33,8 +33,6 @@ define([
                 selectBillingAddressAction(quote.shippingAddress());
             }
 
-            console.log('test');
-
             payload = {
                 addressInformation: {
                     'shipping_address': quote.shippingAddress(),
@@ -48,7 +46,7 @@ define([
                         sendcloud_service_point_house_number: $('[name="sendcloud_service_point_house_number"]').val(),
                         sendcloud_service_point_zip_code: $('[name="sendcloud_service_point_zip_code"]').val(),
                         sendcloud_service_point_city: $('[name="sendcloud_service_point_city"]').val(),
-                        sendcloud_service_point_country: $('[name="sendcloud_service_point_country"]').val(),
+                        sendcloud_service_point_country: $('[name="sendcloud_service_point_country"]').val()
                     }
                 }
             };

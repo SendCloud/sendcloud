@@ -39,20 +39,20 @@ class BeforeSaveShippingInformation
     {
         $extensionAttributes = $addressInformation->getExtensionAttributes();
         $spId = $extensionAttributes->getSendcloudServicePointId();
-        $spName = $extensionAttributes->getSendCloudServicePointName();
-        $spStreet = $extensionAttributes->getSendCloudServicePointStreet();
-        $spHouseNumber = $extensionAttributes->getSendCloudServiceHouseNumber();
-        $spZipCode = $extensionAttributes->getSendCloudServiceZipCode();
-        $spCity = $extensionAttributes->getSendCloudServiceCity();
-        $spCountry = $extensionAttributes->getSendCloudServiceCountry();
+        $spName = $extensionAttributes->getSendcloudServicePointName();
+        $spStreet = $extensionAttributes->getSendcloudServicePointStreet();
+        $spHouseNumber = $extensionAttributes->getSendcloudServicePointHouseNumber();
+        $spZipCode = $extensionAttributes->getSendcloudServicePointZipCode();
+        $spCity = $extensionAttributes->getSendcloudServicePointCity();
+        $spCountry = $extensionAttributes->getSendcloudServicePointCountry();
 
         $quote = $this->quoteRepository->getActive($cartId);
         $quote->setSendcloudServicePointId($spId);
-        $quote->setSendCloudServicePointName($spName);
-        $quote->setSendCloudServicePointStreet($spStreet);
-        $quote->setSendCloudServiceHouseNumber($spHouseNumber);
-        $quote->setSendcloudServiceZipCode($spZipCode);
-        $quote->setSendcloudServiceCity($spCity);
-        $quote->setSendcloudServiceCountry($spCountry);
+        $quote->setSendcloudServicePointName($spName);
+        $quote->setSendcloudServicePointStreet($spStreet);
+        $quote->setSendcloudServicePointHouseNumber($spHouseNumber);
+        $quote->setSendcloudServicePointZipCode($spZipCode);
+        $quote->setSendcloudServicePointCity($spCity);
+        $quote->setSendcloudServicePointCountry($spCountry);
     }
 }
