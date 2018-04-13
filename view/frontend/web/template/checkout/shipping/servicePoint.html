@@ -1,16 +1,23 @@
 
-<div id="my-carrier-custom-block-wrapper" data-bind="visible: selectedMethod() == 'sendcloud_sendcloud'">
-    <div style="cursor: pointer; background: #1979c3; padding: 10px 20px 10px 20px; display: table; color: #fff;" data-bind="click: openSendCloudMap">
-        Select service point
-    </div>
-    <div id="selectedServicePoint">
-        <div id="servicePointTitle"></div>
-        <div id="servicePointName"></div>
-        <div id="servicePointStreetAndHouseNumber"></div>
-        <div id="servicePointZipCode"></div>
-        <div id="servicePointCity"></div>
-        <div id="servicePointPhone"></div>
-        <div id="servicePointOpeningTimes"></div>
+<div id="sendcloud-service-point" data-bind="visible: selectedMethod() == 'sendcloud_sendcloud'">
+    <div id="selectedServicePoint" data-bind="afterRender: sessionData">
+        <div class="col">
+            <div id="servicePointName"></div>
+            <div id="servicePointStreetAndHouseNumber"></div>
+            <div id="servicePointZipCode"></div>
+            <div id="servicePointCity"></div>
+        </div>
+        <div class="col">
+            <div id="servicePointOpeningTimes">
+                <strong data-bind="i18n: 'Opening hours'"></strong>
+                <ul></ul>
+            </div>
+        </div>
+
+        <span class="button-service-point" data-bind="click: openSendCloudMap, text: servicePointButton">
+            Select service point
+        </span>
+
         <input name="sendcloud_service_point_id" type="hidden"/>
         <input name="sendcloud_service_point_name" type="hidden"/>
         <input name="sendcloud_service_point_street" type="hidden"/>
