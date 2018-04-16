@@ -196,6 +196,8 @@
             <arg value="-c"/>
             <arg value="./magento/dev/tests/unit/phpunit.xml.dist"/>
             <arg value="./magento/app/code/CreativeICT/SendCloud/Test/"/>
+            <arg value="--log-junit"/>
+            <arg value="'${builddir}/logs/junit.xml'"/>
         </exec>
     </target>
 
