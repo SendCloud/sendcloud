@@ -204,8 +204,10 @@
     <target name="vendor-phpunit" description="runs phpunit">
         <exec executable="php">
             <arg value="${magento2dir}/vendor/phpunit/phpunit/phpunit"/>
-            <arg value="-c"/>
-            <arg value="${magento2dir}/dev/tests/unit/phpunit.xml.dist"/>
+            <!--<arg value="-c"/>-->
+            <!--<arg value="${magento2dir}/dev/tests/unit/phpunit.xml.dist"/>-->
+            <arg value="--bootstrap"/>
+            <arg value="${magento2dir}/vendor/autoload.php"/>
             <arg value="${magento2dir}/app/code/CreativeICT/SendCloud/Test/"/>
             <arg value="--log-junit"/>
             <arg value="'${builddir}/logs/junit.xml'"/>
