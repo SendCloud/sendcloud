@@ -7,7 +7,7 @@
     <property name="moduledir" value="${magento2dir}/app/code/CreativeICT/SendCloud"/>
 
     <target name="build"
-            depends="prepare, composer-download,install-composer,composer-selfupdate,install-magento,create-database, deploy-sampledata, install-module, lint, phploc, pdepend, phpmd-ci, phpcs-ci, phpunit"/>
+            depends="prepare, composer-download,install-composer,composer-selfupdate,install-magento,create-database, deploy-sampledata, install-module, lint, phploc, pdepend, phpmd-ci, phpcs-ci, vendor-phpunit"/>
 
     <target name="clean" description="Cleanup build artifacts">
         <delete dir="${builddir}/api"/>
@@ -196,6 +196,17 @@
             <arg value="-c"/>
             <arg value="./magento/dev/tests/unit/phpunit.xml.dist"/>
             <arg value="./magento/app/code/CreativeICT/SendCloud/Test/"/>
+            <arg value="--log-junit"/>
+            <arg value="'${builddir}/logs/junit.xml'"/>
+        </exec>
+    </target>
+
+    <target name="vendor-phpunit" description="runs phpunit">
+        <exec executable="php">
+            <arg value="${magento2dir}/vendor/phpunit/phpunit/phpunit"/>
+            <arg value="-c"/>
+            <arg value="${magento2dir}/dev/tests/unit/phpunit.xml.dist"/>
+            <arg value="${magento2dir}/app/code/CreativeICT/SendCloud/Test/"/>
             <arg value="--log-junit"/>
             <arg value="'${builddir}/logs/junit.xml'"/>
         </exec>
