@@ -107,7 +107,7 @@
             <arg value="${db.user}"/>
             <arg value="-p${db.password}"/>
             <arg value="-e"/>
-            <arg value="'CREATE DATABASE IF NOT EXISTS magento;'"/>
+            <arg value="'CREATE DATABASE IF NOT EXISTS sendcloud;'"/>
         </exec>
     </target>
 
