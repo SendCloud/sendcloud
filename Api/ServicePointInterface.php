@@ -12,9 +12,11 @@ namespace CreativeICT\SendCloud\Api;
 interface ServicePointInterface
 {
     /**
-     * @return mixed
+     * @api
+     * @param string $script_url
+     * @return array|mixed
      */
-    public function activate();
+    public function activate($script_url);
 
     /**
      * @return mixed

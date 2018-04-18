@@ -2,66 +2,33 @@
 namespace CreativeICT\SendCloud\Model;
 
 use CreativeICT\SendCloud\Api\SettingsInterface;
-use CreativeICT\SendCloud\Logger\SendCloudLogger;
-use Exception;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\Config\Storage\WriterInterface;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Module\ResourceInterface;
 
 class Settings implements SettingsInterface
 {
-    /** @var WriterInterface  */
-    private $configWriter;
-
-    /** @var ScopeConfigInterface  */
-    private $scopeConfig;
-
-    /** @var SendCloudLogger  */
-    private $logger;
+    /** @var ModuleResource  */
+    private $moduleResource;
 
     /**
      * Settings constructor.
-     * @param WriterInterface $configWriter
-     * @param ScopeConfigInterface $scopeConfig
-     * @param SendCloudLogger $logger
-     * @param JsonFactory $resultJsonFactory
+     * @param ResourceInterface $moduleResource
      */
     public function __construct(
-        WriterInterface $configWriter,
-        ScopeConfigInterface $scopeConfig,
-        SendCloudLogger $logger
+        ResourceInterface $moduleResource
     )
     {
-        $this->configWriter = $configWriter;
-        $this->scopeConfig = $scopeConfig;
-        $this->logger = $logger;
+        $this->moduleResource = $moduleResource;
     }
 
     /**
-     * @return mixed|string
+     * @return array
      */
     public function getModuleInformation()
     {
-        return "Module information";
-    }
+        $moduleInformation = [[
+            'Version' => $this->moduleResource->getDbVersion('CreativeICT_SendCloud')
+        ]];
 
-    /**
-     * @api
-     * @param string $script_url
-     * @return array
-     * @throws Exception
-     */
-    public function setScriptUrl($script_url)
-    {
-        try {
-            $this->configWriter->save('creativeict/sendcloud/script_url', $script_url, $scope = $this->scopeConfig::SCOPE_TYPE_DEFAULT, $scopeId = 0);
-        } catch (Exception $ex) {
-            $this->logger->debug($ex->getMessage());
-
-            return array('message' => array('error' => 'Script url is not set'));
-        }
-
-        return array('message' => array('succes' => 'Script url is set'));
+        return $moduleInformation;
     }
 }

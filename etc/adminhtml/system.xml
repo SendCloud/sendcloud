@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="sales" translate="label" sortOrder="10">
+        <tab id="sendcloud" translate="label" sortOrder="10">
             <label>Sendcloud</label>
         </tab>
         <section id="sendcloud" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -17,6 +17,9 @@
                 </field>
                 <field id="listbutton" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <frontend_model>CreativeICT\SendCloud\Block\System\Config\Form\Button</frontend_model>
+                    <depends>
+                        <field id="sendcloud/general/enable">1</field>
+                    </depends>
                 </field>
             </group>
         </section>
