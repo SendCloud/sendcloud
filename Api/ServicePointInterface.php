@@ -24,12 +24,8 @@ interface ServicePointInterface
     public function deactivate();
 
     /**
+     * @param boolean $activate
      * @return mixed
      */
-    public function shippingEmailActivate();
-
-    /**
-     * @return mixed
-     */
-    public function shippingEmailDeactivate();
+    public function shippingEmail($activate);
 }

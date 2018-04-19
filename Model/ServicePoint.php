@@ -14,6 +14,7 @@ use CreativeICT\SendCloud\Logger\SendCloudLogger;
 use Exception;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 
 class ServicePoint implements ServicePointInterface
 {
@@ -26,19 +27,24 @@ class ServicePoint implements ServicePointInterface
     /** @var SendCloudLogger  */
     private $logger;
 
+    /** @var Json  */
+    private $json;
+
     public function __construct(
         WriterInterface $writer,
         ScopeConfigInterface $scopeConfig,
+        Json $json,
         SendCloudLogger $logger
     )
     {
         $this->writer = $writer;
         $this->scopeConfig = $scopeConfig;
+        $this->json = $json;
         $this->logger = $logger;
     }
 
     /**
-     * @param string $script_url
+     * @param $script_url
      * @return array|mixed
      */
     public function activate($script_url)
@@ -72,32 +78,24 @@ class ServicePoint implements ServicePointInterface
     }
 
     /**
+     * @param boolean $activate
      * @return array
      */
-    public function shippingEmailActivate()
+    public function shippingEmail($activate)
     {
+        if ($activate) {
+            $message = array('success' => 'Shipment email is activated');
+        } else {
+            $message = array('success' => 'Shipment email is deactivated');
+        }
+
         try {
-            $this->writer->save('sales_email/shipment/enabled', 1, $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('sales_email/shipment/enabled', (int) $activate, $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
-
-            return array('message' => array('error' => 'Shipment email is not activated'));
+            $message = array('error' => 'Shipment email is not changed');
         }
-        return array('message' => array('success' => 'Shipment email is activated'));
-    }
 
-    /**
-     * @return array
-     */
-    public function shippingEmailDeactivate()
-    {
-        try {
-            $this->writer->save('sales_email/shipment/enabled', 0, $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
-        } catch (Exception $ex) {
-            $this->logger->debug($ex->getMessage());
-
-            return array('message' => array('error' => 'Shipment email is not deactivated'));
-        }
-        return array('message' => array('success' => 'Shipment email is deactivated'));
+        return array('message' => $message);
     }
 }
