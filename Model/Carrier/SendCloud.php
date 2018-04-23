@@ -116,6 +116,7 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
     /**
      * @param RateRequest $request
      * @return bool|Result
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function collectRates(RateRequest $request)
     {

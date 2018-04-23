@@ -3,8 +3,9 @@ define([
     'ko',
     'uiComponent',
     'Magento_Checkout/js/model/quote',
+    'Magento_Customer/js/model/customer',
     'mage/translate'
-], function ($, ko, Component, quote) {
+], function ($, ko, Component, quote, customer) {
     'use strict';
     var self = this;
 
@@ -30,29 +31,29 @@ define([
             return this;
         },
         servicePoint: function (serviceObject) {
-            var openingTimes = '';
+            // var openingTimes = '';
             if (serviceObject) {
-                var days = [$.mage.__("Mon"), $.mage.__("Tue"), $.mage.__("Wed"), $.mage.__("Thu"), $.mage.__("Fri"), $.mage.__("Sat"), $.mage.__("Sun")];
+                // var days = [$.mage.__("Mon"), $.mage.__("Tue"), $.mage.__("Wed"), $.mage.__("Thu"), $.mage.__("Fri"), $.mage.__("Sat"), $.mage.__("Sun")];
 
                 this.servicePointButton = $.mage.__("Change service point");
+
+                $('.button-service-point').text(this.servicePointButton);
 
                 $('#servicePointName').html("<strong>" + serviceObject.name + "</strong>");
                 $('#servicePointStreetAndHouseNumber').html(serviceObject.street + " " + serviceObject.house_number);
                 $('#servicePointZipCode').html(serviceObject.postal_code);
                 $('#servicePointCity').html(serviceObject.city);
 
-                openingTimes = serviceObject.formatted_opening_times;
-
-                console.log(openingTimes);
-
-                $('#servicePointOpeningTimes').html('<strong>'+ $.mage.__("Opening hours") + '</strong><ul></ul>');
-                $('#servicePointOpeningTimes ul').html('');
-
-                $.each(openingTimes, function (key, value) {
-                    if (value.length > 0) {
-                        $('#servicePointOpeningTimes ul').append('<li>' + days[key] + ' <span>' + value + '</span></li>');
-                    }
-                });
+                // openingTimes = serviceObject.formatted_opening_times;
+                //
+                // $('#servicePointOpeningTimes').html('<strong>'+ $.mage.__("Opening hours") + '</strong><ul></ul>');
+                // $('#servicePointOpeningTimes ul').html('');
+                //
+                // $.each(openingTimes, function (key, value) {
+                //     if (value.length > 0) {
+                //         $('#servicePointOpeningTimes ul').append('<li>' + days[key] + ' <span>' + value + '</span></li>');
+                //     }
+                // });
 
                 $('input[name="sendcloud_service_point_id"]').val(serviceObject.id);
                 $('input[name="sendcloud_service_point_name"]').val(serviceObject.name);
@@ -71,6 +72,11 @@ define([
         openSendCloudMap: function (e) {
             var zipCode = $('[name="postcode"]').val(),
                 countryCode = $('[name="country_id"]').val();
+
+            if (customer.isLoggedIn()) {
+                zipCode = customer.getShippingAddressList()[0]['postcode'];
+                countryCode = customer.getShippingAddressList()[0]['countryId'];
+            }
 
             zipCode = zipCode.replace(' ', '');
 
@@ -106,6 +112,7 @@ define([
                             country: servicePointObject.country,
                             formatted_opening_times: servicePointObject.formatted_opening_times
                         };
+                    window.checkoutConfig.quoteData
 
                     self.servicePoint(servicePointObject);
 

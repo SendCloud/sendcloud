@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="CreativeICT_SendCloud::css/servicepoint.css" />
     </head>
@@ -17,13 +17,25 @@
                                     <item name="children" xsi:type="array">
                                         <item name="shipping-step" xsi:type="array">
                                             <item name="children" xsi:type="array">
+                                                <item name="step-config" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-rates-validation" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="servicepoint-rates-validation" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/shipping-rates-validation</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
                                                 <item name="shippingAddress" xsi:type="array">
+                                                    <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/shipping</item>
                                                     <item name="children" xsi:type="array">
                                                         <item name="shippingAdditional" xsi:type="array">
                                                             <item name="component" xsi:type="string">uiComponent</item>
                                                             <item name="displayArea" xsi:type="string">shippingAdditional</item>
                                                             <item name="children" xsi:type="array">
-                                                                <item name="carrier_custom" xsi:type="array">
+                                                                <item name="service-point" xsi:type="array">
                                                                     <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/checkout/shipping/servicePoint</item>
                                                                 </item>
                                                             </item>
@@ -31,6 +43,13 @@
                                                     </item>
                                                 </item>
                                             </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-information" xsi:type="array">
+                                            <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/shipping-information</item>
                                         </item>
                                     </item>
                                 </item>
