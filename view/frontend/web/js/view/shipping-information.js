@@ -62,7 +62,6 @@ define([
 
         getServicePointInformation: function(){
             var address = JSON.parse(window.sessionStorage.getItem('service-point-data'));
-            console.log(address);
 
             return address;
         }
