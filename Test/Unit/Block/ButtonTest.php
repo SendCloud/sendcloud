@@ -10,7 +10,7 @@ namespace CreativeICT\SendCloud\Test\Unit\Block;
 
 use CreativeICT\SendCloud\Test\Unit\Generic;
 
-class TestButton extends Generic
+class ButtonTest extends Generic
 {
     private $button;
     private $urlInterface;

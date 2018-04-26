@@ -11,7 +11,7 @@ namespace CreativeICT\SendCloud\Test\Unit\Model;
 
 use CreativeICT\SendCloud\Test\Unit\Generic;
 
-class TestSettings extends Generic
+class SettingsTest extends Generic
 {
     private $settings;
 

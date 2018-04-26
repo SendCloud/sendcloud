@@ -6,7 +6,7 @@ namespace CreativeICT\SendCloud\Test\Unit\Controller;
 use CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\Connector;
 use CreativeICT\SendCloud\Test\Unit\Generic;
 
-class TestConnector extends Generic
+class ConnectorTest extends Generic
 {
     private $controller;
 

@@ -13,7 +13,7 @@ use CreativeICT\SendCloud\Test\Unit\Generic;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Carrier\AbstractCarrierInterface;
 
-class TestSendCloud extends Generic
+class SendCloudTest extends Generic
 {
     /** @var \CreativeICT\SendCloud\Model\Carrier\SendCloud */
     private $sendCloud;
