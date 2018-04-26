@@ -30,7 +30,15 @@
         <div class="shipping-information-content">
             <span class="value" data-bind="text: getShippingMethodTitle()"></span>
 
-            <div class="service-point-information" data-bind="visible: selectedMethod() == 'sendcloud_sendcloud', text: getServicePointInformation()"></div>
+            <div class="service-point-information" data-bind="visible: selectedMethod() == 'sendcloud_sendcloud'">
+                <strong data-bind="text: getServicePointInformation().name"></strong><br>
+                <span>
+                    <!-- ko text: getServicePointInformation().street --><!-- /ko -->
+                    <!-- ko text: getServicePointInformation().house_number --><!-- /ko -->
+                </span><br>
+                <span data-bind="text: getServicePointInformation().postal_code"></span>
+                <span data-bind="text: getServicePointInformation().city"></span>
+            </div>
         </div>
     </div>
 </div>
