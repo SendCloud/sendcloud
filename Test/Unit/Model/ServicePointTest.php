@@ -17,8 +17,8 @@ class ServicePointTest extends Generic
 
     const ACTIVATE = 'activate';
     const DEACTIVATE = 'deactivate';
-    const SHIPACTIVATE = 'activate';
-    const SHIPDEACTIVATE = 'deactivate';
+    const SCRIPT_URL = 'https://embed.sendcloud.sc/spp/1.0.0/api.min.js';
+    const SHIPPING_FLAG = 1;
 
     protected function setUp()
     {
@@ -29,21 +29,23 @@ class ServicePointTest extends Generic
 
     public function testActivate()
     {
-        $this->assertEquals(self::ACTIVATE, $this->servicePoint->activate());
+        $result = array('message' => array('success' => 'Shipping method is activated an script url is set'));
+
+        $this->assertEquals($result, $this->servicePoint->activate(self::SCRIPT_URL));
     }
 
     public function testDeactivate()
     {
-        $this->assertEquals(self::DEACTIVATE, $this->servicePoint->deactivate());
+        $result = array('message' => array('success' => 'Shipping method is deactivated'));
+
+        $this->assertEquals($result, $this->servicePoint->deactivate());
     }
 
-    public function testShippingEmailActivate()
+    public function testShippingEmail()
     {
-        $this->assertEquals(self::SHIPACTIVATE, $this->servicePoint->shippingEmailActivate());
+        $result = array('message' => array('success' => 'Shipment email is activated'));
+
+        $this->assertEquals($result, $this->servicePoint->shippingEmail(self::SHIPPING_FLAG));
     }
 
-    public function testShippingEmailDeactivate()
-    {
-        $this->assertEquals(self::SHIPDEACTIVATE, $this->servicePoint->shippingEmailDeactivate());
-    }
 }

@@ -15,7 +15,7 @@ class SettingsTest extends Generic
 {
     private $settings;
 
-    const MODULE_INFORMATION = "Module information";
+    const MODULE_INFORMATION = [["Version" => NULL]];
     const SCRIPT_URL = "https://sendcloud.nl/scripturltest";
 
     protected function setUp()
@@ -28,10 +28,5 @@ class SettingsTest extends Generic
     public function testGetModuleInformation()
     {
         $this->assertEquals(self::MODULE_INFORMATION, $this->settings->getModuleInformation());
-    }
-
-    public function testSetScriptUrl()
-    {
-        $this->assertEquals(true, $this->settings->setScriptUrl(self::SCRIPT_URL));
     }
 }

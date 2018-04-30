@@ -15,6 +15,9 @@ use Magento\Shipping\Model\Carrier\AbstractCarrierInterface;
 
 class SendCloudTest extends Generic
 {
+    const METHOD_CODE = 'sendcloud';
+    const METHOD_TITLE = 'Sendcloud';
+
     /** @var \CreativeICT\SendCloud\Model\Carrier\SendCloud */
     private $sendCloud;
 
@@ -28,6 +31,18 @@ class SendCloudTest extends Generic
 
     private $mockRateRequest;
 
+    private $elementFactory;
+
+    private $mockTrackFactory;
+
+    private $mockTrackErrorFactory;
+
+    private $mockStatusFactory;
+
+    private $mockCountryFactory;
+
+    private $mockCurrencyFactory;
+
     protected function setUp()
     {
         parent::setUp();
@@ -36,12 +51,18 @@ class SendCloudTest extends Generic
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->elementFactory = $this->getMockBuilder('Magento\Shipping\Model\Simplexml\ElementFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->mockResultFactory = $this->getMockBuilder('Magento\Shipping\Model\Rate\ResultFactory')
             ->disableOriginalConstructor()
+            ->setMethods(['create', 'append'])
             ->getMock();
 
         $this->mockMethodFactory = $this->getMockBuilder('Magento\Quote\Model\Quote\Address\RateResult\MethodFactory')
             ->disableOriginalConstructor()
+            ->setMethods(['create', 'setCarrier', 'setMethodTitle'])
             ->getMock();
 
         $this->mockAbstractCarrier = $this->getMockBuilder('Magento\Shipping\Model\Carrier\AbstractCarrier', [])
@@ -49,20 +70,52 @@ class SendCloudTest extends Generic
             ->setMethods(['getConfigData', 'collectRates'])
             ->getMock();
 
-        $this->mockRateRequest = $this->getMockBuilder('Magento\Quote\Model\Quote\Address\RateRequest', []);
+        $this->mockTrackFactory = $this->getMockBuilder('Magento\Shipping\Model\Tracking\ResultFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockTrackErrorFactory = $this->getMockBuilder('Magento\Shipping\Model\Tracking\Result\ErrorFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockRateRequest = $this->getMockBuilder('Magento\Quote\Model\Quote\Address\RateRequest')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockStatusFactory = $this->getMockBuilder('Magento\Shipping\Model\Tracking\Result\StatusFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockCountryFactory = $this->getMockBuilder('Magento\Directory\Model\CountryFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockCurrencyFactory = $this->getMockBuilder('Magento\Directory\Model\CurrencyFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->sendCloud = $this->objectManager->getObject('CreativeICT\SendCloud\Model\Carrier\SendCloud', []);
     }
 
-    public function testGetAllowedMethods()
-    {
-        $code = array('sendcloud' => NULL);
-        $this->assertEquals($code, $this->sendCloud->getAllowedMethods());
-    }
-
     public function testCollectRates()
     {
-        //$this->assertEquals(array('test'), $this->sendCloud->collectRates(RateRequest::class));
-        $this->assertEquals(array('test'), $this->sendCloud->collectRates(\Magento\Quote\Model\Quote\Address\RateRequest));
+        $this->mockResultFactory->method('create')
+            ->willReturn($this->mockResultFactory);
+
+        $this->mockMethodFactory->method('create')
+            ->willReturn($this->mockMethodFactory);
+
+        $this->mockMethodFactory->method('setCarrier')
+            ->with(self::METHOD_CODE)
+            ->willReturn($this->mockMethodFactory);
+        $this->mockMethodFactory->method('setMethodTitle')
+            ->with(self::METHOD_TITLE)
+            ->willReturn($this->mockMethodFactory);
+
+        $this->mockResultFactory->method('append')
+            ->with($this->mockMethodFactory)
+            ->willReturn($this->mockResultFactory);
+
+        $this->assertEquals(false, $this->sendCloud->collectRates($this->mockRateRequest));
     }
 }
