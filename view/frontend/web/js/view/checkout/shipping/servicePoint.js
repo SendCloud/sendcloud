@@ -31,10 +31,7 @@ define([
             return this;
         },
         servicePoint: function (serviceObject) {
-            // var openingTimes = '';
             if (serviceObject) {
-                // var days = [$.mage.__("Mon"), $.mage.__("Tue"), $.mage.__("Wed"), $.mage.__("Thu"), $.mage.__("Fri"), $.mage.__("Sat"), $.mage.__("Sun")];
-
                 this.servicePointButton = $.mage.__("Change service point");
 
                 $('.button-service-point').text(this.servicePointButton);
@@ -43,17 +40,6 @@ define([
                 $('#servicePointStreetAndHouseNumber').html(serviceObject.street + " " + serviceObject.house_number);
                 $('#servicePointZipCode').html(serviceObject.postal_code);
                 $('#servicePointCity').html(serviceObject.city);
-
-                // openingTimes = serviceObject.formatted_opening_times;
-                //
-                // $('#servicePointOpeningTimes').html('<strong>'+ $.mage.__("Opening hours") + '</strong><ul></ul>');
-                // $('#servicePointOpeningTimes ul').html('');
-                //
-                // $.each(openingTimes, function (key, value) {
-                //     if (value.length > 0) {
-                //         $('#servicePointOpeningTimes ul').append('<li>' + days[key] + ' <span>' + value + '</span></li>');
-                //     }
-                // });
 
                 $('input[name="sendcloud_service_point_id"]').val(serviceObject.id);
                 $('input[name="sendcloud_service_point_name"]').val(serviceObject.name);
