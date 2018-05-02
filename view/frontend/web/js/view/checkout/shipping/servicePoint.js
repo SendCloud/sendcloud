@@ -4,7 +4,8 @@ define([
     'uiComponent',
     'Magento_Checkout/js/model/quote',
     'Magento_Customer/js/model/customer',
-    'mage/translate'
+    'mage/translate',
+    'https://embed.sendcloud.sc/spp/1.0.0/api.min.js'
 ], function ($, ko, Component, quote, customer) {
     'use strict';
     var self = this;
@@ -72,7 +73,7 @@ define([
             var self = this;
             var config = {
                 // API key is required, replace it below with your API key
-                'apiKey': "f3348a202ce74a5497859d3a3d476511",
+                'apiKey': sendcloud.getApiKey(),
                 // Country is required
                 'country': countryCode.toLowerCase(),
                 // Postal code is not required, although we recommend it
