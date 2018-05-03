@@ -99,6 +99,7 @@ class ServicePoint implements ServicePointInterface
 
         try {
             $this->writer->save('sales_email/shipment/enabled', (int) $activate, $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
+            $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
             $message = array('error' => 'Shipment email is not changed');
