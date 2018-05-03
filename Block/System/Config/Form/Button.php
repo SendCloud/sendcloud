@@ -52,8 +52,8 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
     {
         $this->addData(
             [
-                'id'        => 'connectToSendcloud',
-                'button_label'     => _('Connect to Sendcloud'),
+                'id'        => 'connectToSendCloud',
+                'button_label'     => _('Connect to SendCloud'),
             ]
         );
         return $this->_toHtml();

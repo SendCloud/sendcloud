@@ -5,6 +5,7 @@ namespace CreativeICT\SendCloud\Test\Unit\Controller;
 
 use CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\Connector;
 use CreativeICT\SendCloud\Test\Unit\Generic;
+use Magento\Framework\Controller\ResultFactory;
 
 class ConnectorTest extends Generic
 {
@@ -24,6 +25,8 @@ class ConnectorTest extends Generic
     private $loggerMock;
 
     private $resultFactoryMock;
+
+    private $urlInterfaceMock;
 
     protected function setUp()
     {
@@ -54,6 +57,11 @@ class ConnectorTest extends Generic
             ->setMethods(['create', 'setData'])
             ->getMock();
 
+        $this->urlInterfaceMock = $this->getMockBuilder('Magento\Backend\Model\UrlInterface')
+            ->disableOriginalConstructor()
+            ->setMethods(['getBaseUrl'])
+            ->getMock();
+
         /** @var Connector connector */
         $this->connector = new Connector(
             $this->contextMock,
@@ -67,17 +75,21 @@ class ConnectorTest extends Generic
 
     public function testExecute()
     {
-        $url = self::URL;
+        $baseUrl = $this->urlInterfaceMock->method('getBaseUrl')
+            ->willReturn(self::url);
 
         $responseData = array(
-            "url" => $url
+            "url" => $baseUrl
         );
 
-        $resultJson = $this->resultFactoryMock->method('create')
+        $this->resultFactoryMock->method('create')
+            ->with(ResultFactory::TYPE_JSON)
             ->willReturn($this->resultFactoryMock);
 
         $this->resultFactoryMock->method('setData')
+            ->with($responseData)
             ->willReturn($this->resultFactoryMock);
 
+        $this->assertEquals('test', $this->connector->execute());
     }
 }
