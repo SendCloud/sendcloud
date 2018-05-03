@@ -55,6 +55,8 @@ define([
             var serviceObject = JSON.parse(window.sessionStorage.getItem('service-point-data'));
 
             this.servicePoint(serviceObject);
+
+            return serviceObject;
         },
         openSendCloudMap: function (e) {
             var zipCode = $('[name="postcode"]').val(),
@@ -71,6 +73,12 @@ define([
         },
         openServicePointPicker: function (zipCode, countryCode) {
             var self = this;
+            var servicePointId = null;
+
+            if (self.sessionData()[['id']]) {
+                servicePointId = self.sessionData()[['id']];
+            }
+
             var config = {
                 // API key is required, replace it below with your API key
                 'apiKey': sendcloud.getApiKey(),
@@ -83,7 +91,7 @@ define([
                 // you can filter service points by carriers as well.
                 'carriers': null, // comma separated string (e.g. "postnl,bpost,dhl")
                 // you can also pass a servicePointId if you want the map to be opened at a preselected service point
-                'servicePointId': null // integer
+                'servicePointId': servicePointId // integer
             }
 
             sendcloud.servicePoints.open(

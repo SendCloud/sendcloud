@@ -29,11 +29,6 @@
                 <div class="box-content">
                     <?php if ($_order->getShippingDescription()): ?>
                         <?= $block->escapeHtml($_order->getShippingDescription()) ?>
-                        <?php
-//                            echo '<pre>';
-//                            var_dump(json_encode($_order->getData()));
-//                            echo '</pre>';
-                        ?>
                         <?php if ($_order->getSendcloudServicePointId() > 0) : ?>
                             <div class="service-point-information">
                                 <strong><?= __('Service Point') ?></strong>
