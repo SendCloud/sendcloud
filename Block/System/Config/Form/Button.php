@@ -28,7 +28,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
      */
     public function getAjaxCheckUrl()
     {
-        return $this->getUrl('creativeict_autoconnect/autoconnect/index');
+        return $this->getUrl('creativeict_autoconnect/autoconnect/connector');
     }
 
     /**

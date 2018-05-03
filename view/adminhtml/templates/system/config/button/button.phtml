@@ -15,7 +15,6 @@
                 method: 'POST',
                 data: {form_key: window.FORM_KEY},
                 success: function (response) {
-                    console.log(response.url)
                     window.open(response.url,'_blank');
                 }
             })
