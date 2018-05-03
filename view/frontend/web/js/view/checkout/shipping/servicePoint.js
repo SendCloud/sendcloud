@@ -62,7 +62,7 @@ define([
             var zipCode = $('[name="postcode"]').val(),
                 countryCode = $('[name="country_id"]').val();
 
-            if (customer.isLoggedIn()) {
+            if (customer.isLoggedIn() && customer.getShippingAddressList()[0]) {
                 zipCode = customer.getShippingAddressList()[0]['postcode'];
                 countryCode = customer.getShippingAddressList()[0]['countryId'];
             }
@@ -75,7 +75,7 @@ define([
             var self = this;
             var servicePointId = null;
 
-            if (self.sessionData()[['id']]) {
+            if (self.sessionData() && self.sessionData()['id']) {
                 servicePointId = self.sessionData()[['id']];
             }
 
