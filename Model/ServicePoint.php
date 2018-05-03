@@ -12,6 +12,7 @@ namespace CreativeICT\SendCloud\Model;
 use CreativeICT\SendCloud\Api\ServicePointInterface;
 use CreativeICT\SendCloud\Logger\SendCloudLogger;
 use Exception;
+use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\Serialize\Serializer\Json;
@@ -30,17 +31,22 @@ class ServicePoint implements ServicePointInterface
     /** @var Json  */
     private $json;
 
+    /** @var TypeListInterface  */
+    private $cache;
+
     public function __construct(
         WriterInterface $writer,
         ScopeConfigInterface $scopeConfig,
         Json $json,
-        SendCloudLogger $logger
+        SendCloudLogger $logger,
+        TypeListInterface $cache
     )
     {
         $this->writer = $writer;
         $this->scopeConfig = $scopeConfig;
         $this->json = $json;
         $this->logger = $logger;
+        $this->cache = $cache;
     }
 
     /**
@@ -52,6 +58,7 @@ class ServicePoint implements ServicePointInterface
         try {
             $this->writer->save('carriers/sendcloud/active', 1, $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
             $this->writer->save('creativeict/sendcloud/script_url', $script_url, $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
+            $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
 
@@ -69,6 +76,7 @@ class ServicePoint implements ServicePointInterface
         try {
             $this->writer->save('carriers/sendcloud/active', 0, $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
             $this->writer->save('creativeict/sendcloud/script_url', '', $this->scopeConfig::SCOPE_TYPE_DEFAULT, 0);
+            $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
 
