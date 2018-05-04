@@ -10,15 +10,16 @@
         'prototype'
     ], function($){
         $('#connectToSendCloud').click(function () {
+            var w = window.open('<?php echo $block->getAjaxCheckUrl()?>');
             $.ajax({
                 url: "<?php echo $block->getAjaxCheckUrl() ?>",
                 method: 'POST',
                 data: {form_key: window.FORM_KEY},
                 success: function (response) {
-                    window.open(response.url,'_blank');
+                    w.location = response.url;
                 }
-            })
-
+            });
+            return false;
         });
 
     });
