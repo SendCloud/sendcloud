@@ -49,7 +49,7 @@
                 </tr>
             </table>
             {{/depend}}
-            {{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Magento_Sales::email/shipment/track.phtml' shipment=$shipment order=$order}}
+            <!--{{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Magento_Sales::email/shipment/track.phtml' shipment=$shipment order=$order}}-->
             <table class="order-details">
                 <tr>
                     <td class="address-details">
@@ -72,7 +72,6 @@
                     <td class="method-info">
                         <h3>{{trans "Shipping Method"}}</h3>
                         <p>{{var order.getShippingDescription()}}</p>
-
                         {{depend order.getSendcloudServicePointId()}}
                         <p>
                             <strong>{{trans "Service Point"}}</strong><br>
@@ -81,6 +80,7 @@
                             {{var order.getSendcloudServicePointZipCode()}} {{var order.getSendcloudServicePointCity()}}
                         </p>
                         {{/depend}}
+                        {{depend order.getIsNotVirtual()}}
                     </td>
                     {{/depend}}
                 </tr>

@@ -20,7 +20,6 @@
 "var order.getShippingDescription()":"Shipping Description"
 } @-->
 {{template config_path="design/email/header_template"}}
-
 <table>
     <tr class="email-intro">
         <td>
@@ -82,6 +81,7 @@
                             {{var order.getSendcloudServicePointZipCode()}} {{var order.getSendcloudServicePointCity()}}
                         </p>
                         {{/depend}}
+                    {{depend order.getIsNotVirtual()}}
                     </td>
                     {{/depend}}
                 </tr>
