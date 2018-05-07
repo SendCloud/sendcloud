@@ -2,6 +2,7 @@
 namespace CreativeICT\SendCloud\Model;
 
 use CreativeICT\SendCloud\Api\SettingsInterface;
+use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Module\ResourceInterface;
 
 class Settings implements SettingsInterface
@@ -9,15 +10,21 @@ class Settings implements SettingsInterface
     /** @var ModuleResource  */
     private $moduleResource;
 
+    /** @var ProductMetadataInterface  */
+    private $productMetaData;
+
     /**
      * Settings constructor.
      * @param ResourceInterface $moduleResource
+     * @param ProductMetadataInterface $productMetadata
      */
     public function __construct(
-        ResourceInterface $moduleResource
+        ResourceInterface $moduleResource,
+        ProductMetadataInterface $productMetadata
     )
     {
         $this->moduleResource = $moduleResource;
+        $this->productMetaData = $productMetadata;
     }
 
     /**
@@ -26,7 +33,9 @@ class Settings implements SettingsInterface
     public function getModuleInformation()
     {
         $moduleInformation = [[
-            'Version' => $this->moduleResource->getDbVersion('CreativeICT_SendCloud')
+            'php' => phpversion(),
+            'magento' => $this->productMetaData->getVersion(),
+            'SendCloud-plugin' => $this->moduleResource->getDbVersion('CreativeICT_SendCloud')
         ]];
 
         return $moduleInformation;
