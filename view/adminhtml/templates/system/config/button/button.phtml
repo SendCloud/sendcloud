@@ -10,7 +10,7 @@
         'prototype'
     ], function($){
         $('#connectToSendCloud').click(function () {
-            var w = window.open('<?php echo $block->getAjaxCheckUrl()?>');
+            var w = window.open('');
             $.ajax({
                 url: "<?php echo $block->getAjaxCheckUrl() ?>",
                 method: 'POST',
