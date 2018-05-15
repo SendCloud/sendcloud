@@ -109,6 +109,7 @@ class Connector extends Action
         $strongPassword = false;
 
         try {
+            // TODO: Dit kan veel beter. Tijdelijke oplossing
             while ($strongPassword != true) {
                 $chars = Random::CHARS_LOWERS . Random::CHARS_UPPERS . Random::CHARS_DIGITS;
                 $password = $this->mathRandom->getRandomString($length, $chars);
