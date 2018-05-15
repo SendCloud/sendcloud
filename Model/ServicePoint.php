@@ -21,9 +21,6 @@ class ServicePoint implements ServicePointInterface
     /** @var WriterInterface  */
     private $writer;
 
-    /** @var ScopeConfigInterface  */
-    private $scopeConfig;
-
     /** @var SendCloudLogger  */
     private $logger;
 
@@ -32,13 +29,11 @@ class ServicePoint implements ServicePointInterface
 
     public function __construct(
         WriterInterface $writer,
-        ScopeConfigInterface $scopeConfig,
         SendCloudLogger $logger,
         TypeListInterface $cache
     )
     {
         $this->writer = $writer;
-        $this->scopeConfig = $scopeConfig;
         $this->logger = $logger;
         $this->cache = $cache;
     }
@@ -50,8 +45,8 @@ class ServicePoint implements ServicePointInterface
     public function activate($script_url)
     {
         try {
-            $this->writer->save('carriers/sendcloud/active', 1, scopeConfig::SCOPE_TYPE_DEFAULT, 0);
-            $this->writer->save('creativeict/sendcloud/script_url', $script_url, scopeConfig::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('carriers/sendcloud/active', 1, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('creativeict/sendcloud/script_url', $script_url, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
             $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
@@ -68,8 +63,8 @@ class ServicePoint implements ServicePointInterface
     public function deactivate()
     {
         try {
-            $this->writer->save('carriers/sendcloud/active', 0, scopeConfig::SCOPE_TYPE_DEFAULT, 0);
-            $this->writer->save('creativeict/sendcloud/script_url', '', scopeConfig::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('carriers/sendcloud/active', 0, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('creativeict/sendcloud/script_url', '', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
             $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
@@ -92,7 +87,7 @@ class ServicePoint implements ServicePointInterface
         }
 
         try {
-            $this->writer->save('sales_email/shipment/enabled', (int) $activate, scopeConfig::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('sales_email/shipment/enabled', (int) $activate, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
             $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());

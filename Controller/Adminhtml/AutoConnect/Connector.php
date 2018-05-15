@@ -105,12 +105,21 @@ class Connector extends Action
     private function generatePassword()
     {
         $length = 10;
+        $strongPassword = false;
 
         try {
-            $chars = Random::CHARS_LOWERS . Random::CHARS_UPPERS . Random::CHARS_DIGITS;
-            $password = $this->mathRandom->getRandomString($length, $chars);
+            while ($strongPassword != true) {
+                $chars = Random::CHARS_LOWERS . Random::CHARS_UPPERS . Random::CHARS_DIGITS;
+                $password = $this->mathRandom->getRandomString($length, $chars);
 
-            return $password;
+                if (preg_match('"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"', $password)) {
+                    $strongPassword = true;
+
+                    return $password;
+                }
+
+                $this->logger->debug('The password don\'t match the character');
+            }
         } catch (\Exception $ex) {
             $this->logger->debug($ex->getMessage());
         }
