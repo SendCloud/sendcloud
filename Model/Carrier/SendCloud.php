@@ -9,6 +9,7 @@
 namespace CreativeICT\SendCloud\Model\Carrier;
 
 
+use CreativeICT\SendCloud\Logger\SendCloudLogger;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Directory\Helper\Data;
 use Magento\Directory\Model\CountryFactory;
@@ -40,6 +41,9 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
 
     /** @var ResultFactory  */
     private $_rateResultFactory;
+
+    /** @var SendCloudLogger */
+    private $sendCloudLogger;
 
     /**
      * SendCloud constructor.
@@ -78,10 +82,12 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         Data $directoryData,
         StockRegistryInterface $stockRegistry,
         FormatInterface $localeFormat,
+        SendCloudLogger $sendCloudLogger,
         array $data = []
     ) {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
+        $this->sendCloudLogger = $sendCloudLogger;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
@@ -125,11 +131,9 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
             return false;
         }
 
-        $scriptUrl = $this->_scopeConfig->getValue('creativeict/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
-
-        if($scriptUrl == '' || $scriptUrl == NULL) {
+        if (!$this->checkForScriptUrl()) {
             return false;
-        }
+        };
 
         /** @var \Magento\Shipping\Model\Rate\Result $result */
         $result = $this->_rateResultFactory->create();
@@ -156,6 +160,19 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         $result->append($method);
 
         return $result;
+    }
+
+    private function checkForScriptUrl()
+    {
+        $isScriptUrlDefined = true;
+        $scriptUrl = $this->_scopeConfig->getValue('creativeict/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+
+        if($scriptUrl == '' || $scriptUrl == NULL) {
+            $this->sendCloudLogger->debug('The option service point is not active in SendCloud');
+            $isScriptUrlDefined = false;
+        }
+
+        return $isScriptUrlDefined;
     }
 
     public function proccessAdditionalValidation(\Magento\Framework\DataObject $request) {
