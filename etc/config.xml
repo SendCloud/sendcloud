@@ -9,7 +9,7 @@
         </sendcloud>
         <carriers>
             <sendcloud>
-                <active>1</active>
+                <active>0</active>
                 <sallowspecific>0</sallowspecific>
                 <model>CreativeICT\SendCloud\Model\Carrier\SendCloud</model>
                 <name>SendCloud</name>
