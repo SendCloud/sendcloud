@@ -98,6 +98,7 @@ class Connector extends Action
     }
 
     /**
+     * TODO: Genereer automatisch een sterk wachtwoord. Zodat dit maar 1 keer hoeft worden uitgevoerd.
      * Generate random password
      *
      * @return string
@@ -118,7 +119,7 @@ class Connector extends Action
                     return $password;
                 }
 
-                $this->logger->debug('The password don\'t match the character');
+                $this->logger->debug('The password don\'t match the character: '.$password);
             }
         } catch (\Exception $ex) {
             $this->logger->debug($ex->getMessage());
