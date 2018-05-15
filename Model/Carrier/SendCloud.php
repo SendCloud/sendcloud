@@ -28,6 +28,7 @@ use Magento\Shipping\Model\Tracking\Result\StatusFactory;
 use Magento\Shipping\Model\Tracking\ResultFactory as TrackFactory;
 use Psr\Log\LoggerInterface;
 use Magento\Shipping\Model\Rate\Result;
+use Magento\Store\Model\ScopeInterface;
 
 
 class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model\Carrier\CarrierInterface
@@ -121,6 +122,12 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
     public function collectRates(RateRequest $request)
     {
         if (!$this->getConfigFlag('active')) {
+            return false;
+        }
+
+        $scriptUrl = $this->_scopeConfig->getValue('creativeict/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+
+        if($scriptUrl == '' || $scriptUrl == NULL) {
             return false;
         }
 
