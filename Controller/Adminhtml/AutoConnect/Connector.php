@@ -98,30 +98,23 @@ class Connector extends Action
     }
 
     /**
-     * TODO: Genereer automatisch een sterk wachtwoord. Zodat dit maar 1 keer hoeft worden uitgevoerd.
      * Generate random password
      *
      * @return string
      */
     private function generatePassword()
     {
-        $length = 10;
-        $strongPassword = false;
+        $length = 3;
 
         try {
-            // TODO: Dit kan veel beter. Tijdelijke oplossing
-            while ($strongPassword != true) {
-                $chars = Random::CHARS_LOWERS . Random::CHARS_UPPERS . Random::CHARS_DIGITS;
-                $password = $this->mathRandom->getRandomString($length, $chars);
 
-                if (preg_match('"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"', $password)) {
-                    $strongPassword = true;
+            $chars = Random::CHARS_UPPERS;
+            $firstPart = $this->mathRandom->getRandomString($length, $chars);
+            $secondPart = str_shuffle(bin2hex(openssl_random_pseudo_bytes(4)));
 
-                    return $password;
-                }
+            $password = $firstPart . $secondPart;
 
-                $this->logger->debug('The password don\'t match the character: '.$password);
-            }
+            return $password;
         } catch (\Exception $ex) {
             $this->logger->debug($ex->getMessage());
         }
