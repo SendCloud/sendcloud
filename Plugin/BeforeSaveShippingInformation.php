@@ -6,7 +6,7 @@
  * Time: 9:30
  */
 
-namespace CreativeICT\SendCloud\Plugin;
+namespace SendCloud\SendCloud\Plugin;
 
 
 use Magento\Checkout\Api\Data\ShippingInformationInterface;

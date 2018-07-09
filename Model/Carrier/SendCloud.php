@@ -6,10 +6,10 @@
  * Time: 21:45
  */
 
-namespace CreativeICT\SendCloud\Model\Carrier;
+namespace SendCloud\SendCloud\Model\Carrier;
 
 
-use CreativeICT\SendCloud\Logger\SendCloudLogger;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Directory\Helper\Data;
 use Magento\Directory\Model\CountryFactory;
@@ -165,7 +165,7 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
     private function checkForScriptUrl()
     {
         $isScriptUrlDefined = true;
-        $scriptUrl = $this->_scopeConfig->getValue('creativeict/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+        $scriptUrl = $this->_scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
 
         if($scriptUrl == '' || $scriptUrl == NULL) {
             $this->sendCloudLogger->debug('The option service point is not active in SendCloud');

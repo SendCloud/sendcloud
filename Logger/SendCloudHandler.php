@@ -1,5 +1,5 @@
 <?php
-namespace CreativeICT\SendCloud\Logger;
+namespace SendCloud\SendCloud\Logger;
 
 use Monolog\Logger;
 use Magento\Framework\Logger\Handler\Base;

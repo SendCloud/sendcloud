@@ -1,5 +1,5 @@
 <?php
-namespace CreativeICT\SendCloud\Api;
+namespace SendCloud\SendCloud\Api;
 
 interface SettingsInterface
 {

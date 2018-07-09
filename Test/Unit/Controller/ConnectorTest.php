@@ -1,10 +1,10 @@
 <?php
 
-namespace CreativeICT\SendCloud\Test\Unit\Controller;
+namespace SendCloud\SendCloud\Test\Unit\Controller;
 
 
-use CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\Connector;
-use CreativeICT\SendCloud\Test\Unit\Generic;
+use SendCloud\SendCloud\Controller\Adminhtml\AutoConnect\Connector;
+use SendCloud\SendCloud\Test\Unit\Generic;
 use Magento\Framework\Controller\ResultFactory;
 
 class ConnectorTest extends Generic
@@ -40,7 +40,7 @@ class ConnectorTest extends Generic
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->autoGenerateApiMock = $this->getMockBuilder('CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\AutoGenerateApiUser')
+        $this->autoGenerateApiMock = $this->getMockBuilder('SendCloud\SendCloud\Controller\Adminhtml\AutoConnect\AutoGenerateApiUser')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -48,7 +48,7 @@ class ConnectorTest extends Generic
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->loggerMock = $this->getMockBuilder('CreativeICT\SendCloud\Logger\SendCloudLogger')
+        $this->loggerMock = $this->getMockBuilder('SendCloud\SendCloud\Logger\SendCloudLogger')
             ->disableOriginalConstructor()
             ->getMock();
 

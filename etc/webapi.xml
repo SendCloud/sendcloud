@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
     <route url="/V1/service-point" method="POST">
-        <service class="CreativeICT\SendCloud\Api\ServicePointInterface" method="activate"/>
+        <service class="SendCloud\SendCloud\Api\ServicePointInterface" method="activate"/>
         <resources>
             <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/V1/service-point" method="DELETE">
-        <service class="CreativeICT\SendCloud\Api\ServicePointInterface" method="deactivate"/>
+        <service class="SendCloud\SendCloud\Api\ServicePointInterface" method="deactivate"/>
         <resources>
             <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/V1/shipping-email" method="PUT">
-        <service class="CreativeICT\SendCloud\Api\ServicePointInterface" method="shippingEmail"/>
+        <service class="SendCloud\SendCloud\Api\ServicePointInterface" method="shippingEmail"/>
         <resources>
             <resource ref="Magento_Sales::sales"/>
         </resources>
     </route>
 
     <route url="/V1/sendcloud-information" method="GET">
-        <service class="CreativeICT\SendCloud\Api\SettingsInterface" method="getModuleInformation"/>
+        <service class="SendCloud\SendCloud\Api\SettingsInterface" method="getModuleInformation"/>
         <resources>
             <resource ref="Magento_Sales::sales"/>
         </resources>

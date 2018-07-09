@@ -6,7 +6,7 @@
  * Time: 21:43
  */
 
-namespace CreativeICT\SendCloud\Api;
+namespace SendCloud\SendCloud\Api;
 
 
 interface ServicePointInterface

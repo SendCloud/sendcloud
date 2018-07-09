@@ -3,8 +3,8 @@ define(
         'uiComponent',
         'Magento_Checkout/js/model/shipping-rates-validator',
         'Magento_Checkout/js/model/shipping-rates-validation-rules',
-        'CreativeICT_SendCloud/js/model/shipping-rates-validator',
-        'CreativeICT_SendCloud/js/model/shipping-rates-validation-rules'
+        'SendCloud_SendCloud/js/model/shipping-rates-validator',
+        'SendCloud_SendCloud/js/model/shipping-rates-validation-rules'
     ],
     function (
         Component,

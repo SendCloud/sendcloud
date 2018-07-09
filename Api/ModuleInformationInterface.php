@@ -6,7 +6,7 @@
  * Time: 21:44
  */
 
-namespace CreativeICT\SendCloud\Api;
+namespace SendCloud\SendCloud\Api;
 
 
 interface ModuleInformationInterface

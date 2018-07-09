@@ -6,16 +6,16 @@
  * Time: 17:04
  */
 
-namespace CreativeICT\SendCloud\Test\Unit\Block;
+namespace SendCloud\SendCloud\Test\Unit\Block;
 
-use CreativeICT\SendCloud\Test\Unit\Generic;
+use SendCloud\SendCloud\Test\Unit\Generic;
 
 class ButtonTest extends Generic
 {
     private $button;
     private $urlInterface;
 
-    const WEBSHOP_URL = 'https://www.webshop.nl/admin/creativeict_autoconnect/autoconnect/index';
+    const WEBSHOP_URL = 'https://www.webshop.nl/admin/sendcloud_autoconnect/autoconnect/index';
 
     protected function setUp()
     {
@@ -36,7 +36,7 @@ class ButtonTest extends Generic
             ->method('getUrl')
             ->willReturn(self::WEBSHOP_URL);
 
-        $this->button = $this->objectManager->getObject('CreativeICT\SendCloud\Block\System\Config\Form\Button', [
+        $this->button = $this->objectManager->getObject('SendCloud\SendCloud\Block\System\Config\Form\Button', [
             'context' => $this->contextMock,
         ]);
     }

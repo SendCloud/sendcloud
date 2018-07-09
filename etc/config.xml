@@ -11,7 +11,7 @@
             <sendcloud>
                 <active>0</active>
                 <sallowspecific>0</sallowspecific>
-                <model>CreativeICT\SendCloud\Model\Carrier\SendCloud</model>
+                <model>SendCloud\SendCloud\Model\Carrier\SendCloud</model>
                 <name>SendCloud</name>
                 <price>15.00</price>
                 <title>SendCloud</title>

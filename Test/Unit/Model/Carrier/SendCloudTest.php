@@ -6,10 +6,18 @@
  * Time: 14:01
  */
 
-namespace CreativeICT\SendCloud\Test\Unit\Model\Carrier;
+namespace SendCloud\SendCloud\Test\Unit\Model\Carrier;
 
 
-use CreativeICT\SendCloud\Test\Unit\Generic;
+use Magento\Directory\Model\CountryFactory;
+use Magento\Directory\Model\CurrencyFactory;
+use Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory;
+use Magento\Quote\Model\Quote\Address\RateResult\MethodFactory;
+use Magento\Shipping\Model\Carrier\AbstractCarrier;
+use Magento\Shipping\Model\Rate\ResultFactory;
+use Magento\Shipping\Model\Simplexml\ElementFactory;
+use Magento\Shipping\Model\Tracking\Result\StatusFactory;
+use SendCloud\SendCloud\Test\Unit\Generic;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Carrier\AbstractCarrierInterface;
 
@@ -18,29 +26,40 @@ class SendCloudTest extends Generic
     const METHOD_CODE = 'sendcloud';
     const METHOD_TITLE = 'Sendcloud';
 
-    /** @var \CreativeICT\SendCloud\Model\Carrier\SendCloud */
+    /** @var \SendCloud\SendCloud\Model\Carrier\SendCloud */
     private $sendCloud;
 
+    /** @var ErrorFactory */
     private $mockErrorFactory;
 
+    /** @var ResultFactory */
     private $mockResultFactory;
 
+    /** @var MethodFactory */
     private $mockMethodFactory;
 
+    /** @var AbstractCarrier */
     private $mockAbstractCarrier;
 
+    /** @var RateRequest */
     private $mockRateRequest;
 
+    /** @var ElementFactory */
     private $elementFactory;
 
+    /** @var \Magento\Shipping\Model\Tracking\ResultFactory */
     private $mockTrackFactory;
 
+    /** @var \Magento\Shipping\Model\Tracking\Result\ErrorFactory */
     private $mockTrackErrorFactory;
 
+    /** @var StatusFactory */
     private $mockStatusFactory;
 
+    /** @var CountryFactory */
     private $mockCountryFactory;
 
+    /** @var CurrencyFactory */
     private $mockCurrencyFactory;
 
     protected function setUp()
@@ -94,7 +113,7 @@ class SendCloudTest extends Generic
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->sendCloud = $this->objectManager->getObject('CreativeICT\SendCloud\Model\Carrier\SendCloud', []);
+        $this->sendCloud = $this->objectManager->getObject('SendCloud\SendCloud\Model\Carrier\SendCloud', []);
     }
 
     public function testCollectRates()

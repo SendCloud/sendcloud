@@ -2,7 +2,7 @@ define(
     [
         'jquery',
         'mageUtils',
-        'CreativeICT_SendCloud/js/model/shipping-rates-validation-rules',
+        'SendCloud_SendCloud/js/model/shipping-rates-validation-rules',
         'mage/translate'
     ],
     function ($, utils, validationRules, $t) {

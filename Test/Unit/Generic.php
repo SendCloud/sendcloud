@@ -1,6 +1,6 @@
 <?php
 
-namespace CreativeICT\SendCloud\Test\Unit;
+namespace SendCloud\SendCloud\Test\Unit;
 
 
 use Magento\TestFramework\ObjectManager;

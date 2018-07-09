@@ -15,7 +15,7 @@ define([
 
     return Component.extend({
         defaults: {
-            template: 'CreativeICT_SendCloud/shipping-information'
+            template: 'SendCloud_SendCloud/shipping-information'
         },
         initObservable: function () {
             this.selectedMethod = ko.computed(function() {

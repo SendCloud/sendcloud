@@ -6,10 +6,10 @@
  * Time: 13:55
  */
 
-namespace CreativeICT\SendCloud\Test\Unit\Model;
+namespace SendCloud\SendCloud\Test\Unit\Model;
 
 
-use CreativeICT\SendCloud\Test\Unit\Generic;
+use SendCloud\SendCloud\Test\Unit\Generic;
 
 class SettingsTest extends Generic
 {
@@ -22,7 +22,7 @@ class SettingsTest extends Generic
     {
         parent::setUp();
 
-        $this->settings = $this->objectManager->getObject('CreativeICT\SendCloud\Model\Settings', []);
+        $this->settings = $this->objectManager->getObject('SendCloud\SendCloud\Model\Settings', []);
     }
 
     public function testGetModuleInformation()

@@ -6,11 +6,11 @@
  * Time: 21:46
  */
 
-namespace CreativeICT\SendCloud\Model;
+namespace SendCloud\SendCloud\Model;
 
 
-use CreativeICT\SendCloud\Api\ServicePointInterface;
-use CreativeICT\SendCloud\Logger\SendCloudLogger;
+use SendCloud\SendCloud\Api\ServicePointInterface;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Exception;
 use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -46,7 +46,7 @@ class ServicePoint implements ServicePointInterface
     {
         try {
             $this->writer->save('carriers/sendcloud/active', 1, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
-            $this->writer->save('creativeict/sendcloud/script_url', $script_url, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('sendcloud/sendcloud/script_url', $script_url, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
             $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
@@ -64,7 +64,7 @@ class ServicePoint implements ServicePointInterface
     {
         try {
             $this->writer->save('carriers/sendcloud/active', 0, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
-            $this->writer->save('creativeict/sendcloud/script_url', '', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
+            $this->writer->save('sendcloud/sendcloud/script_url', '', ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
             $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());

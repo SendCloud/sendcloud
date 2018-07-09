@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="CreativeICT_SendCloud::css/servicepoint.css" />
+        <css src="SendCloud_SendCloud::css/servicepoint.css" />
     </head>
     <body>
         <referenceBlock name="sales.order.print.info">
             <action method="setTemplate">
-                <argument name="template" xsi:type="string">CreativeICT_SendCloud::order/info.phtml</argument>
+                <argument name="template" xsi:type="string">SendCloud_SendCloud::order/info.phtml</argument>
             </action>
         </referenceBlock>
     </body>

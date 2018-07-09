@@ -6,7 +6,7 @@
  * Time: 15:44
  */
 
-namespace CreativeICT\SendCloud\Block\Checkout;
+namespace SendCloud\SendCloud\Block\Checkout;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template;
@@ -33,6 +33,6 @@ class Config extends Template
      */
     public function getScriptUrl()
     {
-        return $this->scopeConfig->getValue('creativeict/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
     }
 }

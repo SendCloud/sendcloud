@@ -5,7 +5,7 @@
     </head>
     <body>
         <referenceBlock name="head.additional">
-            <block name="sendcloud_config" class="CreativeICT\SendCloud\Block\Checkout\Config" template="CreativeICT_SendCloud::js.phtml"/>
+            <block name="sendcloud_config" class="SendCloud\SendCloud\Block\Checkout\Config" template="SendCloud_SendCloud::js.phtml"/>
         </referenceBlock>
         <referenceBlock name="checkout.root">
             <arguments>
@@ -22,21 +22,21 @@
                                                         <item name="shipping-rates-validation" xsi:type="array">
                                                             <item name="children" xsi:type="array">
                                                                 <item name="servicepoint-rates-validation" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/shipping-rates-validation</item>
+                                                                    <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/shipping-rates-validation</item>
                                                                 </item>
                                                             </item>
                                                         </item>
                                                     </item>
                                                 </item>
                                                 <item name="shippingAddress" xsi:type="array">
-                                                    <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/shipping</item>
+                                                    <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/shipping</item>
                                                     <item name="children" xsi:type="array">
                                                         <item name="shippingAdditional" xsi:type="array">
                                                             <item name="component" xsi:type="string">uiComponent</item>
                                                             <item name="displayArea" xsi:type="string">shippingAdditional</item>
                                                             <item name="children" xsi:type="array">
                                                                 <item name="service-point" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/checkout/shipping/servicePoint</item>
+                                                                    <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/checkout/shipping/servicePoint</item>
                                                                 </item>
                                                             </item>
                                                         </item>
@@ -49,7 +49,7 @@
                                 <item name="sidebar" xsi:type="array">
                                     <item name="children" xsi:type="array">
                                         <item name="shipping-information" xsi:type="array">
-                                            <item name="component" xsi:type="string">CreativeICT_SendCloud/js/view/shipping-information</item>
+                                            <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/shipping-information</item>
                                         </item>
                                     </item>
                                 </item>

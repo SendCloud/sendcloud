@@ -1,9 +1,9 @@
 <?php
 
-namespace CreativeICT\SendCloud\Test\Unit\Controller;
+namespace SendCloud\SendCloud\Test\Unit\Controller;
 
-use CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect\AutoGenerateApiUser;
-use CreativeICT\SendCloud\Test\Unit\Generic;
+use SendCloud\SendCloud\Controller\Adminhtml\AutoConnect\AutoGenerateApiUser;
+use SendCloud\SendCloud\Test\Unit\Generic;
 
 class AutoGenerateApiUserTest extends Generic
 {
@@ -21,6 +21,9 @@ class AutoGenerateApiUserTest extends Generic
 
     /** @var AutoGenerateApiUser */
     private $autoGenerateApiUser;
+
+    /** @var \SendCloud\SendCloud\Logger\SendCloudLogger */
+    private $sendCloudLogger;
 
     protected function setUp()
     {
@@ -41,7 +44,7 @@ class AutoGenerateApiUserTest extends Generic
             ->setMethods(['create', 'setRoleId', 'setData', 'saveRel'])
             ->getMock();
 
-        $this->sendCloudLogger = $this->getMockBuilder('CreativeICT\SendCloud\Logger\SendCloudLogger')
+        $this->sendCloudLogger = $this->getMockBuilder('SendCloud\SendCloud\Logger\SendCloudLogger')
             ->disableOriginalConstructor()
             ->getMock();
 

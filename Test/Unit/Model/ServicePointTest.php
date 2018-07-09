@@ -6,10 +6,10 @@
  * Time: 12:50
  */
 
-namespace CreativeICT\SendCloud\Test\Unit\Model;
+namespace SendCloud\SendCloud\Test\Unit\Model;
 
 
-use CreativeICT\SendCloud\Test\Unit\Generic;
+use SendCloud\SendCloud\Test\Unit\Generic;
 
 class ServicePointTest extends Generic
 {
@@ -24,7 +24,7 @@ class ServicePointTest extends Generic
     {
         parent::setUp();
 
-        $this->servicePoint = $this->objectManager->getObject('CreativeICT\SendCloud\Model\ServicePoint', []);
+        $this->servicePoint = $this->objectManager->getObject('SendCloud\SendCloud\Model\ServicePoint', []);
     }
 
     public function testActivate()

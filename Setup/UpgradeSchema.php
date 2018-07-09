@@ -6,7 +6,7 @@
  * Time: 10:51
  */
 
-namespace CreativeICT\SendCloud\Setup;
+namespace SendCloud\SendCloud\Setup;
 
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\ModuleContextInterface;

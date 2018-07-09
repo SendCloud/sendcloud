@@ -1,17 +1,17 @@
 <?php
-namespace CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect;
+namespace SendCloud\SendCloud\Controller\Adminhtml\AutoConnect;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use \Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Math\Random;
-use CreativeICT\SendCloud\Logger\SendCloudLogger;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class Index
  *
- * @package CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect
+ * @package SendCloud\SendCloud\Controller\Adminhtml\AutoConnect
  */
 class Connector extends Action
 {

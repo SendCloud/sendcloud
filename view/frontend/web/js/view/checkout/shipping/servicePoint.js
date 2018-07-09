@@ -12,7 +12,7 @@ define([
 
     return Component.extend({
         defaults: {
-            template: 'CreativeICT_SendCloud/checkout/shipping/servicePoint',
+            template: 'SendCloud_SendCloud/checkout/shipping/servicePoint',
             scriptUrl: ''
         },
         servicePointData: ko.observable(),

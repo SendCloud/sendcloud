@@ -1,11 +1,11 @@
 <?php
 
-namespace CreativeICT\SendCloud\Block\System\Config\Form;
+namespace SendCloud\SendCloud\Block\System\Config\Form;
 
 /**
  * Class Button
  *
- * @package CreativeICT\SendCloud\Block\System\Config\Form
+ * @package SendCloud\SendCloud\Block\System\Config\Form
  */
 class Button extends \Magento\Config\Block\System\Config\Form\Field
 {
@@ -28,7 +28,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
      */
     public function getAjaxCheckUrl()
     {
-        return $this->getUrl('creativeict_autoconnect/autoconnect/connector');
+        return $this->getUrl('sendcloud_autoconnect/autoconnect/connector');
     }
 
     /**

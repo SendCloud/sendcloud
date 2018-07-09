@@ -6,7 +6,7 @@
  * Time: 10:42
  */
 
-namespace CreativeICT\SendCloud\Plugin\Order;
+namespace SendCloud\SendCloud\Plugin\Order;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Api\Data\OrderExtensionFactory;

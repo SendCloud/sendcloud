@@ -6,7 +6,7 @@
  * Time: 15:39
  */
 
-namespace CreativeICT\SendCloud\Observer;
+namespace SendCloud\SendCloud\Observer;
 
 
 use Magento\Framework\Event\Observer;

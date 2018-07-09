@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="CreativeICT\SendCloud\Api\ServicePointInterface" type="CreativeICT\SendCloud\Model\ServicePoint" />
-    <preference for="CreativeICT\SendCloud\Api\SettingsInterface" type="CreativeICT\SendCloud\Model\Settings"/>
-    <preference for="Magento\Sales\Block\Order\Info" type="CreativeICT\SendCloud\Block\Order\Info"/>
+    <preference for="SendCloud\SendCloud\Api\ServicePointInterface" type="SendCloud\SendCloud\Model\ServicePoint" />
+    <preference for="SendCloud\SendCloud\Api\SettingsInterface" type="SendCloud\SendCloud\Model\Settings"/>
+    <preference for="Magento\Sales\Block\Order\Info" type="SendCloud\SendCloud\Block\Order\Info"/>
 
-    <type name="CreativeICT\SendCloud\Logger\SendCloudHandler">
+    <type name="SendCloud\SendCloud\Logger\SendCloudHandler">
         <arguments>
             <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
         </arguments>
     </type>
 
-    <type name="CreativeICT\SendCloud\Logger\SendCloudLogger">
+    <type name="SendCloud\SendCloud\Logger\SendCloudLogger">
         <arguments>
             <argument name="name" xsi:type="string">SendCloud Logger</argument>
             <argument name="handlers" xsi:type="array">
-                <item name="system" xsi:type="object">CreativeICT\SendCloud\Logger\SendCloudHandler</item>
+                <item name="system" xsi:type="object">SendCloud\SendCloud\Logger\SendCloudHandler</item>
             </argument>
         </arguments>
     </type>
 
     <type name="Magento\Sales\Model\OrderRepository">
-        <plugin sortOrder="1" name="CreativeICT_SendCloud::OrderRepository" type="CreativeICT\SendCloud\Plugin\Order\OrderRepository"/>
+        <plugin sortOrder="1" name="SendCloud_SendCloud::OrderRepository" type="SendCloud\SendCloud\Plugin\Order\OrderRepository"/>
     </type>
 
     <type name="Magento\Checkout\Model\ShippingInformationManagement">
-        <plugin sortOrder="1" name="CreativeICT_SendCloud::ShippingInformationManagement" type="CreativeICT\SendCloud\Plugin\BeforeSaveShippingInformation"/>
+        <plugin sortOrder="1" name="SendCloud_SendCloud::ShippingInformationManagement" type="SendCloud\SendCloud\Plugin\BeforeSaveShippingInformation"/>
     </type>
 
     <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">

@@ -6,7 +6,7 @@
  * Time: 13:56
  */
 
-namespace CreativeICT\SendCloud\Block\Order;
+namespace SendCloud\SendCloud\Block\Order;
 
 use \Magento\Sales\Block\Order\Info as Original;
 
@@ -15,5 +15,5 @@ class Info extends Original
     /**
      * @var string
      */
-    protected $_template = 'CreativeICT_SendCloud::order/info.phtml';
+    protected $_template = 'SendCloud_SendCloud::order/info.phtml';
 }

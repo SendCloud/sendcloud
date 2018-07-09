@@ -1,8 +1,8 @@
 <?php
 
-namespace CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect;
+namespace SendCloud\SendCloud\Controller\Adminhtml\AutoConnect;
 
-use CreativeICT\SendCloud\Logger\SendCloudLogger;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Magento\Authorization\Model\RoleFactory;
 use Magento\Authorization\Model\RulesFactory;
 use Magento\Setup\Exception;
@@ -13,7 +13,7 @@ use Magento\Authorization\Model\UserContextInterface;
 /**
  * Class AutoGenerateApiUser
  *
- * @package CreativeICT\SendCloud\Controller\Adminhtml\AutoConnect
+ * @package SendCloud\SendCloud\Controller\Adminhtml\AutoConnect
  */
 class AutoGenerateApiUser
 {

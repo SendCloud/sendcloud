@@ -1,10 +1,10 @@
-<project name="AdvancedProductBlock" default="build">
+<project name="SendCloud" default="build">
     <property name="workspace" value="${basedir}" />
     <property name="sourcedir" value="${basedir}"/>
     <property name="builddir" value="${workspace}/app/build"/>
     <property name="magento2dir" value="${basedir}/magento"/>
     <property file="build.properties"/>
-    <property name="moduledir" value="${magento2dir}/app/code/CreativeICT/SendCloud"/>
+    <property name="moduledir" value="${magento2dir}/app/code/SendCloud/SendCloud"/>
 
     <target name="build"
             depends="prepare, composer-download,install-composer,composer-selfupdate,install-magento,create-database, deploy-sampledata, install-module, lint, phploc, pdepend, phpmd-ci, phpcs-ci, vendor-phpunit"/>
@@ -140,7 +140,7 @@
             <arg value="--db-password=${db.password}"/>
             <arg value="--admin-firstname=Magento"/>
             <arg value="--admin-lastname=User"/>
-            <arg value="--admin-email=info@creativeict.nl"/>
+            <arg value="--admin-email=support@sendcloud.nl"/>
             <arg value="--admin-user=admin"/>
             <arg value="--admin-password=admin1234"/>
             <arg value="--use-rewrites=1"/>
@@ -162,7 +162,7 @@
     <target name="install-module" description="Installs the SendCloud module">
         <exec executable="rm">
             <arg value="-rf"/>
-            <arg value="./magento/app/code/CreativeICT/"/>
+            <arg value="./magento/app/code/SendCloud/"/>
         </exec>
         <exec executable="mkdir">
             <arg value="-p"/>
@@ -178,12 +178,12 @@
             <arg value="${workspace}/view/"/>
             <arg value="${workspace}/composer.json"/>
             <arg value="${workspace}/registration.php"/>
-            <arg value="./magento/app/code/CreativeICT/SendCloud/"/>
+            <arg value="./magento/app/code/SendCloud/SendCloud/"/>
         </exec>
         <exec executable="php">
             <arg value="${magento2dir}/bin/magento"/>
             <arg value="module:enable"/>
-            <arg value="CreativeICT_SendCloud"/>
+            <arg value="SendCloud_SendCloud"/>
         </exec>
         <exec executable="php">
             <arg value="${magento2dir}/bin/magento"/>
@@ -195,7 +195,7 @@
         <exec executable="phpunit">
             <arg value="-c"/>
             <arg value="./magento/dev/tests/unit/phpunit.xml.dist"/>
-            <arg value="./magento/app/code/CreativeICT/SendCloud/Test/"/>
+            <arg value="./magento/app/code/SendCloud/SendCloud/Test/"/>
             <arg value="--log-junit"/>
             <arg value="'${builddir}/logs/junit.xml'"/>
         </exec>
@@ -208,7 +208,7 @@
             <!--<arg value="${magento2dir}/dev/tests/unit/phpunit.xml.dist"/>-->
             <arg value="--bootstrap"/>
             <arg value="${magento2dir}/vendor/autoload.php"/>
-            <arg value="${magento2dir}/app/code/CreativeICT/SendCloud/Test/"/>
+            <arg value="${magento2dir}/app/code/SendCloud/SendCloud/Test/"/>
             <arg value="--log-junit"/>
             <arg value="'${builddir}/logs/junit.xml'"/>
         </exec>
