@@ -22,6 +22,10 @@
                     </depends>
                 </field>
             </group>
+            <group id="branding" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Branding</label>
+                <frontend_model>SendCloud\SendCloud\Block\System\Config\Form\Branding</frontend_model>
+            </group>
         </section>
         <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
             <group id="sendcloud" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">

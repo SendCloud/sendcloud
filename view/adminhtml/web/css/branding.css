@@ -1,0 +1,14 @@
+.sendcloud-branding {
+    margin: 20px 0;
+}
+.sendcloud-branding .logo-wrap {
+    width: 10%;
+    display: inline-block;
+    margin-right: 2%;
+}
+.sendcloud-branding .content {
+    display: inline-block;
+    width: 45%;
+    margin-left: 5%;
+    line-height: 30px;
+}

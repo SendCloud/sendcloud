@@ -2,7 +2,7 @@
   "name": "SendCloud/SendCloud",
   "description": "A Magento 2 module that connects the Magento environment to the SendCloud environment",
   "type": "magento2-module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "require": {
     "magento/framework": "~100.0.4"
   },

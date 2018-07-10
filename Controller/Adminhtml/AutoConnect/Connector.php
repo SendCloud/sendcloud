@@ -111,7 +111,6 @@ class Connector extends Action
             $chars = Random::CHARS_UPPERS;
             $firstPart = $this->mathRandom->getRandomString($length, $chars);
             $secondPart = str_shuffle(bin2hex(openssl_random_pseudo_bytes(4)));
-
             $password = $firstPart . $secondPart;
 
             return $password;
