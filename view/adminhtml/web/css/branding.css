@@ -8,7 +8,9 @@
 }
 .sendcloud-branding .content {
     display: inline-block;
-    width: 45%;
-    margin-left: 5%;
+    width: 50%;
+    padding-left: 4%;
     line-height: 30px;
+    border-left: 1px solid #cccccc;
+    vertical-align: sub;
 }
