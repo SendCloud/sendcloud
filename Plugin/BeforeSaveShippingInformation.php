@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Plugin;
 
-
 use Magento\Checkout\Api\Data\ShippingInformationInterface;
 use Magento\Checkout\Model\ShippingInformationManagement;
 use Magento\Framework\App\RequestInterface;
@@ -19,10 +18,7 @@ class BeforeSaveShippingInformation
     private $request;
     private $quoteRepository;
 
-    public function __construct(
-        RequestInterface $request,
-        QuoteRepository $quoteRepository
-    )
+    public function __construct( RequestInterface $request, QuoteRepository $quoteRepository )
     {
         $this->request = $request;
         $this->quoteRepository = $quoteRepository;

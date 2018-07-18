@@ -2,7 +2,6 @@
 
 namespace SendCloud\SendCloud\Test\Unit\Controller;
 
-
 use SendCloud\SendCloud\Controller\Adminhtml\AutoConnect\Connector;
 use SendCloud\SendCloud\Test\Unit\Generic;
 use Magento\Framework\Controller\ResultFactory;
@@ -78,9 +77,9 @@ class ConnectorTest extends Generic
         $baseUrl = $this->urlInterfaceMock->method('getBaseUrl')
             ->willReturn(self::url);
 
-        $responseData = array(
+        $responseData = [
             "url" => $baseUrl
-        );
+        ];
 
         $this->resultFactoryMock->method('create')
             ->with(ResultFactory::TYPE_JSON)

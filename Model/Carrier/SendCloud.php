@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Model\Carrier;
 
-
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Directory\Helper\Data;
@@ -30,7 +29,6 @@ use Magento\Shipping\Model\Tracking\ResultFactory as TrackFactory;
 use Psr\Log\LoggerInterface;
 use Magento\Shipping\Model\Rate\Result;
 use Magento\Store\Model\ScopeInterface;
-
 
 class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model\Carrier\CarrierInterface
 {
@@ -167,7 +165,7 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         $isScriptUrlDefined = true;
         $scriptUrl = $this->_scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
 
-        if($scriptUrl == '' || $scriptUrl == NULL) {
+        if ($scriptUrl == '' || $scriptUrl == null) {
             $this->sendCloudLogger->debug('The option service point is not active in SendCloud');
             $isScriptUrlDefined = false;
         }
@@ -175,7 +173,8 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         return $isScriptUrlDefined;
     }
 
-    public function proccessAdditionalValidation(\Magento\Framework\DataObject $request) {
+    public function proccessAdditionalValidation(\Magento\Framework\DataObject $request)
+    {
         return true;
     }
 }

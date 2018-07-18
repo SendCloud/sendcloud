@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Api;
 
-
 interface ServicePointInterface
 {
     /**

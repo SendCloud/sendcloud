@@ -14,7 +14,7 @@
         <strong><?= /* @escapeNotVerified */ __('Order Information') ?></strong>
     </div>
     <div class="block-content">
-        <?php if (!$_order->getIsVirtual()): ?>
+        <?php if (!$_order->getIsVirtual()) : ?>
             <div class="box box-order-shipping-address">
                 <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Shipping Address') ?></span></strong>
                 <div class="box-content">
@@ -27,19 +27,19 @@
                     <span><?= /* @escapeNotVerified */ __('Shipping Method') ?></span>
                 </strong>
                 <div class="box-content">
-                    <?php if ($_order->getShippingDescription()): ?>
-                        <?= $block->escapeHtml($_order->getShippingDescription()) ?>
+                    <?php if ($_order->getShippingDescription()) : ?>
+                        <?= /* @escapeNotVerified */ $block->escapeHtml($_order->getShippingDescription()) ?>
                         <?php if ($_order->getSendcloudServicePointId() > 0) : ?>
                             <div class="service-point-information">
                                 <strong><?= __('Service Point') ?></strong>
                                 <address>
-                                    <?= $_order->getSendcloudServicePointName() ?><br>
-                                    <?= $_order->getSendcloudServicePointStreet() ?> <?= $_order->getSendcloudServicePointHouseNumber() ?><br>
-                                    <?= $_order->getSendcloudServicePointZipCode() ?>  <?= $_order->getSendcloudServicePointCity() ?>
+                                    <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointName() ?><br>
+                                    <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointStreet() ?> <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointHouseNumber() ?><br>
+                                    <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointZipCode() ?>  <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointCity() ?>
                                 </address>
                             </div>
                         <?php endif; ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <?= /* @escapeNotVerified */ __('No shipping information available') ?>
                     <?php endif; ?>
                 </div>
@@ -59,7 +59,7 @@
                 <span><?= /* @escapeNotVerified */ __('Payment Method') ?></span>
             </strong>
             <div class="box-content">
-                <?= $block->getPaymentInfoHtml() ?>
+                <?= /* @escapeNotVerified */ $block->getPaymentInfoHtml() ?>
             </div>
         </div>
     </div>

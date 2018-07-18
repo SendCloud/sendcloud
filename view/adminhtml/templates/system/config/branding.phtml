@@ -1,12 +1,12 @@
 <div class="sendcloud-branding">
     <div class="logo-wrap">
-        <img width="123" src="<?= $this->getSendCloudLogo() ?>"/>
+        <img width="123" src="<?= /* @escapeNotVerified */ $block->getSendCloudLogo() ?>"/>
     </div>
     <div class="logo-wrap">
-        <img style="position: relative; top:2px;" width="110" src="<?= $this->getCreativeICTLogo() ?>"/>
+        <img style="position: relative; top:2px;" width="110" src="<?= $block->getCreativeICTLogo() ?>"/>
     </div>
     <div class="content">
-        <p>SendCloud | The Number 1 Shipping Tool | Contact <a href="<?= $this->getSendCloudUrl() ?>" target="_blank">SendCloud</a> for support and more information.
-            SendCloud Magento module developed by <a href="<?= $this->getCreativeICTUrl() ?>" target="_blank">CreativeICT</a> a Full Service Digital Agency.</p>
+        <p>SendCloud | The Number 1 Shipping Tool | Contact <a href="<?= /* @escapeNotVerified */ $block->getSendCloudUrl() ?>" target="_blank">SendCloud</a> for support and more information.
+            SendCloud Magento module developed by <a href="<?= /* @escapeNotVerified */ $block->getCreativeICTUrl() ?>" target="_blank">CreativeICT</a> a Full Service Digital Agency.</p>
     </div>
 </div>

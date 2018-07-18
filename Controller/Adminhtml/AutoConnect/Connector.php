@@ -36,13 +36,7 @@ class Connector extends Action
      * @param Random $mathRandom
      * @param SendCloudLogger $logger
      */
-    public function __construct(
-        Context $context,
-        PageFactory $resultPageFactory,
-        AutoGenerateApiUser $autoGenerateApiUser,
-        Random $mathRandom,
-        SendCloudLogger $logger
-    )
+    public function __construct( Context $context, PageFactory $resultPageFactory, AutoGenerateApiUser $autoGenerateApiUser, Random $mathRandom, SendCloudLogger $logger )
     {
         $this->resultPageFactory = $resultPageFactory;
         $this->autoGenerateApiUser = $autoGenerateApiUser;
@@ -67,9 +61,9 @@ class Connector extends Action
 
         $url = $this->generateUrl($apiUserInfo);
 
-        $responseData = array(
+        $responseData = [
             "url" => $url
-        );
+        ];
 
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
         $resultJson->setData($responseData);
@@ -107,7 +101,6 @@ class Connector extends Action
         $length = 3;
 
         try {
-
             $chars = Random::CHARS_UPPERS;
             $firstPart = $this->mathRandom->getRandomString($length, $chars);
             $secondPart = str_shuffle(bin2hex(openssl_random_pseudo_bytes(4)));

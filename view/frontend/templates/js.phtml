@@ -5,7 +5,7 @@
                 "components": {
                     "sendcloud": {
                         "component": "SendCloud_SendCloud/js/view/checkout/shipping/servicePoint",
-                        "scriptUrl": "<?= $this->getScriptUrl()?>"
+                        "scriptUrl": "<?= /* @escapeNotVerified */ $block->getScriptUrl()?>"
                     }
                 }
             }

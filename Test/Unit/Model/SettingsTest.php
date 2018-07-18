@@ -8,14 +8,13 @@
 
 namespace SendCloud\SendCloud\Test\Unit\Model;
 
-
 use SendCloud\SendCloud\Test\Unit\Generic;
 
 class SettingsTest extends Generic
 {
     private $settings;
 
-    const MODULE_INFORMATION = [["Version" => NULL]];
+    const MODULE_INFORMATION = [["Version" => null]];
     const SCRIPT_URL = "https://sendcloud.nl/scripturltest";
 
     protected function setUp()

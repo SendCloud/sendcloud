@@ -9,7 +9,9 @@
 ?>
 <?php /** @var $block \Magento\Shipping\Block\Adminhtml\View */ ?>
 <?php $order = $block->getOrder() ?>
-<?php if ($order->getIsVirtual()) : return '';endif; ?>
+<?php if ($order->getIsVirtual()) :
+    return '';
+endif; ?>
 
 <?php /* Shipping Method */ ?>
 <div class="admin__page-section-item order-shipping-method">
@@ -18,21 +20,31 @@
     </div>
     <div class="admin__page-section-item-content">
         <?php  if ($order->getTracksCollection()->count()) : ?>
-            <p><a href="#" id="linkId" onclick="popWin('<?= /* @escapeNotVerified */ $this->helper('Magento\Shipping\Helper\Data')->getTrackingPopupUrlBySalesModel($order) ?>','trackorder','width=800,height=600,resizable=yes,scrollbars=yes')" title="<?= /* @escapeNotVerified */ __('Track Order') ?>"><?= /* @escapeNotVerified */ __('Track Order') ?></a></p>
-        <?php endif; ?>
-        <?php if ($order->getShippingDescription()): ?>
             <p>
-                <strong><?= $block->escapeHtml($order->getShippingDescription()) ?></strong>
+                <a href="#"
+                   id="linkId"
+                   onclick="popWin(
+                       '<?= /* @escapeNotVerified */ $this->helper('Magento\Shipping\Helper\Data')
+                                                                ->getTrackingPopupUrlBySalesModel($order) ?>'
+                       ,'trackorder','width=800,height=600,resizable=yes,scrollbars=yes')"
+                   title="<?= /* @escapeNotVerified */ __('Track Order') ?>">
+                    <?= /* @escapeNotVerified */ __('Track Order') ?>
+                </a>
+            </p>
+        <?php endif; ?>
+        <?php if ($order->getShippingDescription()) : ?>
+            <p>
+                <strong><?= /* @escapeNotVerified */ $block->escapeHtml($order->getShippingDescription()) ?></strong>
 
-                <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()): ?>
+                <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()) : ?>
                     <?php $_excl = $block->displayShippingPriceInclTax($order); ?>
-                <?php else: ?>
+                <?php else : ?>
                     <?php $_excl = $block->displayPriceAttribute('shipping_amount', false, ' '); ?>
                 <?php endif; ?>
                 <?php $_incl = $block->displayShippingPriceInclTax($order); ?>
 
                 <?= /* @escapeNotVerified */ $_excl ?>
-                <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $_incl != $_excl) : ?>
                     (<?= /* @escapeNotVerified */ __('Incl. Tax') ?> <?= /* @escapeNotVerified */ $_incl ?>)
                 <?php endif; ?>
             </p>
@@ -41,13 +53,13 @@
                 <div class="service-point-information">
                     <strong><?= __('Service Point') ?></strong>
                     <address>
-                        <?= $order->getSendcloudServicePointName() ?><br>
-                        <?= $order->getSendcloudServicePointStreet() ?> <?= $order->getSendcloudServicePointHouseNumber() ?><br>
-                        <?= $order->getSendcloudServicePointZipCode() ?>  <?= $order->getSendcloudServicePointCity() ?>
+                        <?= /* @escapeNotVerified */ $order->getSendcloudServicePointName() ?><br>
+                        <?= /* @escapeNotVerified */ $order->getSendcloudServicePointStreet() ?> <?= /* @escapeNotVerified */ $order->getSendcloudServicePointHouseNumber() ?><br>
+                        <?= /* @escapeNotVerified */ $order->getSendcloudServicePointZipCode() ?>  <?= /* @escapeNotVerified */ $order->getSendcloudServicePointCity() ?>
                     </address>
                 </div>
             <?php endif; ?>
-        <?php else: ?>
+        <?php else : ?>
             <?= /* @escapeNotVerified */ __('No shipping information available') ?>
         <?php endif; ?>
     </div>

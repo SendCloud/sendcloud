@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Test\Unit\Model\Carrier;
 
-
 use Magento\Directory\Model\CountryFactory;
 use Magento\Directory\Model\CurrencyFactory;
 use Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory;

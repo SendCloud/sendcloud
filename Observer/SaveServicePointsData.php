@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Observer;
 
-
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
@@ -17,9 +16,7 @@ class SaveServicePointsData implements ObserverInterface
 {
     private $quoteRepository;
 
-    public function __construct(
-        QuoteRepository $quoteRepository
-    )
+    public function __construct( QuoteRepository $quoteRepository )
     {
         $this->quoteRepository = $quoteRepository;
     }

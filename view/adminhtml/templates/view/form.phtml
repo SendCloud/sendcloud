@@ -34,10 +34,13 @@ $order = $block->getShipment()->getOrder();
             </div>
             <div class="admin__page-section-item-content">
                 <div class="shipping-description-wrapper">
-                    <?php if ($block->getShipment()->getTracksCollection()->count()): ?>
+                    <?php if ($block->getShipment()->getTracksCollection()->count()) : ?>
                         <p>
-                            <a href="#" id="linkId" onclick="popWin('<?= $block->escapeUrl($this->helper('Magento\Shipping\Helper\Data')->getTrackingPopupUrlBySalesModel($block->getShipment())); ?>','trackshipment','width=800,height=600,resizable=yes,scrollbars=yes')"
-                               title="<?= $block->escapeHtml(__('Track this shipment')); ?>">
+                            <a
+                                href="#"
+                                id="linkId"
+                                onclick="popWin('<?= $block->escapeUrl($this->helper('Magento\Shipping\Helper\Data')->getTrackingPopupUrlBySalesModel($block->getShipment())); ?>','trackshipment','width=800,height=600,resizable=yes,scrollbars=yes')"
+                                title="<?= $block->escapeHtml(__('Track this shipment')); ?>">
                                 <?= $block->escapeHtml(__('Track this shipment')); ?>
                             </a>
                         </p>
@@ -48,7 +51,7 @@ $order = $block->getShipment()->getOrder();
 
                     <?php if ($order->getSendcloudServicePointId() > 0) : ?>
                         <div class="service-point-information">
-                            <strong><?= __('Service Point') ?></strong>
+                            <strong><?= /* @escapeNotVerified */ __('Service Point') ?></strong>
                             <address>
                                 <?= $order->getSendcloudServicePointName() ?><br>
                                 <?= $order->getSendcloudServicePointStreet() ?> <?= $order->getSendcloudServicePointHouseNumber() ?><br>
@@ -59,27 +62,27 @@ $order = $block->getShipment()->getOrder();
 
                     <?= $block->escapeHtml(__('Total Shipping Charges')); ?>:
 
-                    <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()): ?>
+                    <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()) : ?>
                         <?php $excl = $block->displayShippingPriceInclTax($order); ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <?php $excl = $block->displayPriceAttribute('shipping_amount', false, ' '); ?>
                     <?php endif; ?>
                     <?php $incl = $block->displayShippingPriceInclTax($order); ?>
 
                     <?= /* @noEscape */ $excl; ?>
-                    <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $incl != $excl): ?>
+                    <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $incl != $excl) : ?>
                         (<?= $block->escapeHtml(__('Incl. Tax')); ?> <?= /* @noEscape */ $incl; ?>)
                     <?php endif; ?>
                 </div>
 
                 <p>
-                    <?php if ($block->canCreateShippingLabel()): ?>
+                    <?php if ($block->canCreateShippingLabel()) : ?>
                         <?= /* @noEscape */ $block->getCreateLabelButton(); ?>
                     <?php endif ?>
-                    <?php if ($block->getShipment()->getShippingLabel()): ?>
+                    <?php if ($block->getShipment()->getShippingLabel()) : ?>
                         <?= /* @noEscape */ $block->getPrintLabelButton(); ?>
                     <?php endif ?>
-                    <?php if ($block->getShipment()->getPackages()): ?>
+                    <?php if ($block->getShipment()->getPackages()) : ?>
                         <?= /* @noEscape */ $block->getShowPackagesButton(); ?>
                     <?php endif ?>
                 </p>

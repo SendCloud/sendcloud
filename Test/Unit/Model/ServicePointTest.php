@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Test\Unit\Model;
 
-
 use SendCloud\SendCloud\Test\Unit\Generic;
 
 class ServicePointTest extends Generic
@@ -29,23 +28,22 @@ class ServicePointTest extends Generic
 
     public function testActivate()
     {
-        $result = array('message' => array('success' => 'Shipping method is activated an script url is set'));
+        $result = ['message' => ['success' => 'Shipping method is activated an script url is set']];
 
         $this->assertEquals($result, $this->servicePoint->activate(self::SCRIPT_URL));
     }
 
     public function testDeactivate()
     {
-        $result = array('message' => array('success' => 'Shipping method is deactivated'));
+        $result = ['message' => ['success' => 'Shipping method is deactivated']];
 
         $this->assertEquals($result, $this->servicePoint->deactivate());
     }
 
     public function testShippingEmail()
     {
-        $result = array('message' => array('success' => 'Shipment email is activated'));
+        $result = ['message' => ['success' => 'Shipment email is activated']];
 
         $this->assertEquals($result, $this->servicePoint->shippingEmail(self::SHIPPING_FLAG));
     }
-
 }

@@ -8,12 +8,11 @@
 
 namespace SendCloud\SendCloud\Observer;
 
-
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
 
-class setOrderAttributes implements ObserverInterface
+class SetOrderAttributes implements ObserverInterface
 {
     private $quoteRepository;
 

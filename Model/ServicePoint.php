@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Model;
 
-
 use SendCloud\SendCloud\Api\ServicePointInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Exception;
@@ -27,11 +26,7 @@ class ServicePoint implements ServicePointInterface
     /** @var TypeListInterface  */
     private $cache;
 
-    public function __construct(
-        WriterInterface $writer,
-        SendCloudLogger $logger,
-        TypeListInterface $cache
-    )
+    public function __construct( WriterInterface $writer, SendCloudLogger $logger, TypeListInterface $cache )
     {
         $this->writer = $writer;
         $this->logger = $logger;
@@ -51,10 +46,10 @@ class ServicePoint implements ServicePointInterface
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
 
-            return array('message' => array('error' => 'Shipping method is not activated and script url is not set'));
+            return ['message' => ['error' => 'Shipping method is not activated and script url is not set']];
         }
 
-        return array('message' => array('success' => 'Shipping method is activated an script url is set'));
+        return ['message' => ['success' => 'Shipping method is activated an script url is set']];
     }
 
     /**
@@ -69,9 +64,9 @@ class ServicePoint implements ServicePointInterface
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
 
-            return array('message' => array('error' => 'Shipping method is not deactivated'));
+            return ['message' => ['error' => 'Shipping method is not deactivated']];
         }
-        return array('message' => array('success' => 'Shipping method is deactivated'));
+        return ['message' => ['success' => 'Shipping method is deactivated']];
     }
 
     /**
@@ -81,9 +76,9 @@ class ServicePoint implements ServicePointInterface
     public function shippingEmail($activate)
     {
         if ($activate) {
-            $message = array('success' => 'Shipment email is activated');
+            $message = ['success' => 'Shipment email is activated'];
         } else {
-            $message = array('success' => 'Shipment email is deactivated');
+            $message = ['success' => 'Shipment email is deactivated'];
         }
 
         try {
@@ -91,9 +86,9 @@ class ServicePoint implements ServicePointInterface
             $this->cache->cleanType('config');
         } catch (Exception $ex) {
             $this->logger->debug($ex->getMessage());
-            $message = array('error' => 'Shipment email is not changed');
+            $message = ['error' => 'Shipment email is not changed'];
         }
 
-        return array('message' => $message);
+        return ['message' => $message];
     }
 }

@@ -36,75 +36,75 @@ class UpgradeSchema implements UpgradeSchemaInterface
     {
         $connection = $setup->getConnection();
         $connection->addColumn(
-                $setup->getTable($tableName),
-                'sendcloud_service_point_id',
-                [
-                    'type' => Table::TYPE_INTEGER,
-                    'length' => 255,
-                    'nullable' => true,
-                    'comment' => 'service point id'
-                ]
-            );
+            $setup->getTable($tableName),
+            'sendcloud_service_point_id',
+            [
+                'type' => Table::TYPE_INTEGER,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point id'
+            ]
+        );
         $connection->addColumn(
-                $setup->getTable($tableName),
-                'sendcloud_service_point_name',
-                [
-                    'type' => Table::TYPE_TEXT,
-                    'length' => 255,
-                    'nullable' => true,
-                    'comment' => 'service point name'
-                ]
-            );
+            $setup->getTable($tableName),
+            'sendcloud_service_point_name',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point name'
+            ]
+        );
         $connection->addColumn(
-                $setup->getTable($tableName),
-                'sendcloud_service_point_street',
-                [
-                    'type' => Table::TYPE_TEXT,
-                    'length' => 255,
-                    'nullable' => true,
-                    'comment' => 'service point street'
-                ]
-            );
+            $setup->getTable($tableName),
+            'sendcloud_service_point_street',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point street'
+            ]
+        );
         $connection->addColumn(
-                $setup->getTable($tableName),
-                'sendcloud_service_point_house_number',
-                [
-                    'type' => Table::TYPE_TEXT,
-                    'length' => 255,
-                    'nullable' => true,
-                    'comment' => 'service point house number'
-                ]
-            );
+            $setup->getTable($tableName),
+            'sendcloud_service_point_house_number',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point house number'
+            ]
+        );
         $connection->addColumn(
-                $setup->getTable($tableName),
-                'sendcloud_service_point_zip_code',
-                [
-                    'type' => Table::TYPE_TEXT,
-                    'length' => 255,
-                    'nullable' => true,
-                    'comment' => 'service point zip code'
-                ]
-            );
+            $setup->getTable($tableName),
+            'sendcloud_service_point_zip_code',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point zip code'
+            ]
+        );
         $connection->addColumn(
-                $setup->getTable($tableName),
-                'sendcloud_service_point_city',
-                [
-                    'type' => Table::TYPE_TEXT,
-                    'length' => 255,
-                    'nullable' => true,
-                    'comment' => 'service point city'
-                ]
-            );
+            $setup->getTable($tableName),
+            'sendcloud_service_point_city',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point city'
+            ]
+        );
         $connection->addColumn(
-                $setup->getTable($tableName),
-                'sendcloud_service_point_country',
-                [
-                    'type' => Table::TYPE_TEXT,
-                    'length' => 255,
-                    'nullable' => true,
-                    'comment' => 'service point country'
-                ]
-            );
+            $setup->getTable($tableName),
+            'sendcloud_service_point_country',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point country'
+            ]
+        );
 
         return $setup;
     }

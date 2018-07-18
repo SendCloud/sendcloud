@@ -64,7 +64,6 @@ class AutoGenerateApiUserTest extends Generic
             $this->mockRoleFactory,
             $this->mockRulesFactory
         );
-
     }
 
     public function testCreateApiUser()
@@ -81,7 +80,6 @@ class AutoGenerateApiUserTest extends Generic
         $this->mockRulesFactory->method('setData')
             ->willReturn($this->mockRulesFactory);
 
-
         $this->autoGenerateApiUser->createApiUser(self::PASSWORD);
 
         $this->assertEquals(self::USERNAME, $this->autoGenerateApiUser->createApiUser(self::PASSWORD)['username']);
@@ -94,7 +92,6 @@ class AutoGenerateApiUserTest extends Generic
             ->willReturn($this->mockUserFactory);
         $this->mockUserFactory->method('getUsername')
             ->willReturn(self::USERNAME);
-
 
         $this->assertEquals(self::USERNAME, $this->autoGenerateApiUser->getApiUser(self::PASSWORD)['username']);
         $this->assertEquals(self::PASSWORD, $this->autoGenerateApiUser->getApiUser(self::PASSWORD)['password']);

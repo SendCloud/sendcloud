@@ -8,7 +8,6 @@
 
 namespace SendCloud\SendCloud\Api;
 
-
 interface ModuleInformationInterface
 {
     public function getCurrentModuleVersion();

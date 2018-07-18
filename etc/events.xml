@@ -5,6 +5,6 @@
     </event>
 
     <event name="sales_order_save_before">
-        <observer name="setOrderAttributes" instance="SendCloud\SendCloud\Observer\setOrderAttributes"/>
+        <observer name="setOrderAttributes" instance="SendCloud\SendCloud\Observer\SetOrderAttributes"/>
     </event>
 </config>

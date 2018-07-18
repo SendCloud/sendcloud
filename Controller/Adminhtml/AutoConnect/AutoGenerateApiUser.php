@@ -50,12 +50,7 @@ class AutoGenerateApiUser
      * @param RoleFactory $roleFactory
      * @param RulesFactory $rulesFactory
      */
-    public function __construct(
-        UserFactory $userFactory,
-        SendCloudLogger $logger,
-        RoleFactory $roleFactory,
-        RulesFactory $rulesFactory
-    )
+    public function __construct(UserFactory $userFactory, SendCloudLogger $logger, RoleFactory $roleFactory, RulesFactory $rulesFactory )
     {
         $this->userFactory = $userFactory;
         $this->logger = $logger;
@@ -111,7 +106,7 @@ class AutoGenerateApiUser
             'is_active' => 1
         ];
 
-        try{
+        try {
             $userFactory = $this->userFactory->create();
             $apiUser = $userFactory->setData($apiUserInfo);
             $apiUser->save();
@@ -136,12 +131,12 @@ class AutoGenerateApiUser
      */
     private function generateApiRole()
     {
-        $roleData = array(
+        $roleData = [
             'name' => 'SendCloudApi',
             'pid' => 0,
             'role_type' => RoleGroup::ROLE_TYPE,
             'user_type' => UserContextInterface::USER_TYPE_ADMIN
-        );
+        ];
 
         try {
             $role = $this->roleFactory->create();
