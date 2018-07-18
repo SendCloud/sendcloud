@@ -4,7 +4,7 @@
   "type": "magento2-module",
   "version": "1.0.3",
   "require": {
-    "magento/framework": "~100.0.4"
+    "magento/framework": ">=100 <102"
   },
   "autoload": {
     "files": [ "registration.php" ],
