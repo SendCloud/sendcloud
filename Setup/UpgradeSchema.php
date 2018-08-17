@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rick
- * Date: 27-3-18
- * Time: 10:51
- */
 
 namespace SendCloud\SendCloud\Setup;
 
@@ -13,6 +7,10 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\UpgradeSchemaInterface;
 
+/**
+ * Class UpgradeSchema
+ * @package SendCloud\SendCloud\Setup
+ */
 class UpgradeSchema implements UpgradeSchemaInterface
 {
     /**
@@ -32,6 +30,11 @@ class UpgradeSchema implements UpgradeSchemaInterface
         $setup->endSetup();
     }
 
+    /**
+     * @param $setup
+     * @param $tableName
+     * @return mixed
+     */
     private function addColumns($setup, $tableName)
     {
         $connection = $setup->getConnection();

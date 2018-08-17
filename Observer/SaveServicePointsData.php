@@ -12,15 +12,27 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
 
+/**
+ * Class SaveServicePointsData
+ * @package SendCloud\SendCloud\Observer
+ */
 class SaveServicePointsData implements ObserverInterface
 {
     private $quoteRepository;
 
-    public function __construct( QuoteRepository $quoteRepository )
+    /**
+     * SaveServicePointsData constructor.
+     * @param QuoteRepository $quoteRepository
+     */
+    public function __construct(QuoteRepository $quoteRepository)
     {
         $this->quoteRepository = $quoteRepository;
     }
 
+    /**
+     * @param Observer $observer
+     * @return $this
+     */
     public function execute(Observer $observer)
     {
         $order = $observer->getOrder();

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rick
- * Date: 12-4-18
- * Time: 17:07
- */
 
 namespace SendCloud\SendCloud\Observer;
 
@@ -12,17 +6,28 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
 
+/**
+ * Class SetOrderAttributes
+ * @package SendCloud\SendCloud\Observer
+ */
 class SetOrderAttributes implements ObserverInterface
 {
     private $quoteRepository;
 
+    /**
+     * SetOrderAttributes constructor.
+     * @param QuoteRepository $quoteRepository
+     */
     public function __construct(
         QuoteRepository $quoteRepository
-    )
-    {
+    ) {
         $this->quoteRepository = $quoteRepository;
     }
 
+    /**
+     * @param Observer $observer
+     * @return $this
+     */
     public function execute(Observer $observer)
     {
         $order = $observer->getOrder();

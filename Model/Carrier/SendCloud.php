@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: wessel
- * Date: 06-02-18
- * Time: 21:45
- */
 
 namespace SendCloud\SendCloud\Model\Carrier;
 
@@ -30,6 +24,10 @@ use Psr\Log\LoggerInterface;
 use Magento\Shipping\Model\Rate\Result;
 use Magento\Store\Model\ScopeInterface;
 
+/**
+ * Class SendCloud
+ * @package SendCloud\SendCloud\Model\Carrier
+ */
 class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model\Carrier\CarrierInterface
 {
     /**
@@ -147,7 +145,9 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
 
         $amount = $this->getConfigData('price');
 
-        if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
+        if ($this->getConfigData('free_shipping_enable')
+            && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()
+        ) {
             $method->setPrice('0.00');
             $method->setCost('0.00');
         } else {
@@ -160,6 +160,9 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         return $result;
     }
 
+    /**
+     * @return bool
+     */
     private function checkForScriptUrl()
     {
         $isScriptUrlDefined = true;
@@ -173,6 +176,10 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         return $isScriptUrlDefined;
     }
 
+    /**
+     * @param \Magento\Framework\DataObject $request
+     * @return bool
+     */
     public function proccessAdditionalValidation(\Magento\Framework\DataObject $request)
     {
         return true;

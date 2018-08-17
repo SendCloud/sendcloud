@@ -3,15 +3,28 @@ namespace SendCloud\SendCloud\Plugin\Checkout\Model\Checkout;
 
 use SendCloud\SendCloud\Helper\Checkout;
 
+/**
+ * Class LayoutProcessor
+ * @package SendCloud\SendCloud\Plugin\Checkout\Model\Checkout
+ */
 class LayoutProcessor
 {
     private $helper;
 
+    /**
+     * LayoutProcessor constructor.
+     * @param Checkout $helper
+     */
     public function __construct(Checkout $helper)
     {
         $this->helper = $helper;
     }
 
+    /**
+     * @param \Magento\Checkout\Block\Checkout\LayoutProcessor $subject
+     * @param array $jsLayout
+     * @return array
+     */
     public function afterProcess(\Magento\Checkout\Block\Checkout\LayoutProcessor $subject, array $jsLayout)
     {
         if ($this->helper->checkForScriptUrl()) {

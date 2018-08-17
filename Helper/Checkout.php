@@ -7,12 +7,22 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
+/**
+ * Class Checkout
+ * @package SendCloud\SendCloud\Helper
+ */
 class Checkout extends AbstractHelper
 {
     private $_scopeConfig;
 
     private $sendCloudLogger;
 
+    /**
+     * Checkout constructor.
+     * @param Context $context
+     * @param ScopeConfigInterface $scopeConfig
+     * @param SendCloudLogger $sendCloudLogger
+     */
     public function __construct(Context $context, ScopeConfigInterface $scopeConfig, SendCloudLogger $sendCloudLogger)
     {
         parent::__construct($context);
@@ -21,6 +31,9 @@ class Checkout extends AbstractHelper
         $this->sendCloudLogger = $sendCloudLogger;
     }
 
+    /**
+     * @return bool
+     */
     public function checkForScriptUrl()
     {
         $isScriptUrlDefined = true;
