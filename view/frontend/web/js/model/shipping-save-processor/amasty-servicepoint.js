@@ -41,7 +41,14 @@ define([
                 selectBillingAddressAction(quote.shippingAddress());
             }
 
-            var sendCloudAttributes = '';
+            payload = {
+                addressInformation: {
+                    shipping_address: quote.shippingAddress(),
+                    billing_address: quote.billingAddress(),
+                    shipping_method_code: quote.shippingMethod().method_code,
+                    shipping_carrier_code: quote.shippingMethod().carrier_code
+                }
+            };
 
             if (quote.shippingMethod().method_code === 'sendcloud') {
 
@@ -55,18 +62,9 @@ define([
                         sendcloud_service_point_city: $('[name="sendcloud_service_point_city"]').val(),
                         sendcloud_service_point_country: $('[name="sendcloud_service_point_country"]').val()
                     };
+                    payload['addressInformation']['extension_attributes'] = sendCloudAttributes;
                 }
             }
-
-            payload = {
-                addressInformation: {
-                    shipping_address: quote.shippingAddress(),
-                    billing_address: quote.billingAddress(),
-                    shipping_method_code: quote.shippingMethod().method_code,
-                    shipping_carrier_code: quote.shippingMethod().carrier_code,
-                    extension_attributes: sendCloudAttributes
-                }
-            };
 
             if (defaultProcessor.hasOwnProperty('extendPayload')) {
                 defaultProcessor.extendPayload(payload);
