@@ -2,6 +2,7 @@
 
 namespace SendCloud\SendCloud\Model\Carrier;
 
+use SendCloud\SendCloud\Helper\Checkout;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Directory\Helper\Data;
@@ -41,6 +42,8 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
     /** @var SendCloudLogger */
     private $sendCloudLogger;
 
+    private $helper;
+
     /**
      * SendCloud constructor.
      * @param ScopeConfigInterface $scopeConfig
@@ -79,11 +82,13 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         StockRegistryInterface $stockRegistry,
         FormatInterface $localeFormat,
         SendCloudLogger $sendCloudLogger,
+        Checkout $helper,
         array $data = []
     ) {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
         $this->sendCloudLogger = $sendCloudLogger;
+        $this->helper = $helper;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
@@ -127,7 +132,7 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
             return false;
         }
 
-        if (!$this->checkForScriptUrl()) {
+        if ($this->helper->checkForScriptUrl() == false || $this->helper->checkIfModuleIsActive() == false) {
             return false;
         };
 
@@ -158,22 +163,6 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         $result->append($method);
 
         return $result;
-    }
-
-    /**
-     * @return bool
-     */
-    private function checkForScriptUrl()
-    {
-        $isScriptUrlDefined = true;
-        $scriptUrl = $this->_scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
-
-        if ($scriptUrl == '' || $scriptUrl == null) {
-            $this->sendCloudLogger->debug('The option service point is not active in SendCloud');
-            $isScriptUrlDefined = false;
-        }
-
-        return $isScriptUrlDefined;
     }
 
     /**

@@ -46,4 +46,18 @@ class Checkout extends AbstractHelper
 
         return $isScriptUrlDefined;
     }
+
+    /**
+     * @return bool|mixed
+     */
+    public function checkIfModuleIsActive()
+    {
+        $isActive = $this->_scopeConfig->getValue(
+            'sendcloud/general/enable',
+            ScopeInterface::SCOPE_STORE
+        );
+
+        return $isActive;
+    }
+
 }

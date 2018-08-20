@@ -44,7 +44,7 @@ class BeforeSaveShippingInformation
     {
         $extensionAttributes = $addressInformation->getExtensionAttributes();
 
-        if ($this->helper->checkForScriptUrl() && $extensionAttributes != null) {
+        if ($this->helper->checkForScriptUrl() && $extensionAttributes != null && $this->helper->checkIfModuleIsActive()) {
             $spId = $extensionAttributes->getSendcloudServicePointId();
             $spName = $extensionAttributes->getSendcloudServicePointName();
             $spStreet = $extensionAttributes->getSendcloudServicePointStreet();

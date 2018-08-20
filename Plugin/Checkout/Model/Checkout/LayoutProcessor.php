@@ -27,7 +27,7 @@ class LayoutProcessor
      */
     public function afterProcess(\Magento\Checkout\Block\Checkout\LayoutProcessor $subject, array $jsLayout)
     {
-        if ($this->helper->checkForScriptUrl()) {
+        if ($this->helper->checkForScriptUrl() && $this->helper->checkIfModuleIsActive()) {
             $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']['children']['step-config']['children']['shipping-rates-validation']['children']['servicepoint-rates-validation'] = [
                 'component' => 'SendCloud_SendCloud/js/view/shipping-rates-validation'
             ];
