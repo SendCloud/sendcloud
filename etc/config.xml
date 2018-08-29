@@ -9,13 +9,14 @@
         </sendcloud>
         <carriers>
             <sendcloud>
-                <active>1</active>
+                <active>0</active>
                 <sallowspecific>0</sallowspecific>
-                <model>CreativeICT\SendCloud\Model\Carrier\Sendcloud</model>
-                <name>Sendcloud</name>
+                <model>SendCloud\SendCloud\Model\Carrier\SendCloud</model>
+                <name>SendCloud</name>
                 <price>15.00</price>
-                <title>Sendcloud</title>
+                <title>SendCloud</title>
                 <type>I</type>
+                <sort_order>500</sort_order>
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
             </sendcloud>
         </carriers>

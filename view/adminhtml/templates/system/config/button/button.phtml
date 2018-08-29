@@ -1,6 +1,6 @@
 <div class="pp-buttons-container">
-    <button id="<?php echo $block->getId() ?>" onclick="return false;">
-        <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+    <button id="<?= /* @escapeNotVerified */ $block->getId() ?>" onclick="return false;">
+        <span><span><span><?= /* @escapeNotVerified */ $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
     </button>
 </div>
 
@@ -9,17 +9,17 @@
         'jquery',
         'prototype'
     ], function($){
-        console.log('<?php echo $block->getAjaxCheckUrl() ?>');
-        $('#connectToSendcloud').click(function () {
+        $('#connectToSendCloud').click(function () {
+            var w = window.open('');
             $.ajax({
-                url: "http://192.168.70.70/backend/creativeict_autoconnect/autoconnect/index/",
+                url: "<?= /* @escapeNotVerified */ $block->getAjaxCheckUrl() ?>",
                 method: 'POST',
                 data: {form_key: window.FORM_KEY},
                 success: function (response) {
-                    console.log(response)
+                    w.location = response.url;
                 }
-            })
-
+            });
+            return false;
         });
 
     });

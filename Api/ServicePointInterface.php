@@ -6,12 +6,29 @@
  * Time: 21:43
  */
 
-namespace CreativeICT\SendCloud\Api;
+namespace SendCloud\SendCloud\Api;
 
-
+/**
+ * Interface ServicePointInterface
+ * @package SendCloud\SendCloud\Api
+ */
 interface ServicePointInterface
 {
-    public function activate();
+    /**
+     * @api
+     * @param string $script_url
+     * @return array|mixed
+     */
+    public function activate($script_url);
 
+    /**
+     * @return mixed
+     */
     public function deactivate();
+
+    /**
+     * @param boolean $activate
+     * @return mixed
+     */
+    public function shippingEmail($activate);
 }

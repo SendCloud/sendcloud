@@ -1,4 +1,44 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="CreativeICT\SendCloud\Api\ServicePointInterface" type="CreativeICT\SendCloud\Model\ServicePoint" />
+    <preference for="SendCloud\SendCloud\Api\ServicePointInterface" type="SendCloud\SendCloud\Model\ServicePoint" />
+    <preference for="SendCloud\SendCloud\Api\SettingsInterface" type="SendCloud\SendCloud\Model\Settings"/>
+    <preference for="Magento\Sales\Block\Order\Info" type="SendCloud\SendCloud\Block\Order\Info"/>
+
+    <type name="SendCloud\SendCloud\Logger\SendCloudHandler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="SendCloud\SendCloud\Logger\SendCloudLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">SendCloud Logger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">SendCloud\SendCloud\Logger\SendCloudHandler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Model\OrderRepository">
+        <plugin sortOrder="1" name="SendCloud_SendCloud::OrderRepository" type="SendCloud\SendCloud\Plugin\Order\OrderRepository"/>
+    </type>
+
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin sortOrder="1" name="SendCloud_SendCloud::ShippingInformationManagement" type="SendCloud\SendCloud\Plugin\BeforeSaveShippingInformation"/>
+    </type>
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="sendcloud_service_point_id" xsi:type="string">sales_order.sendcloud_service_point_id</item>
+                <item name="sendcloud_service_point_name" xsi:type="string">sales_order.sendcloud_service_point_name</item>
+                <item name="sendcloud_service_point_street" xsi:type="string">sales_order.sendcloud_service_point_street</item>
+                <item name="sendcloud_service_point_house_number" xsi:type="string">sales_order.sendcloud_service_point_house_number</item>
+                <item name="sendcloud_service_point_zip_code" xsi:type="string">sales_order.sendcloud_service_point_zip_code</item>
+                <item name="sendcloud_service_point_city" xsi:type="string">sales_order.sendcloud_service_point_city</item>
+                <item name="sendcloud_service_point_country" xsi:type="string">sales_order.sendcloud_service_point_country</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
 </config>

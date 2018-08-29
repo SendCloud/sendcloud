@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="sales" translate="label" sortOrder="10">
-            <label>Sendcloud</label>
+        <tab id="sendcloud" translate="label" sortOrder="10">
+            <label>SendCloud</label>
         </tab>
         <section id="sendcloud" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Sendcloud</label>
+            <label>SendCloud</label>
             <tab>sales</tab>
-            <resource>CreativeICT_Sendcloud::sendcloud_config</resource>
+            <resource>SendCloud_SendCloud::sendcloud_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>General Configuration</label>
                 <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
@@ -16,13 +16,20 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="listbutton" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>CreativeICT\Sendcloud\Block\System\Config\Form\Button</frontend_model>
+                    <frontend_model>SendCloud\SendCloud\Block\System\Config\Form\Button</frontend_model>
+                    <depends>
+                        <field id="sendcloud/general/enable">1</field>
+                    </depends>
                 </field>
+            </group>
+            <group id="branding" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Branding</label>
+                <frontend_model>SendCloud\SendCloud\Block\System\Config\Form\Branding</frontend_model>
             </group>
         </section>
         <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
             <group id="sendcloud" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Sendcloud</label>
+                <label>SendCloud service point</label>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -34,6 +41,9 @@
                     <label>Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
+                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                </field>
                 <field id="handling_type" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Calculate Handling Fee</label>
                     <source_model>Magento\Shipping\Model\Source\HandlingType</source_model>
@@ -42,11 +52,19 @@
                     <label>Handling Fee</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Sort Order</label>
+                <field id="free_shipping_enable" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Free Shipping Threshold</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                 </field>
-                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Title</label>
+                <field id="free_shipping_subtotal" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Free Shipping Amount Threshold</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="free_shipping_enable">1</field>
+                    </depends>
+                </field>
+                <field id="specificerrmsg" translate="label" type="textarea" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Displayed Error Message</label>
                 </field>
                 <field id="sallowspecific" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Ship to Applicable Countries</label>
@@ -58,12 +76,13 @@
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
-                <field id="showmethod" translate="label" type="select" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="showmethod" translate="label" type="select" sortOrder="99" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Show Method if Not Applicable</label>
+                    <frontend_class>shipping-skip-hide</frontend_class>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="specificerrmsg" translate="label" type="textarea" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Displayed Error Message</label>
+                <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Sort Order</label>
                 </field>
             </group>
         </section>

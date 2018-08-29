@@ -1,11 +1,11 @@
 <?php
 
-namespace CreativeICT\SendCloud\Block\System\Config\Form;
+namespace SendCloud\SendCloud\Block\System\Config\Form;
 
 /**
  * Class Button
  *
- * @package CreativeICT\SendCloud\Block\System\Config\Form
+ * @package SendCloud\SendCloud\Block\System\Config\Form
  */
 class Button extends \Magento\Config\Block\System\Config\Form\Field
 {
@@ -28,7 +28,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
      */
     public function getAjaxCheckUrl()
     {
-        return $this->getUrl('creativeict_autoconnect/autoconnect/index'); //hit controller by ajax call on button click.
+        return $this->getUrl('sendcloud_autoconnect/autoconnect/connector');
     }
 
     /**
@@ -52,8 +52,8 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
     {
         $this->addData(
             [
-                'id'        => 'connectToSendcloud',
-                'button_label'     => _('Connect to Sendcloud'),
+                'id'        => 'connectToSendCloud',
+                'button_label'     => __('Connect to SendCloud'),
             ]
         );
         return $this->_toHtml();

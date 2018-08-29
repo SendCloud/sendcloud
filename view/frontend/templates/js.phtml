@@ -1,0 +1,14 @@
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "sendcloud": {
+                        "component": "SendCloud_SendCloud/js/view/checkout/shipping/servicePoint",
+                        "scriptUrl": "<?= /* @escapeNotVerified */ $block->getScriptUrl()?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

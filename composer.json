@@ -1,0 +1,15 @@
+{
+  "name": "sendcloud/sendcloud",
+  "description": "A Magento 2 module that connects the Magento environment to the SendCloud environment",
+  "type": "magento2-module",
+  "version": "1.0.6",
+  "require": {
+    "magento/framework": ">=100 <102"
+  },
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+        "SendCloud\\SendCloud\\": ""
+    }
+  }
+}
