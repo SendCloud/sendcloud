@@ -61,7 +61,6 @@
         <exec executable="phpmd">
             <arg path="${moduledir}" />
             <arg value="xml" />
-            <!--<arg value="${workspace}/app/phpmd.xml" />-->
             <arg value="cleancode, codesize, controversial, design, naming, unusedcode"/>
             <arg value="--reportfile" />
             <arg value="${builddir}/logs/pmd.xml" />
@@ -72,10 +71,6 @@
         <exec executable="phpcs">
             <arg value="--report=checkstyle" />
             <arg value="--report-file=${builddir}/logs/checkstyle.xml" />
-            <!--<arg value="&#45;&#45;ignore=${sourcedir}/SIT/Tootal/ParameterToolBundle/Resources/*" />-->
-            <!--<arg value="&#45;&#45;ignore=${sourcedir}/SIT/Tootal/ParameterToolBundle/Resources/public/js/*" />-->
-            <!--<arg value="&#45;&#45;ignore=${sourcedir}/SIT/Tootal/ParameterToolBundle/Resources/public/css/*" />-->
-            <!--<arg value="&#45;&#45;exclude=Symfony2.WhiteSpace.DiscourageFitzinator"/>-->
             <arg value="--standard=PSR2" />
             <arg path="${moduledir}" />
         </exec>
@@ -153,10 +148,6 @@
             <arg value="deploy:mode:set"/>
             <arg value="developer"/>
         </exec>
-        <!--<exec executable="php">-->
-        <!--<arg value="${magento2dir}/bin/magento"/>-->
-        <!--<arg value="sampledata:deploy"/>-->
-        <!--</exec>-->
     </target>
 
     <target name="install-module" description="Installs the SendCloud module">
@@ -204,8 +195,6 @@
     <target name="vendor-phpunit" description="runs phpunit">
         <exec executable="php">
             <arg value="${magento2dir}/vendor/phpunit/phpunit/phpunit"/>
-            <!--<arg value="-c"/>-->
-            <!--<arg value="${magento2dir}/dev/tests/unit/phpunit.xml.dist"/>-->
             <arg value="--bootstrap"/>
             <arg value="${magento2dir}/vendor/autoload.php"/>
             <arg value="${magento2dir}/app/code/SendCloud/SendCloud/Test/"/>
@@ -213,8 +202,6 @@
             <arg value="'${builddir}/logs/junit.xml'"/>
         </exec>
     </target>
-
-    <!-- ${workspace}/etc/ ${workspace}/Helper/ ${workspace}/Gateway/ ${workspace}/Logger/ ${workspace}/Model/ ${workspace}/Setup/ ${workspace}/Test/ ${workspace}/view/  ${workspace}/registration.php ${workspace}/composer.json-->
 
     <target name="composer-selfupdate" description="composer self update">
         <exec executable="php" failonerror="true">
