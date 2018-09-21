@@ -4,7 +4,7 @@ namespace SendCloud\SendCloud\Test\Unit;
 
 use Magento\TestFramework\ObjectManager;
 
-class Generic extends \PHPUnit\Framework\TestCase
+class Generic extends TestCaseFinder
 {
     /** @var ObjectManager */
     protected $objectManager;
