@@ -50,6 +50,7 @@ define([
                 $('input[name="sendcloud_service_point_city"]').val(serviceObject.city);
                 $('input[name="sendcloud_service_point_country"]').val(serviceObject.country);
             }
+	        $('.table-checkout-shipping-method input:checked').parents('tr').first().trigger('click');
         },
         sessionData: function() {
             var serviceObject = JSON.parse(window.sessionStorage.getItem('service-point-data'));
