@@ -171,6 +171,16 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
      */
     public function proccessAdditionalValidation(\Magento\Framework\DataObject $request)
     {
+        return $this->processAdditionalValidation($request);
+
+    }
+
+    /**
+     * @param \Magento\Framework\DataObject $request
+     * @return bool
+     */
+    public function processAdditionalValidation(\Magento\Framework\DataObject $request)
+    {
         return true;
     }
 }
