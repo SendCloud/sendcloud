@@ -79,6 +79,11 @@ define([
                 servicePointId = self.sessionData()[['id']];
             }
 
+            var lang = document.documentElement.lang;
+            if(!(lang == 'en' || lang == 'fr' || lang == 'nl' || lang == 'de')){
+                lang = 'en'
+            }
+
             var config = {
                 // API key is required, replace it below with your API key
                 'apiKey': sendcloud.getApiKey(),
@@ -87,7 +92,7 @@ define([
                 // Postal code is not required, although we recommend it
                 'postalCode': zipCode,
                 // Language is also not required. defaults to "en" - (available options en, fr, nl, de)
-                'language': "nl",
+                'language': lang,
                 // you can filter service points by carriers as well.
                 'carriers': null, // comma separated string (e.g. "postnl,bpost,dhl")
                 // you can also pass a servicePointId if you want the map to be opened at a preselected service point

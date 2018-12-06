@@ -6,7 +6,9 @@
         <img style="position: relative; top:2px;" width="110" src="<?= $block->getCreativeICTLogo() ?>"/>
     </div>
     <div class="content">
-        <p>SendCloud | The Number 1 Shipping Tool | Contact <a href="<?= /* @escapeNotVerified */ $block->getSendCloudUrl() ?>" target="_blank">SendCloud</a> for support and more information.
-            SendCloud Magento module developed by <a href="<?= /* @escapeNotVerified */ $block->getCreativeICTUrl() ?>" target="_blank">CreativeICT</a> a Full Service Digital Agency.</p>
+        <p>
+            <?=__('SendCloud | The Number 1 Shipping Tool | Contact ');?>
+            <a href="<?= /* @escapeNotVerified */ $block->getSendCloudUrl() ?>" target="_blank"><?=__('SendCloud');?></a> <?=__('for support and more information.');?>
+            <?=__('SendCloud Magento module developed by');?> <a href="<?= /* @escapeNotVerified */ $block->getCreativeICTUrl() ?>" target="_blank"><?=__('CreativeICT');?></a> <?=__('a Full Service Digital Agency.');?></p>
     </div>
 </div>
