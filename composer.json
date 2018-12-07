@@ -4,7 +4,7 @@
   "type": "magento2-module",
   "homepage": "https://www.sendcloud.com/",
   "license": "Apache-2.0",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "require": {
     "magento/framework": ">=100 <102"
   },
