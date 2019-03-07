@@ -4,6 +4,7 @@ namespace SendCloud\SendCloud\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\QuoteRepository;
 
 /**
@@ -31,7 +32,13 @@ class SetOrderAttributes implements ObserverInterface
     public function execute(Observer $observer)
     {
         $order = $observer->getOrder();
-        $quote = $this->quoteRepository->get($order->getQuoteId());
+
+        try {
+            $quote = $this->quoteRepository->get($order->getQuoteId());
+        } catch (NoSuchEntityException $e) {
+            return $this;
+        }
+
         $order->setSendcloudServicePointId($quote->getSendcloudServicePointId());
         $order->setSendcloudServicePointName($quote->getSendcloudServicePointName());
         $order->setSendcloudServicePointStreet($quote->getSendcloudServicePointStreet());
