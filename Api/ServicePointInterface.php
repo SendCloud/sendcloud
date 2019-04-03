@@ -17,7 +17,7 @@ interface ServicePointInterface
     /**
      * @api
      * @param string $script_url
-     * @return array|mixed
+     * @return mixed[]
      */
     public function activate($script_url);
 
