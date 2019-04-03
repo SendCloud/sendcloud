@@ -8,7 +8,7 @@ namespace SendCloud\SendCloud\Api;
 interface SettingsInterface
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getModuleInformation();
 }
