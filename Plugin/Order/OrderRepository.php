@@ -19,7 +19,7 @@ class OrderRepository
     /** @var OrderExtensionFactory  */
     private $orderExtensionFactory;
 
-    public function __construct( OrderExtensionFactory $orderExtensionFactory )
+    public function __construct(OrderExtensionFactory $orderExtensionFactory)
     {
         $this->orderExtensionFactory = $orderExtensionFactory;
     }

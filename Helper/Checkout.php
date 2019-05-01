@@ -59,5 +59,4 @@ class Checkout extends AbstractHelper
 
         return $isActive;
     }
-
 }

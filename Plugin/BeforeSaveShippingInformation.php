@@ -26,8 +26,7 @@ class BeforeSaveShippingInformation
         RequestInterface $request,
         QuoteRepository $quoteRepository,
         Checkout $helper
-    )
-    {
+    ) {
         $this->request = $request;
         $this->quoteRepository = $quoteRepository;
         $this->helper = $helper;

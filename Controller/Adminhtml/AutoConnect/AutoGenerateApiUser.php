@@ -50,7 +50,7 @@ class AutoGenerateApiUser
      * @param RoleFactory $roleFactory
      * @param RulesFactory $rulesFactory
      */
-    public function __construct(UserFactory $userFactory, SendCloudLogger $logger, RoleFactory $roleFactory, RulesFactory $rulesFactory )
+    public function __construct(UserFactory $userFactory, SendCloudLogger $logger, RoleFactory $roleFactory, RulesFactory $rulesFactory)
     {
         $this->userFactory = $userFactory;
         $this->logger = $logger;

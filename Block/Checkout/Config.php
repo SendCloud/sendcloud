@@ -17,7 +17,7 @@ class Config extends Template
     /** @var ScopeConfigInterface  */
     private $scopeConfig;
 
-    public function __construct( Template\Context $context, ScopeConfigInterface $scopeConfig, array $data = [] )
+    public function __construct(Template\Context $context, ScopeConfigInterface $scopeConfig, array $data = [])
     {
         $this->scopeConfig = $scopeConfig;
 
