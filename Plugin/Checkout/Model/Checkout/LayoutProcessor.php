@@ -42,10 +42,6 @@ class LayoutProcessor
                     ]
                 ]
             ];
-
-            $jsLayout['components']['checkout']['children']['sidebar']['children']['shipping-information'] = [
-                'component' => 'SendCloud_SendCloud/js/view/shipping-information'
-            ];
         }
 
         return $jsLayout;
