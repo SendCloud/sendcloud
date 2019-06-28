@@ -8,19 +8,13 @@
 
 namespace SendCloud\SendCloud\Block\Checkout;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
 
 class Config extends Template
 {
-    /** @var ScopeConfigInterface  */
-    private $scopeConfig;
-
-    public function __construct(Template\Context $context, ScopeConfigInterface $scopeConfig, array $data = [])
+    public function __construct(Template\Context $context, array $data = [])
     {
-        $this->scopeConfig = $scopeConfig;
-
         parent::__construct($context, $data);
     }
 
