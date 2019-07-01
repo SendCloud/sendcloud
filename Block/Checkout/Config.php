@@ -23,6 +23,6 @@ class Config extends Template
      */
     public function getScriptUrl()
     {
-        return $this->scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+        return $this->_scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
     }
 }
