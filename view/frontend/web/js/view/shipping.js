@@ -238,13 +238,6 @@ define([
                 null;
         }),
 
-        setShippingInformation: function () {
-            this.allowedDynamicalSave = false;
-            var result = this._super();
-            this.allowedDynamicalSave = true;
-            return result;
-        },
-
         /**
          * @param {Object} shippingMethod
          * @return {Boolean}
@@ -267,17 +260,11 @@ define([
                     }
                 );
             }
-        },
 
-        /**
-         * Trigger Shipping data Validate Event.
-         */
-        triggerShippingDataValidateEvent: function () {
-            this.source.trigger('shippingAddress.data.validate');
-
-            if (this.source.get('shippingAddress.custom_attributes')) {
-                this.source.trigger('shippingAddress.custom_attributes.data.validate');
-            }
+            this.allowedDynamicalSave = false;
+            var result = this._super();
+            this.allowedDynamicalSave = true;
+            return result;
         },
 
         validatePlaceOrder: function () {
@@ -435,7 +422,7 @@ define([
             allowedDynamicalValidation: true,
             initialize: function () {
                 this._super();
-                instance = this;
+                var instance = this;
 
                 quote.shippingAddress.subscribe(this.shippingAddressObserver.bind(this));
                 quote.shippingMethod.subscribe(this.shippingMethodObserver.bind(this));
