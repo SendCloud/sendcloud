@@ -2,6 +2,9 @@
 
 namespace SendCloud\SendCloud\Model\Carrier;
 
+use Magento\Framework\DataObject;
+use Magento\Quote\Api\Data\ShippingMethodInterface;
+use Magento\Shipping\Model\Carrier\CarrierInterface;
 use SendCloud\SendCloud\Helper\Checkout;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
@@ -23,20 +26,19 @@ use Magento\Shipping\Model\Tracking\Result\StatusFactory;
 use Magento\Shipping\Model\Tracking\ResultFactory as TrackFactory;
 use Psr\Log\LoggerInterface;
 use Magento\Shipping\Model\Rate\Result;
-use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class SendCloud
  * @package SendCloud\SendCloud\Model\Carrier
  */
-class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model\Carrier\CarrierInterface
+class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 {
     /**
      * @var string
      */
     protected $_code = 'sendcloud';
 
-    /** @var ResultFactory  */
+    /** @var ResultFactory */
     private $_rateResultFactory;
 
     /** @var SendCloudLogger */
@@ -109,7 +111,7 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
         );
     }
 
-    protected function _doShipmentRequest(\Magento\Framework\DataObject $request)
+    protected function _doShipmentRequest(DataObject $request)
     {
     }
 
@@ -124,7 +126,6 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
     /**
      * @param RateRequest $request
      * @return bool|Result
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function collectRates(RateRequest $request)
     {
@@ -136,10 +137,10 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
             return false;
         };
 
-        /** @var \Magento\Shipping\Model\Rate\Result $result */
+        /** @var Result $result */
         $result = $this->_rateResultFactory->create();
 
-        /** @var \Magento\Quote\Api\Data\ShippingMethodInterface $method */
+        /** @var ShippingMethodInterface $method */
         $method = $this->_rateMethodFactory->create();
 
         $method->setCarrier($this->_code);
@@ -166,19 +167,19 @@ class SendCloud extends AbstractCarrierOnline implements \Magento\Shipping\Model
     }
 
     /**
-     * @param \Magento\Framework\DataObject $request
+     * @param DataObject $request
      * @return bool
      */
-    public function proccessAdditionalValidation(\Magento\Framework\DataObject $request)
+    public function proccessAdditionalValidation(DataObject $request)
     {
         return $this->processAdditionalValidation($request);
     }
 
     /**
-     * @param \Magento\Framework\DataObject $request
+     * @param DataObject $request
      * @return bool
      */
-    public function processAdditionalValidation(\Magento\Framework\DataObject $request)
+    public function processAdditionalValidation(DataObject $request)
     {
         return true;
     }

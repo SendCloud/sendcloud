@@ -14,16 +14,29 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Model\OrderRepository as MagentoOrderRepository;
 
+/**
+ * Class OrderRepository
+ * @package SendCloud\SendCloud\Plugin\Order
+ */
 class OrderRepository
 {
     /** @var OrderExtensionFactory  */
     private $orderExtensionFactory;
 
+    /**
+     * OrderRepository constructor.
+     * @param OrderExtensionFactory $orderExtensionFactory
+     */
     public function __construct(OrderExtensionFactory $orderExtensionFactory)
     {
         $this->orderExtensionFactory = $orderExtensionFactory;
     }
 
+    /**
+     * @param MagentoOrderRepository $subject
+     * @param OrderInterface $order
+     * @return OrderInterface
+     */
     public function afterGet(MagentoOrderRepository $subject, OrderInterface $order)
     {
         $this->loadSendCloudExtensionAttributes($order);
@@ -31,6 +44,11 @@ class OrderRepository
         return $order;
     }
 
+    /**
+     * @param MagentoOrderRepository $subject
+     * @param OrderSearchResultInterface $orderCollection
+     * @return OrderSearchResultInterface
+     */
     public function afterGetList(MagentoOrderRepository $subject, OrderSearchResultInterface $orderCollection)
     {
         foreach ($orderCollection->getItems() as $order) {
@@ -40,6 +58,10 @@ class OrderRepository
         return $orderCollection;
     }
 
+    /**
+     * @param OrderInterface $order
+     * @return $this
+     */
     private function loadSendCloudExtensionAttributes(OrderInterface $order)
     {
         $extensionAttributes = $order->getExtensionAttributes();
@@ -53,13 +75,13 @@ class OrderRepository
         }
 
         try {
-            $extensionAttributes->setSendcloudServicePointId($order->getData('sendcloud_service_point_id'));
-            $extensionAttributes->setSendcloudServicePointName($order->getData('sendcloud_service_point_name'));
-            $extensionAttributes->setSendcloudServicePointStreet($order->getData('sendcloud_service_point_street'));
-            $extensionAttributes->setSendcloudServicePointHouseNumber($order->getData('sendcloud_service_point_house_number'));
-            $extensionAttributes->setSendcloudServicePointZipCode($order->getData('sendcloud_service_point_zip_code'));
-            $extensionAttributes->setSendcloudServicePointCity($order->getData('sendcloud_service_point_city'));
-            $extensionAttributes->setSendcloudServicePointCountry($order->getData('sendcloud_service_point_country'));
+            $extensionAttributes->setSendcloudServicePointId($order->getSendcloudServicePointId());
+            $extensionAttributes->setSendcloudServicePointName($order->getSendcloudServicePointName());
+            $extensionAttributes->setSendcloudServicePointStreet($order->getSendcloudServicePointStreet());
+            $extensionAttributes->setSendcloudServicePointHouseNumber($order->getSendcloudServicePointHouseNumber());
+            $extensionAttributes->setSendcloudServicePointZipCode($order->getSendcloudServicePointZipCode());
+            $extensionAttributes->setSendcloudServicePointCity($order->getSendcloudServicePointCity());
+            $extensionAttributes->setSendcloudServicePointCountry($order->getSendcloudServicePointCountry());
         } catch (NoSuchEntityException $e) {
             return $this;
         }

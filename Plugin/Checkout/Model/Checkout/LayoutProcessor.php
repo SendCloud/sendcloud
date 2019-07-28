@@ -1,6 +1,8 @@
 <?php
+
 namespace SendCloud\SendCloud\Plugin\Checkout\Model\Checkout;
 
+use Magento\Checkout\Block\Checkout\LayoutProcessor as TargetLayoutProcessor;
 use SendCloud\SendCloud\Helper\Checkout;
 
 /**
@@ -9,6 +11,9 @@ use SendCloud\SendCloud\Helper\Checkout;
  */
 class LayoutProcessor
 {
+    /**
+     * @var Checkout
+     */
     private $helper;
 
     /**
@@ -21,11 +26,11 @@ class LayoutProcessor
     }
 
     /**
-     * @param \Magento\Checkout\Block\Checkout\LayoutProcessor $subject
+     * @param TargetLayoutProcessor $subject
      * @param array $jsLayout
      * @return array
      */
-    public function afterProcess(\Magento\Checkout\Block\Checkout\LayoutProcessor $subject, array $jsLayout)
+    public function afterProcess(TargetLayoutProcessor $subject, array $jsLayout)
     {
         if ($this->helper->checkForScriptUrl() && $this->helper->checkIfModuleIsActive()) {
             $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']['children']['step-config']['children']['shipping-rates-validation']['children']['servicepoint-rates-validation'] = [
