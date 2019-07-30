@@ -1,4 +1,5 @@
 <?php
+
 namespace SendCloud\SendCloud\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;

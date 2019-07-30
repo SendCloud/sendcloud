@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: wessel
- * Date: 27-02-18
- * Time: 21:43
- */
 
 namespace SendCloud\SendCloud\Api;
 
@@ -17,7 +11,7 @@ interface ServicePointInterface
     /**
      * @api
      * @param string $script_url
-     * @return array|mixed
+     * @return mixed[]
      */
     public function activate($script_url);
 

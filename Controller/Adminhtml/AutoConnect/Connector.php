@@ -1,4 +1,5 @@
 <?php
+
 namespace SendCloud\SendCloud\Controller\Adminhtml\AutoConnect;
 
 use Magento\Backend\App\Action;

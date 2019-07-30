@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rick
- * Date: 29-3-18
- * Time: 13:55
- */
 
 namespace SendCloud\SendCloud\Test\Unit\Model;
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rick
- * Date: 12-4-18
- * Time: 15:39
- */
 
 namespace SendCloud\SendCloud\Observer;
 
