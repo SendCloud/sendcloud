@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rick
- * Date: 10-7-18
- * Time: 10:06
- */
 
 namespace SendCloud\SendCloud\Block\System\Config\Form;
 

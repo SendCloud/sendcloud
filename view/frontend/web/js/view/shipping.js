@@ -238,13 +238,6 @@ define([
                 null;
         }),
 
-        setShippingInformation: function () {
-            this.allowedDynamicalSave = false;
-            var result = this._super();
-            this.allowedDynamicalSave = true;
-            return result;
-        },
-
         /**
          * @param {Object} shippingMethod
          * @return {Boolean}
@@ -267,6 +260,11 @@ define([
                     }
                 );
             }
+
+            this.allowedDynamicalSave = false;
+            var result = this._super();
+            this.allowedDynamicalSave = true;
+            return result;
         },
 
         /**
@@ -435,7 +433,7 @@ define([
             allowedDynamicalValidation: true,
             initialize: function () {
                 this._super();
-                instance = this;
+                var instance = this;
 
                 quote.shippingAddress.subscribe(this.shippingAddressObserver.bind(this));
                 quote.shippingMethod.subscribe(this.shippingMethodObserver.bind(this));

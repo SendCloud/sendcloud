@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rick
- * Date: 28-3-18
- * Time: 17:04
- */
 
 namespace SendCloud\SendCloud\Test\Unit\Block;
 

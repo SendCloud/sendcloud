@@ -96,14 +96,24 @@
     <target name="check-magento">
         <mkdir dir="${magento2dir}"/>
     </target>
-
+    
+    <target name="drop-database" description="creates the database based on build.properties">
+        <exec executable="mysql">
+            <arg value="-u"/>
+            <arg value="${db.user}"/>
+            <arg value="-p${db.password}"/>
+            <arg value="-e"/>
+            <arg value="DROP DATABASE IF EXISTS sendcloud;"/>
+        </exec>
+    </target>
+    
     <target name="create-database" description="creates the database based on build.properties">
         <exec executable="mysql">
             <arg value="-u"/>
             <arg value="${db.user}"/>
             <arg value="-p${db.password}"/>
             <arg value="-e"/>
-            <arg value="'CREATE DATABASE IF NOT EXISTS sendcloud;'"/>
+            <arg value="CREATE DATABASE IF NOT EXISTS sendcloud;"/>
         </exec>
     </target>
 
@@ -119,7 +129,7 @@
             <arg value="composer.phar"/>
             <arg value="create-project"/>
             <arg value="--repository-url=https://repo.magento.com/"/>
-            <arg value="magento/project-community-edition"/>
+            <arg value="magento/project-community-edition=2.2.6"/>
             <arg value="magento"/>
         </exec>
     </target>
@@ -179,16 +189,6 @@
         <exec executable="php">
             <arg value="${magento2dir}/bin/magento"/>
             <arg value="setup:upgrade"/>
-        </exec>
-    </target>
-
-    <target name="phpunit" description="runs phpunit">
-        <exec executable="phpunit">
-            <arg value="-c"/>
-            <arg value="./magento/dev/tests/unit/phpunit.xml.dist"/>
-            <arg value="./magento/app/code/SendCloud/SendCloud/Test/"/>
-            <arg value="--log-junit"/>
-            <arg value="'${builddir}/logs/junit.xml'"/>
         </exec>
     </target>
 

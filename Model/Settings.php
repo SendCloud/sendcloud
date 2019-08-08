@@ -1,4 +1,5 @@
 <?php
+
 namespace SendCloud\SendCloud\Model;
 
 use SendCloud\SendCloud\Api\SettingsInterface;
