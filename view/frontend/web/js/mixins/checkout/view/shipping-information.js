@@ -12,6 +12,7 @@ define([
                 template: 'SendCloud_SendCloud/shipping-information'
             },
             initObservable: function () {
+                this._super();
                 this.selectedMethod = ko.computed(function() {
                     var method = quote.shippingMethod();
                     var selectedMethod = method != null ? method.carrier_code + '_' + method.method_code : null;
