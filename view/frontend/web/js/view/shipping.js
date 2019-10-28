@@ -267,17 +267,6 @@ define([
             return result;
         },
 
-        /**
-         * Trigger Shipping data Validate Event.
-         */
-        triggerShippingDataValidateEvent: function () {
-            this.source.trigger('shippingAddress.data.validate');
-
-            if (this.source.get('shippingAddress.custom_attributes')) {
-                this.source.trigger('shippingAddress.custom_attributes.data.validate');
-            }
-        },
-
         validatePlaceOrder: function () {
             var loginFormSelector = 'form[data-role=email-with-possible-login]',
                 emailValidationResult = this.isCustomerLoggedIn();
