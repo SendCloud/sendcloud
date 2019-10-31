@@ -13,6 +13,7 @@
             <module name="Magento_Quote"/>
             <module name="Magento_Store" />
             <module name="Magento_User" />
+            <module name="Magento_SalesRule" />
         </sequence>
     </module>
 </config>
