@@ -260,11 +260,6 @@ define([
                     }
                 );
             }
-
-            this.allowedDynamicalSave = false;
-            var result = this._super();
-            this.allowedDynamicalSave = true;
-            return result;
         },
 
         validatePlaceOrder: function () {
