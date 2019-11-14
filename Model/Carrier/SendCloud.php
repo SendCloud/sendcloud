@@ -3,6 +3,7 @@
 namespace SendCloud\SendCloud\Model\Carrier;
 
 use Magento\Framework\DataObject;
+use Magento\OfflineShipping\Model\Carrier\Flatrate\ItemPriceCalculator;
 use Magento\Quote\Api\Data\ShippingMethodInterface;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use SendCloud\SendCloud\Helper\Checkout;
@@ -13,7 +14,6 @@ use Magento\Directory\Model\CountryFactory;
 use Magento\Directory\Model\CurrencyFactory;
 use Magento\Directory\Model\RegionFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Locale\FormatInterface;
 use Magento\Framework\Xml\Security;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory;
@@ -44,6 +44,15 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     /** @var SendCloudLogger */
     private $sendCloudLogger;
 
+
+    /**
+     * @var ItemPriceCalculator
+     */
+    private $itemPriceCalculator;
+
+    /**
+     * @var Checkout
+     */
     private $helper;
 
     /**
@@ -63,7 +72,9 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
      * @param CurrencyFactory $currencyFactory
      * @param Data $directoryData
      * @param StockRegistryInterface $stockRegistry
-     * @param FormatInterface $localeFormat
+     * @param ItemPriceCalculator $itemPriceCalculator
+     * @param SendCloudLogger $sendCloudLogger
+     * @param Checkout $helper
      * @param array $data
      */
     public function __construct(
@@ -82,7 +93,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
         CurrencyFactory $currencyFactory,
         Data $directoryData,
         StockRegistryInterface $stockRegistry,
-        FormatInterface $localeFormat,
+        ItemPriceCalculator $itemPriceCalculator,
         SendCloudLogger $sendCloudLogger,
         Checkout $helper,
         array $data = []
@@ -90,6 +101,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
+        $this->itemPriceCalculator = $itemPriceCalculator;
         $this->sendCloudLogger = $sendCloudLogger;
         $this->helper = $helper;
         parent::__construct(
@@ -112,6 +124,10 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
         );
     }
 
+    /**
+     * @param DataObject $request
+     * @return DataObject|void
+     */
     protected function _doShipmentRequest(DataObject $request)
     {
     }
@@ -122,6 +138,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
      */
     public function getAllowedMethods()
     {
+        return ['sendcloud' => $this->getConfigData('name')];
     }
 
     /**
@@ -138,9 +155,48 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             return false;
         };
 
+        $freeBoxes = $this->getFreeBoxesCount($request);
+        $this->setFreeBoxes($freeBoxes);
+
         /** @var Result $result */
         $result = $this->_rateResultFactory->create();
 
+        $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
+
+        if ($shippingPrice !== false) {
+            $method = $this->createResultMethod($shippingPrice);
+            $result->append($method);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param RateRequest $request
+     * @param $freeBoxes
+     * @return float|string
+     */
+    private function getShippingPrice(RateRequest $request, $freeBoxes)
+    {
+        $configPrice = $this->getConfigData('price');
+
+        $shippingPrice = $this->itemPriceCalculator->getShippingPricePerOrder($request, $configPrice, $freeBoxes);
+
+        $shippingPrice = $this->getFinalPriceWithHandlingFee($shippingPrice);
+
+        if ($shippingPrice !== false && $request->getPackageQty() == $freeBoxes) {
+            $shippingPrice = '0.00';
+        }
+
+        return $shippingPrice;
+    }
+
+    /**
+     * @param $shippingPrice
+     * @return ShippingMethodInterface
+     */
+    private function createResultMethod($shippingPrice)
+    {
         /** @var ShippingMethodInterface $method */
         $method = $this->_rateMethodFactory->create();
 
@@ -150,21 +206,9 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
         $method->setMethod($this->_code);
         $method->setMethodTitle($this->getConfigData('name'));
 
-        $amount = $this->getConfigData('price');
-
-        if ($this->getConfigData('free_shipping_enable')
-            && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()
-        ) {
-            $method->setPrice('0.00');
-            $method->setCost('0.00');
-        } else {
-            $method->setPrice($amount);
-            $method->setCost($amount);
-        }
-
-        $result->append($method);
-
-        return $result;
+        $method->setPrice($shippingPrice);
+        $method->setCost($shippingPrice);
+        return $method;
     }
 
     /**
@@ -183,5 +227,43 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     public function processAdditionalValidation(DataObject $request)
     {
         return true;
+    }
+
+    /**
+     * @param RateRequest $request
+     * @return int
+     */
+    private function getFreeBoxesCount(RateRequest $request)
+    {
+        $freeBoxes = 0;
+        if ($request->getAllItems()) {
+            foreach ($request->getAllItems() as $item) {
+                if ($item->getProduct()->isVirtual() || $item->getParentItem()) {
+                    continue;
+                }
+
+                if ($item->getHasChildren() && $item->isShipSeparately()) {
+                    $freeBoxes += $this->getFreeBoxesCountFromChildren($item);
+                } elseif ($item->getFreeShipping()) {
+                    $freeBoxes += $item->getQty();
+                }
+            }
+        }
+        return $freeBoxes;
+    }
+
+    /**
+     * @param mixed $item
+     * @return mixed
+     */
+    private function getFreeBoxesCountFromChildren($item)
+    {
+        $freeBoxes = 0;
+        foreach ($item->getChildren() as $child) {
+            if ($child->getFreeShipping() && !$child->getProduct()->isVirtual()) {
+                $freeBoxes += $item->getQty() * $child->getQty();
+            }
+        }
+        return $freeBoxes;
     }
 }
