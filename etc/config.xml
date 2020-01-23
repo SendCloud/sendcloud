@@ -4,7 +4,6 @@
         <sendcloud>
             <general>
                 <enable>1</enable>
-                <display_text>Hello World</display_text>
             </general>
         </sendcloud>
         <carriers>
