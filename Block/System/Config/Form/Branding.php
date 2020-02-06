@@ -8,7 +8,7 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 class Branding extends Field
 {
     const SENDCLOUD_URL = 'https://www.sendcloud.nl';
-    const CREATIVEICT_URL = 'https://www.creativeict.nl';
+    const CREATIVEICT_URL = 'https://www.creative-ct.nl';
 
     protected $_template = 'SendCloud_SendCloud::system/config/branding.phtml';
 
