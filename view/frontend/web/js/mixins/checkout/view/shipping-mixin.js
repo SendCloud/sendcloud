@@ -1,6 +1,7 @@
 define([
     'Magento_Checkout/js/model/quote',
-], function (quote) {
+    'mage/translate'
+], function (quote, $t) {
     'use strict';
 
     return function (Component) {
