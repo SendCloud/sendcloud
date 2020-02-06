@@ -165,6 +165,14 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 
         if ($shippingPrice !== false) {
             $method = $this->createResultMethod($shippingPrice);
+            $amount = $this->getConfigData('price');
+            if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
+                $method->setPrice('0.00');
+                $method->setCost('0.00');
+            } else {
+                $method->setPrice($amount);
+                $method->setCost($amount);
+            }
             $result->append($method);
         }
 
