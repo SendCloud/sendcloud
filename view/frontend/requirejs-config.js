@@ -13,6 +13,9 @@ var config = {
             },
             'Magento_Checkout/js/view/shipping': {
                 'SendCloud_SendCloud/js/mixins/checkout/view/shipping-mixin': true
+            },
+            'Mageplaza_Osc/js/model/shipping-save-processor/checkout': {
+                'SendCloud_SendCloud/js/model/shipping-save-processor/mageplaza-servicepoint': true
             }
         }
     }
