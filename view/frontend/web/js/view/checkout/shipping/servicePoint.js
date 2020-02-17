@@ -63,8 +63,8 @@ define([
                 countryCode = $('[name="country_id"]').val();
 
             if (customer.isLoggedIn() && customer.getShippingAddressList()[0]) {
-                zipCode = customer.getShippingAddressList()[0]['postcode'];
-                countryCode = customer.getShippingAddressList()[0]['countryId'];
+                zipCode = quote.shippingAddress().postcode;
+                countryCode = quote.shippingAddress().countryId;
             }
 
             zipCode = zipCode.replace(' ', '');
