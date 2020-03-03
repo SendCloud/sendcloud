@@ -32,7 +32,8 @@ class AutoGenerateApiUser
         'Magento_Sales::actions',
         'Magento_Sales::actions_view',
         'Magento_Sales::actions_edit',
-        'Magento_Sales::shipment'
+        'Magento_Sales::shipment',
+        'Magento_Sales::ship'
     ];
 
 
