@@ -4,9 +4,11 @@ define([
     'uiComponent',
     'Magento_Checkout/js/model/quote',
     'Magento_Customer/js/model/customer',
+    'Magento_Checkout/js/action/set-shipping-information',
+    'uiRegistry',
     'mage/translate',
     'https://embed.sendcloud.sc/spp/1.0.0/api.min.js'
-], function ($, ko, Component, quote, customer) {
+], function ($, ko, Component, quote, customer, setShippingInformationAction, registry) {
     'use strict';
     var self = this;
 
@@ -117,6 +119,15 @@ define([
                     self.servicePoint(servicePointObject);
 
                     window.sessionStorage.setItem("service-point-data", JSON.stringify(sessionData));
+
+                    var shipping = registry.get('checkout.steps.shipping-step.shippingAddress'),
+                        result;
+
+                    result = shipping.validateShippingInformation();
+                    if (result) {
+                        setShippingInformationAction();
+                    }
+
                 },
                 function(errors) {
                     errors.forEach(function(error) {
