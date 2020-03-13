@@ -108,6 +108,16 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'comment' => 'service point country'
             ]
         );
+        $connection->addColumn(
+            $setup->getTable($tableName),
+            'sendcloud_service_point_post_number',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point post number'
+            ]
+        );
 
         return $setup;
     }
