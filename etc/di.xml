@@ -37,6 +37,7 @@
                 <item name="sendcloud_service_point_zip_code" xsi:type="string">sales_order.sendcloud_service_point_zip_code</item>
                 <item name="sendcloud_service_point_city" xsi:type="string">sales_order.sendcloud_service_point_city</item>
                 <item name="sendcloud_service_point_country" xsi:type="string">sales_order.sendcloud_service_point_country</item>
+                <item name="sendcloud_service_point_post_number" xsi:type="string">sales_order.sendcloud_service_point_post_number</item>
             </argument>
         </arguments>
     </virtualType>

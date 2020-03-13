@@ -51,6 +51,7 @@ define([
                 $('input[name="sendcloud_service_point_zip_code"]').val(serviceObject.postal_code);
                 $('input[name="sendcloud_service_point_city"]').val(serviceObject.city);
                 $('input[name="sendcloud_service_point_country"]').val(serviceObject.country);
+                $('input[name="sendcloud_service_point_post_number"]').val(serviceObject.post_number);
             }
         },
         sessionData: function() {
@@ -98,7 +99,8 @@ define([
                 // you can filter service points by carriers as well.
                 'carriers': null, // comma separated string (e.g. "postnl,bpost,dhl")
                 // you can also pass a servicePointId if you want the map to be opened at a preselected service point
-                'servicePointId': servicePointId // integer
+                'servicePointId': servicePointId, // integer,
+                'postNumber': postNumber
             }
 
             sendcloud.servicePoints.open(
@@ -112,7 +114,8 @@ define([
                             postal_code: servicePointObject.postal_code,
                             city: servicePointObject.city,
                             country: servicePointObject.country,
-                            formatted_opening_times: servicePointObject.formatted_opening_times
+                            formatted_opening_times: servicePointObject.formatted_opening_times,
+                            post_number: servicePointObject.post_number
                         };
                     window.checkoutConfig.quoteData
 
