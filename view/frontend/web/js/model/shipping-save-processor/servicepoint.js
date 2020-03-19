@@ -51,7 +51,7 @@ define([
                         sendcloud_service_point_zip_code: $('[name="sendcloud_service_point_zip_code"]').val(),
                         sendcloud_service_point_city: $('[name="sendcloud_service_point_city"]').val(),
                         sendcloud_service_point_country: $('[name="sendcloud_service_point_country"]').val(),
-                        sendcloud_service_point_post_number: $('[name="sendcloud_service_point_post_number"]').val()
+                        sendcloud_service_point_postnumber: $('[name="sendcloud_service_point_postnumber"]').val()
                     };
                     payload['addressInformation']['extension_attributes'] = sendCloudAttributes;
                 }

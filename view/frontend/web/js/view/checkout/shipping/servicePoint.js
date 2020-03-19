@@ -37,12 +37,14 @@ define([
             if (serviceObject) {
                 this.servicePointButton = $.mage.__("Change service point");
 
+                console.log(serviceObject);
                 $('.button-service-point').text(this.servicePointButton);
 
                 $('#servicePointName').html("<strong>" + serviceObject.name + "</strong>");
                 $('#servicePointStreetAndHouseNumber').html(serviceObject.street + " " + serviceObject.house_number);
                 $('#servicePointZipCode').html(serviceObject.postal_code);
                 $('#servicePointCity').html(serviceObject.city);
+                $('#servicePointPostnumber').html(serviceObject.postnumber);
 
                 $('input[name="sendcloud_service_point_id"]').val(serviceObject.id);
                 $('input[name="sendcloud_service_point_name"]').val(serviceObject.name);
@@ -51,7 +53,7 @@ define([
                 $('input[name="sendcloud_service_point_zip_code"]').val(serviceObject.postal_code);
                 $('input[name="sendcloud_service_point_city"]').val(serviceObject.city);
                 $('input[name="sendcloud_service_point_country"]').val(serviceObject.country);
-                $('input[name="sendcloud_service_point_post_number"]').val(serviceObject.post_number);
+                $('input[name="sendcloud_service_point_postnumber"]').val(serviceObject.postnumber);
             }
         },
         sessionData: function() {
@@ -77,9 +79,14 @@ define([
         openServicePointPicker: function (zipCode, countryCode) {
             var self = this;
             var servicePointId = null;
+            var postNumber = null;
 
             if (self.sessionData() && self.sessionData()['id']) {
                 servicePointId = self.sessionData()[['id']];
+            }
+
+            if (self.sessionData() && self.sessionData()['postNumber']) {
+                postNumber = self.sessionData()[['postNumber']];
             }
 
             var lang = document.documentElement.lang;
@@ -105,7 +112,7 @@ define([
 
             sendcloud.servicePoints.open(
                 config,
-                function(servicePointObject) {
+                function(servicePointObject, postNumber) {
                     var sessionData = {
                             id: servicePointObject.id,
                             name: servicePointObject.name,
@@ -115,11 +122,11 @@ define([
                             city: servicePointObject.city,
                             country: servicePointObject.country,
                             formatted_opening_times: servicePointObject.formatted_opening_times,
-                            post_number: servicePointObject.post_number
+                            postnumber: postNumber
                         };
                     window.checkoutConfig.quoteData
 
-                    self.servicePoint(servicePointObject);
+                    self.servicePoint(sessionData);
 
                     window.sessionStorage.setItem("service-point-data", JSON.stringify(sessionData));
 

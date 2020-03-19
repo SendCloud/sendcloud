@@ -55,7 +55,8 @@ $order = $block->getShipment()->getOrder();
                             <address>
                                 <?= $order->getSendcloudServicePointName() ?><br>
                                 <?= $order->getSendcloudServicePointStreet() ?> <?= $order->getSendcloudServicePointHouseNumber() ?><br>
-                                <?= $order->getSendcloudServicePointZipCode() ?>  <?= $order->getSendcloudServicePointCity() ?>
+                                <?= $order->getSendcloudServicePointZipCode() ?>  <?= $order->getSendcloudServicePointCity() ?><br>
+                                <?= $order->getSendcloudServicePointPostnumber() ?>
                             </address>
                         </div>
                     <?php endif; ?>

@@ -110,7 +110,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
         $connection->addColumn(
             $setup->getTable($tableName),
-            'sendcloud_service_point_post_number',
+            'sendcloud_service_point_postnumber',
             [
                 'type' => Table::TYPE_TEXT,
                 'length' => 255,

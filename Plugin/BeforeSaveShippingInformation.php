@@ -67,7 +67,7 @@ class BeforeSaveShippingInformation
             $spZipCode = $extensionAttributes->getSendcloudServicePointZipCode();
             $spCity = $extensionAttributes->getSendcloudServicePointCity();
             $spCountry = $extensionAttributes->getSendcloudServicePointCountry();
-            $spPostNumber = $extensionAttributes->getSendcloudServicePointPostNumber();
+            $spPostnumber = $extensionAttributes->getSendcloudServicePointPostnumber();
 
             $quote = $this->quoteRepository->getActive($cartId);
             $quote->setSendcloudServicePointId($spId);
@@ -77,7 +77,7 @@ class BeforeSaveShippingInformation
             $quote->setSendcloudServicePointZipCode($spZipCode);
             $quote->setSendcloudServicePointCity($spCity);
             $quote->setSendcloudServicePointCountry($spCountry);
-            $quote->setSendcloudServicePointPostNumber($spPostNumber);
+            $quote->setSendcloudServicePointPostnumber($spPostnumber);
         }
     }
 }

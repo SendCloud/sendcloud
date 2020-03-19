@@ -77,7 +77,8 @@
                             <strong>{{trans "Service Point"}}</strong><br>
                             {{var order.getSendcloudServicePointName()}}<br>
                             {{var order.getSendcloudServicePointStreet()}} {{var order.getSendcloudServicePointHouseNumber()}}<br>
-                            {{var order.getSendcloudServicePointZipCode()}} {{var order.getSendcloudServicePointCity()}}
+                            {{var order.getSendcloudServicePointZipCode()}} {{var order.getSendcloudServicePointCity()}}<br>
+                            {{var order.getSendcloudServicePointPostnumber()}}
                         </p>
                         {{/depend}}
                         {{depend order.getIsNotVirtual()}}
