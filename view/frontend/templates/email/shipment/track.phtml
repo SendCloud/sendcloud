@@ -28,7 +28,7 @@ $_postcode = str_replace(' ', '+', $_order->getShippingAddress()->getPostcode())
                 <tr>
                     <td><?= $block->escapeHtml($_item->getTitle()) ?>:</td>
                     <td>
-                        <?php if ($_item->isCustom() && $_order->getShippingMethod() == 'sendcloud_sendcloud') : ?>
+                        <?php if ($_item->isCustom()) : ?>
                             <a href="<?= $_url .
                                 'carrier=' . strtolower($_item->getTitle()) .
                                 '&code=' . $block->escapeHtml($_item->getNumber()) .
