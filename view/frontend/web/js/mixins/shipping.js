@@ -49,14 +49,16 @@ define([
                         }
 
                         selectShippingMethodAction(selectMethod);
-
-                        if (selectMethod.carrier_code === 'sendcloud' && !servicePointData) {
-                            uiRegistry.async("checkout.steps.shipping-step.shippingAddress")(
-                                function (shippingValidation) {
-                                    shippingValidation.errorValidationMessage($t('Please select a service point'));
-                                }
-                            );
-                        }
+                        console.log(selectMethod);
+                        //if (typeof selectMethod !== "undefined") {
+                            if (selectMethod.carrier_code === 'sendcloud' && !servicePointData) {
+                                uiRegistry.async("checkout.steps.shipping-step.shippingAddress")(
+                                    function (shippingValidation) {
+                                        shippingValidation.errorValidationMessage($t('Please select a service point'));
+                                    }
+                                );
+                            }
+                        //}
 
                         window.checkoutConfig.selectedShippingMethod = selectMethod;
                     }
