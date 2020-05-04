@@ -49,8 +49,8 @@ define([
                         }
 
                         selectShippingMethodAction(selectMethod);
-                        console.log(selectMethod);
-                        //if (typeof selectMethod !== "undefined") {
+
+                        if (selectMethod) {
                             if (selectMethod.carrier_code === 'sendcloud' && !servicePointData) {
                                 uiRegistry.async("checkout.steps.shipping-step.shippingAddress")(
                                     function (shippingValidation) {
@@ -58,7 +58,7 @@ define([
                                     }
                                 );
                             }
-                        //}
+                        }
 
                         window.checkoutConfig.selectedShippingMethod = selectMethod;
                     }
