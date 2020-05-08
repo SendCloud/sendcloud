@@ -37,7 +37,6 @@ define([
             if (serviceObject) {
                 this.servicePointButton = $.mage.__("Change service point");
 
-                console.log(serviceObject);
                 $('.button-service-point').text(this.servicePointButton);
 
                 $('#servicePointName').html("<strong>" + serviceObject.name + "</strong>");
