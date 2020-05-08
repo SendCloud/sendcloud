@@ -19,6 +19,9 @@ var config = {
             'Mageplaza_Osc/js/model/shipping-save-processor/checkout': {
                 'SendCloud_SendCloud/js/model/shipping-save-processor/mageplaza-servicepoint': true
             },
+            'Mageplaza_Osc/js/view/review/placeOrder': {
+                'SendCloud_SendCloud/js/mixins/view/review/placeOrder': true
+            },
             'Onestepcheckout_Iosc/js/shipping': {
                 'SendCloud_SendCloud/js/mixins/shipping': true
             }

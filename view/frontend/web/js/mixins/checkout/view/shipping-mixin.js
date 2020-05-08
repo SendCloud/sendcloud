@@ -1,7 +1,9 @@
 define([
     'Magento_Checkout/js/model/quote',
-    'mage/translate'
-], function (quote, $t) {
+    'mage/translate',
+    'SendCloud_SendCloud/js/view/checkout/shipping/servicePoint',
+    'jquery'
+], function (quote, $t, servicePoint, $) {
     'use strict';
 
     return function (Component) {
@@ -9,19 +11,23 @@ define([
             validateShippingInformation: function() {
                 try{
                     var origResult = this._super(),
-                        servicePointData = JSON.parse(window.sessionStorage.getItem('service-point-data'));
+                        servicePointData = servicePoint().servicePointData();
                 }
                 catch(error) {
                     return false;
                 }
 
                 if (quote.shippingMethod()['carrier_code'] === 'sendcloud' && !servicePointData) {
-                    this.errorValidationMessage($t('Please select a service point'));
+                    var servicePointWrapper = $('#sendcloud-service-point');
+
+                    window.scrollTo({
+                        top: servicePointWrapper.offset().top,
+                        behavior: "smooth"
+                    });
 
                     return false;
-                } else if(quote.shippingMethod()['carrier_code'] === 'sendcloud' && servicePointData) {
-                    this.errorValidationMessage(false);
                 }
+
                 return origResult;
             }
         });
