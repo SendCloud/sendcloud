@@ -19,6 +19,8 @@ define([
                     this.errorValidationMessage($t('Please select a service point'));
 
                     return false;
+                } else if(quote.shippingMethod()['carrier_code'] === 'sendcloud' && servicePointData) {
+                    this.errorValidationMessage(false);
                 }
                 return origResult;
             }
