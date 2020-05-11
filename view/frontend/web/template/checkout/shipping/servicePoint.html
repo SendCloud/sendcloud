@@ -20,4 +20,8 @@
         <input name="sendcloud_service_point_country" type="hidden"/>
         <input name="sendcloud_service_point_postnumber" type="hidden"/>
     </div>
+
+    <!-- ko ifnot: servicePointData() -->
+        <div class="message warning" generated="true"><span data-bind="i18n: 'Please select a service point'"></span></div>
+    <!-- /ko -->
 </div>

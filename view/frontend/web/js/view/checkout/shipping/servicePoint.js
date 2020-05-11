@@ -10,14 +10,15 @@ define([
     'https://embed.sendcloud.sc/spp/1.0.0/api.min.js'
 ], function ($, ko, Component, quote, customer, setShippingInformationAction, registry) {
     'use strict';
-    var self = this;
+    var self = this,
+        servicePointData = ko.observable(false);
 
     return Component.extend({
         defaults: {
             template: 'SendCloud_SendCloud/checkout/shipping/servicePoint',
             scriptUrl: ''
         },
-        servicePointData: ko.observable(),
+        servicePointData: servicePointData,
         servicePointButton: ko.observable($.mage.__("Select service point")),
         initObservable: function () {
             this.selectedMethod = ko.computed(function() {
@@ -36,6 +37,7 @@ define([
         servicePoint: function (serviceObject) {
             if (serviceObject) {
                 this.servicePointButton = $.mage.__("Change service point");
+                servicePointData(serviceObject);
 
                 $('.button-service-point').text(this.servicePointButton);
 

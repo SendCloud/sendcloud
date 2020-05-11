@@ -3,7 +3,7 @@ define([
     'mage/utils/wrapper',
     'Magento_Checkout/js/model/quote'
 ], function ($, wrapper, quote) {
-    'use_strict';
+    'use strict';
 
     return function (checkout) {
         checkout.payloadExtender = wrapper.wrapSuper(checkout.payloadExtender, function (payload) {
