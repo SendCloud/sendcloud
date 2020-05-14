@@ -7,8 +7,10 @@ define([
     return function (Component) {
         return Component.extend({
             isPlaceOrderActionAllowed: function () {
-                if (quote.shippingMethod().method_code === 'sendcloud' && !servicePoint().servicePointData()) {
-                    return false;
+                if (typeof quote.shippingMethod() !== 'undefined' && quote.shippingMethod() !== null) {
+                    if (quote.shippingMethod().method_code === 'sendcloud' && !servicePoint().servicePointData()) {
+                        return false;
+                    }
                 }
                 return true;
             }
