@@ -55,7 +55,8 @@ endif; ?>
                     <address>
                         <?= /* @escapeNotVerified */ $order->getSendcloudServicePointName() ?><br>
                         <?= /* @escapeNotVerified */ $order->getSendcloudServicePointStreet() ?> <?= /* @escapeNotVerified */ $order->getSendcloudServicePointHouseNumber() ?><br>
-                        <?= /* @escapeNotVerified */ $order->getSendcloudServicePointZipCode() ?>  <?= /* @escapeNotVerified */ $order->getSendcloudServicePointCity() ?>
+                        <?= /* @escapeNotVerified */ $order->getSendcloudServicePointZipCode() ?>  <?= /* @escapeNotVerified */ $order->getSendcloudServicePointCity() ?><br>
+                        <?= /* @escapeNotVerified */ $order->getSendcloudServicePointPostnumber()?>
                     </address>
                 </div>
             <?php endif; ?>

@@ -5,6 +5,7 @@
             <div id="servicePointStreetAndHouseNumber"></div>
             <div id="servicePointZipCode"></div>
             <div id="servicePointCity"></div>
+            <div id="servicePointPostnumber"></div>
         </div>
 
         <span class="button-service-point" data-bind="click: openSendCloudMap, i18n: 'Select service point',text: servicePointButton,">
@@ -17,5 +18,10 @@
         <input name="sendcloud_service_point_zip_code" type="hidden"/>
         <input name="sendcloud_service_point_city" type="hidden"/>
         <input name="sendcloud_service_point_country" type="hidden"/>
+        <input name="sendcloud_service_point_postnumber" type="hidden"/>
     </div>
+
+    <!-- ko ifnot: servicePointData() -->
+        <div class="message warning" generated="true"><span data-bind="i18n: 'Please select a service point'"></span></div>
+    <!-- /ko -->
 </div>

@@ -10,14 +10,15 @@ define([
     'https://embed.sendcloud.sc/spp/1.0.0/api.min.js'
 ], function ($, ko, Component, quote, customer, setShippingInformationAction, registry) {
     'use strict';
-    var self = this;
+    var self = this,
+        servicePointData = ko.observable(false);
 
     return Component.extend({
         defaults: {
             template: 'SendCloud_SendCloud/checkout/shipping/servicePoint',
             scriptUrl: ''
         },
-        servicePointData: ko.observable(),
+        servicePointData: servicePointData,
         servicePointButton: ko.observable($.mage.__("Select service point")),
         initObservable: function () {
             this.selectedMethod = ko.computed(function() {
@@ -36,6 +37,7 @@ define([
         servicePoint: function (serviceObject) {
             if (serviceObject) {
                 this.servicePointButton = $.mage.__("Change service point");
+                servicePointData(serviceObject);
 
                 $('.button-service-point').text(this.servicePointButton);
 
@@ -43,6 +45,7 @@ define([
                 $('#servicePointStreetAndHouseNumber').html(serviceObject.street + " " + serviceObject.house_number);
                 $('#servicePointZipCode').html(serviceObject.postal_code);
                 $('#servicePointCity').html(serviceObject.city);
+                $('#servicePointPostnumber').html(serviceObject.postnumber);
 
                 $('input[name="sendcloud_service_point_id"]').val(serviceObject.id);
                 $('input[name="sendcloud_service_point_name"]').val(serviceObject.name);
@@ -51,6 +54,7 @@ define([
                 $('input[name="sendcloud_service_point_zip_code"]').val(serviceObject.postal_code);
                 $('input[name="sendcloud_service_point_city"]').val(serviceObject.city);
                 $('input[name="sendcloud_service_point_country"]').val(serviceObject.country);
+                $('input[name="sendcloud_service_point_postnumber"]').val(serviceObject.postnumber);
             }
         },
         sessionData: function() {
@@ -76,9 +80,14 @@ define([
         openServicePointPicker: function (zipCode, countryCode) {
             var self = this;
             var servicePointId = null;
+            var postNumber = null;
 
             if (self.sessionData() && self.sessionData()['id']) {
                 servicePointId = self.sessionData()[['id']];
+            }
+
+            if (self.sessionData() && self.sessionData()['postNumber']) {
+                postNumber = self.sessionData()[['postNumber']];
             }
 
             var lang = document.documentElement.lang;
@@ -98,12 +107,13 @@ define([
                 // you can filter service points by carriers as well.
                 'carriers': null, // comma separated string (e.g. "postnl,bpost,dhl")
                 // you can also pass a servicePointId if you want the map to be opened at a preselected service point
-                'servicePointId': servicePointId // integer
+                'servicePointId': servicePointId, // integer,
+                'postNumber': postNumber
             }
 
             sendcloud.servicePoints.open(
                 config,
-                function(servicePointObject) {
+                function(servicePointObject, postNumber) {
                     var sessionData = {
                             id: servicePointObject.id,
                             name: servicePointObject.name,
@@ -112,11 +122,12 @@ define([
                             postal_code: servicePointObject.postal_code,
                             city: servicePointObject.city,
                             country: servicePointObject.country,
-                            formatted_opening_times: servicePointObject.formatted_opening_times
+                            formatted_opening_times: servicePointObject.formatted_opening_times,
+                            postnumber: postNumber
                         };
                     window.checkoutConfig.quoteData
 
-                    self.servicePoint(servicePointObject);
+                    self.servicePoint(sessionData);
 
                     window.sessionStorage.setItem("service-point-data", JSON.stringify(sessionData));
 

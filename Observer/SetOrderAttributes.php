@@ -46,6 +46,7 @@ class SetOrderAttributes implements ObserverInterface
         $order->setSendcloudServicePointZipCode($quote->getSendcloudServicePointZipCode());
         $order->setSendcloudServicePointCity($quote->getSendcloudServicePointCity());
         $order->setSendcloudServicePointCountry($quote->getSendcloudServicePointCountry());
+        $order->setSendcloudServicePointPostnumber($quote->getSendcloudServicePointPostnumber());
 
         return $this;
     }

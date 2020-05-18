@@ -27,6 +27,11 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $setup = $this->addColumns($setup, 'sales_order_grid');
             $setup = $this->addColumns($setup, 'quote');
         }
+        if (version_compare($context->getVersion(), '1.2.0', '<=')) {
+            $setup = $this->addPostnumber($setup, 'sales_order');
+            $setup = $this->addPostnumber($setup, 'sales_order_grid');
+            $setup = $this->addPostnumber($setup, 'quote');
+        }
         $setup->endSetup();
     }
 
@@ -106,6 +111,32 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'length' => 255,
                 'nullable' => true,
                 'comment' => 'service point country'
+            ]
+        );
+        $connection->addColumn(
+            $setup->getTable($tableName),
+            'sendcloud_service_point_postnumber',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point post number'
+            ]
+        );
+
+        return $setup;
+    }
+
+    private function addPostnumber($setup, $tableName) {
+        $connection = $setup->getConnection();
+        $connection->addColumn(
+            $setup->getTable($tableName),
+            'sendcloud_service_point_postnumber',
+            [
+                'type' => Table::TYPE_TEXT,
+                'length' => 255,
+                'nullable' => true,
+                'comment' => 'service point post number'
             ]
         );
 
