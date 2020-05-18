@@ -27,7 +27,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $setup = $this->addColumns($setup, 'sales_order_grid');
             $setup = $this->addColumns($setup, 'quote');
         }
-        if (version_compare($context->getVersion(), '1.2', '<=')) {
+        if (version_compare($context->getVersion(), '1.2.0', '<=')) {
             $setup = $this->addPostnumber($setup, 'sales_order');
             $setup = $this->addPostnumber($setup, 'sales_order_grid');
             $setup = $this->addPostnumber($setup, 'quote');
