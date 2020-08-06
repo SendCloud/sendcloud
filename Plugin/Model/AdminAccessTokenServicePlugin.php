@@ -23,8 +23,9 @@ class AdminAccessTokenServicePlugin
         $this->adminTokenService = $adminTokenService;
     }
 
-
     /**
+     * Bypass Two factor authentication for Sendcloud
+     *
      * @param AdminAccessTokenService $subject
      * @param callable $proceed
      * @param $username
