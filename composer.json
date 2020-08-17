@@ -4,9 +4,10 @@
   "type": "magento2-module",
   "homepage": "https://www.sendcloud.com/",
   "license": "Apache-2.0",
-  "version": "1.3.0",
-  "require": {
-      "php": "^7.1.0"
+  "version": "1.4.0",
+  "r
+  equire": {
+    "php": "~7.2|~7.3|~7.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.1"
