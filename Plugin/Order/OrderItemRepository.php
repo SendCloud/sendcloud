@@ -3,12 +3,12 @@
 namespace SendCloud\SendCloud\Plugin\Order;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Api\Data\OrderItemExtensionFactory;
 use Magento\Sales\Api\Data\OrderItemInterface;
 use Magento\Sales\Api\Data\OrderItemSearchResultInterface;
 use Magento\Sales\Api\OrderItemRepositoryInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
-use Exception;
 
 class OrderItemRepository
 {
@@ -47,6 +47,7 @@ class OrderItemRepository
      * @param OrderItemRepositoryInterface $subject
      * @param OrderItemInterface $orderItem
      * @return OrderItemInterface
+     * @throws NoSuchEntityException
      */
     public function afterGet(OrderItemRepositoryInterface $subject, OrderItemInterface $orderItem)
     {
@@ -59,6 +60,7 @@ class OrderItemRepository
      * @param OrderItemRepositoryInterface $subject
      * @param OrderItemSearchResultInterface $searchResult
      * @return OrderItemSearchResultInterface
+     * @throws NoSuchEntityException
      */
     public function afterGetList(OrderItemRepositoryInterface $subject, OrderItemSearchResultInterface $searchResult)
     {
@@ -73,7 +75,8 @@ class OrderItemRepository
 
     /**
      * @param $orderItem
-     * @return bool
+     * @return OrderItemRepository
+     * @throws NoSuchEntityException
      */
     protected function setCustomAttributes($orderItem)
     {
@@ -89,8 +92,10 @@ class OrderItemRepository
             $extensionAttributes->setHsCode($hsCode);
 
             $orderItem->setExtensionAttributes($extensionAttributes);
-        } catch (Exception $e) {
-            return $this->logger->debug($e->getMessage());
+        } catch (NoSuchEntityException $e) {
+            $this->logger->debug($e->getMessage());
+
+            return $this;
         }
     }
 }
