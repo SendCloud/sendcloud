@@ -32,6 +32,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $setup = $this->addPostnumber($setup, 'sales_order_grid');
             $setup = $this->addPostnumber($setup, 'quote');
         }
+        if (version_compare($context->getVersion(), '1.5.0', '<=')) {
+            //we force upgrade on module with the etc/db_schema.xml
+        }
+
         $setup->endSetup();
     }
 
