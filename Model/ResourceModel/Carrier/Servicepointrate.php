@@ -2,11 +2,11 @@
 
 namespace SendCloud\SendCloud\Model\ResourceModel\Carrier;
 
-use Psr\Log\LoggerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Store\Model\StoreManagerInterface;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\Carrier\SendCloud;
 use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\Import;
 use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\RateQuery;
@@ -93,8 +93,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
     protected $coreConfig;
 
     /**
-     * @var \Psr\Log\LoggerInterface
-     * @since 100.1.0
+     * @var SendCloudLogger
      */
     protected $logger;
 
@@ -131,7 +130,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
     /**
      * Servicepointrate constructor.
      * @param Context $context
-     * @param LoggerInterface $logger
+     * @param SendCloudLogger $logger
      * @param ScopeConfigInterface $coreConfig
      * @param StoreManagerInterface $storeManager
      * @param SendCloud $carrierServicepointrate
@@ -142,7 +141,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
      */
     public function __construct(
         Context $context,
-        LoggerInterface $logger,
+        SendCloudLogger $logger,
         ScopeConfigInterface $coreConfig,
         StoreManagerInterface $storeManager,
         SendCloud $carrierServicepointrate,
@@ -231,17 +230,9 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
                 $this->_importedRows += count($values);
             }
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            /*throw new \Magento\Framework\Exception\LocalizedException(
-                __('Error in Import: ' . print_r($fields, true) . print_r($values, true) . print_r($e, true))
-            );
-            exit;//*/
             $connection->rollBack();
             throw new \Magento\Framework\Exception\LocalizedException(__('Unable to import data'), $e);
         } catch (\Exception $e) {
-            /*throw new \Magento\Framework\Exception\LocalizedException(
-                __('Error in Import: ' . print_r($fields, true) . print_r($values, true) . print_r($e, true))
-            );
-            exit;*/
             $connection->rollBack();
             $this->logger->critical($e);
             throw new \Magento\Framework\Exception\LocalizedException(

@@ -1,7 +1,6 @@
 <?php
 namespace SendCloud\SendCloud\Controller\Adminhtml\Exportrates;
 
-//use Magento\OfflineShipping\Controller\Adminhtml\System\Config\ExportTablerates;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Config\Controller\Adminhtml\System\ConfigSectionChecker;
 use Magento\Framework\App\Filesystem\DirectoryList;

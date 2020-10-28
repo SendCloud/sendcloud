@@ -2,32 +2,32 @@
 
 namespace SendCloud\SendCloud\Model\Carrier;
 
-use Magento\Framework\DataObject;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\OfflineShipping\Model\Carrier\Flatrate\ItemPriceCalculator;
-use Magento\Quote\Api\Data\ShippingMethodInterface;
-use Magento\Shipping\Model\Carrier\CarrierInterface;
-use SendCloud\SendCloud\Helper\Checkout;
-use SendCloud\SendCloud\Logger\SendCloudLogger;
-use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Directory\Helper\Data;
 use Magento\Directory\Model\CountryFactory;
 use Magento\Directory\Model\CurrencyFactory;
 use Magento\Directory\Model\RegionFactory;
+use Magento\Framework\DataObject;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Xml\Security;
+use Magento\OfflineShipping\Model\Carrier\Flatrate\ItemPriceCalculator;
+use Magento\Quote\Api\Data\ShippingMethodInterface;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory;
 use Magento\Quote\Model\Quote\Address\RateResult\MethodFactory;
 use Magento\Shipping\Model\Carrier\AbstractCarrierOnline;
+use Magento\Shipping\Model\Carrier\CarrierInterface;
+use Magento\Shipping\Model\Rate\Result;
 use Magento\Shipping\Model\Rate\ResultFactory;
 use Magento\Shipping\Model\Simplexml\ElementFactory;
 use Magento\Shipping\Model\Tracking\Result\ErrorFactory as TrackErrorFactory;
 use Magento\Shipping\Model\Tracking\Result\StatusFactory;
 use Magento\Shipping\Model\Tracking\ResultFactory as TrackFactory;
 use Psr\Log\LoggerInterface;
-use Magento\Shipping\Model\Rate\Result;
+use SendCloud\SendCloud\Helper\Checkout;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
+use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
 
 /**
  * Class SendCloud
