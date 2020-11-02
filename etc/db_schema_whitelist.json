@@ -1,0 +1,19 @@
+{
+    "sendcloud_servicepointrate": {
+        "column": {
+            "pk": true,
+            "website_id": true,
+            "dest_country_id": true,
+            "dest_region_id": true,
+            "dest_zip": true,
+            "condition_name": true,
+            "condition_value": true,
+            "price": true,
+            "cost": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "UNQ_D8DHAGSD72O9FDHLA020ILKAHSDALDS8": true
+        }
+    }
+}

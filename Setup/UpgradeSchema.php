@@ -32,6 +32,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $setup = $this->addPostnumber($setup, 'sales_order_grid');
             $setup = $this->addPostnumber($setup, 'quote');
         }
+
         $setup->endSetup();
     }
 

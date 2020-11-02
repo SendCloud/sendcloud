@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sendcloud_servicepointrate" resource="default" engine="innodb" comment="Shipping SendCloud Servicepoint Rates">
+        <column xsi:type="int" name="pk" unsigned="true" nullable="false" identity="true"
+                comment="Primary key"/>
+        <column xsi:type="int" name="website_id" unsigned="false" nullable="false" identity="false"
+                default="0" comment="Website ID"/>
+        <column xsi:type="varchar" name="dest_country_id" nullable="false" length="4" default="0"
+                comment="Destination coutry ISO/2 or ISO/3 code"/>
+        <column xsi:type="int" name="dest_region_id" unsigned="false" nullable="false" identity="false"
+                default="0" comment="Destination Region ID"/>
+        <column xsi:type="varchar" name="dest_zip" nullable="false" length="10" default="*"
+                comment="Destination Post Code (Zip)"/>
+        <column xsi:type="varchar" name="condition_name" nullable="false" length="30" comment="Rate Condition name"/>
+        <column xsi:type="decimal" name="condition_value" scale="4" precision="12" unsigned="false" nullable="false"
+                default="0" comment="Rate condition value"/>
+        <column xsi:type="decimal" name="price" scale="4" precision="12" unsigned="false" nullable="false" default="0"
+                comment="Price"/>
+        <column xsi:type="decimal" name="cost" scale="4" precision="12" unsigned="false" nullable="false" default="0"
+                comment="Cost"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="pk"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNQ_D8DHAGSD72O9FDHLA020ILKAHSDALDS8">
+            <column name="website_id"/>
+            <column name="dest_country_id"/>
+            <column name="dest_region_id"/>
+            <column name="dest_zip"/>
+            <column name="condition_name"/>
+            <column name="condition_value"/>
+        </constraint>
+    </table>
+</schema>
