@@ -31,24 +31,4 @@
             <column name="condition_value"/>
         </constraint>
     </table>
-    <!--<table name="salesrule" resource="default" comment="Salesrule">
-        <column xsi:type="smallint" name="simple_free_shipping" unsigned="true" nullable="false"
-                identity="false" default="0" comment="Simple Free Shipping"/>
-    </table>
-    <table name="sales_order_item" resource="sales" comment="Sales Flat Order Item">
-        <column xsi:type="smallint" name="free_shipping" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Free Shipping"/>
-    </table>
-    <table name="quote_address" resource="checkout" comment="Sales Flat Quote Address">
-        <column xsi:type="smallint" name="free_shipping" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Free Shipping"/>
-    </table>
-    <table name="quote_item" resource="checkout" comment="Sales Flat Quote Item">
-        <column xsi:type="smallint" name="free_shipping" unsigned="true" nullable="false" identity="false"
-                default="0" comment="Free Shipping"/>
-    </table>
-    <table name="quote_address_item" resource="checkout" comment="Sales Flat Quote Address Item">
-        <column xsi:type="int" name="free_shipping" unsigned="true" nullable="true" identity="false"
-                comment="Free Shipping"/>
-    </table>-->
 </schema>

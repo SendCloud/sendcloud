@@ -129,7 +129,6 @@ class Import
         $this->errors = [];
 
         $headers = $this->getHeaders($file);
-        /** @var ColumnResolver $columnResolver */
         $columnResolver = $this->columnResolverFactory->create(['headers' => $headers]);
 
         $rowNumber = 1;

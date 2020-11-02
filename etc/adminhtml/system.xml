@@ -63,9 +63,6 @@
                         <field id="free_shipping_enable">1</field>
                     </depends>
                 </field>
-                <!--<group id="servicepointrate" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>SendCloud Service point Rates</label>
-                <comment>Manage service point rates</comment>-->
                 <field id="sen_condition_name" translate="label" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Condition</label>
                     <source_model>SendCloud\SendCloud\Model\Config\Source\Servicepointrate</source_model>
@@ -85,7 +82,6 @@
                     <label>Note!</label>
                     <comment>Service point rates can be modified in Website scope</comment>
                 </field>
-                <!--</group>-->
                 <field id="specificerrmsg" translate="label" type="textarea" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Displayed Error Message</label>
                 </field>

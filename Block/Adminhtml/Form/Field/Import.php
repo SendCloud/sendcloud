@@ -2,7 +2,9 @@
 
 namespace SendCloud\SendCloud\Block\Adminhtml\Form\Field;
 
-class Import extends \Magento\Framework\Data\Form\Element\AbstractElement
+use \Magento\Framework\Data\Form\Element\AbstractElement;
+
+class Import extends AbstractElement
 {
     /**
      * @return void
@@ -14,8 +16,6 @@ class Import extends \Magento\Framework\Data\Form\Element\AbstractElement
     }
 
     /**
-     * Enter description here...
-     *
      * @return string
      */
     public function getElementHtml()

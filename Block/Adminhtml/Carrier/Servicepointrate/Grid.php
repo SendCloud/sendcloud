@@ -3,16 +3,16 @@
 namespace SendCloud\SendCloud\Block\Adminhtml\Carrier\Servicepointrate;
 
 use \Magento\Backend\Block\Template\Context;
+use \Magento\Backend\Block\Widget\Grid\Extended;
 use \Magento\Backend\Helper\Data;
 use \SendCloud\SendCloud\Model\Carrier\SendCloud;
-use \SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\Collection;
 use \SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\CollectionFactory;
 
 /**
  * Shipping carrier service point rate grid block
  * WARNING: This grid is used for export SendCloud Servicepoint rates
  */
-class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
+class Grid extends Extended
 {
     /**
      * Website filter
@@ -119,11 +119,10 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * Prepare shipping table rate collection
      *
-     * @return \SendCloud\SendCloud\Block\Adminhtml\Carrier\Servicepointrate\Grid
+     * @return Grid
      */
     protected function _prepareCollection()
     {
-        /** @var $collection \SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\Collection */
         $collection = $this->_collectionFactory->create();
         $collection->setConditionFilter($this->getConditionName())->setWebsiteFilter($this->getWebsiteId());
 

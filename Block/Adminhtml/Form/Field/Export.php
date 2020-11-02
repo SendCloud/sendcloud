@@ -1,25 +1,32 @@
 <?php
 namespace SendCloud\SendCloud\Block\Adminhtml\Form\Field;
 
-class Export extends \Magento\Framework\Data\Form\Element\AbstractElement
+use \Magento\Backend\Block\Widget\Button;
+use \Magento\Backend\Model\UrlInterface;
+use \Magento\Framework\Data\Form\Element\AbstractElement;
+use \Magento\Framework\Data\Form\Element\Factory;
+use \Magento\Framework\Data\Form\Element\CollectionFactory;
+use \Magento\Framework\Escaper;
+
+class Export extends AbstractElement
 {
     /**
-     * @var \Magento\Backend\Model\UrlInterface
+     * @var UrlInterface
      */
     protected $_backendUrl;
 
     /**
-     * @param \Magento\Framework\Data\Form\Element\Factory $factoryElement
-     * @param \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection
-     * @param \Magento\Framework\Escaper $escaper
-     * @param \Magento\Backend\Model\UrlInterface $backendUrl
+     * @param Factory $factoryElement
+     * @param CollectionFactory $factoryCollection
+     * @param Escaper $escaper
+     * @param UrlInterface $backendUrl
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Data\Form\Element\Factory $factoryElement,
-        \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection,
-        \Magento\Framework\Escaper $escaper,
-        \Magento\Backend\Model\UrlInterface $backendUrl,
+        Factory $factoryElement,
+        CollectionFactory $factoryCollection,
+        Escaper $escaper,
+        UrlInterface $backendUrl,
         array $data = []
     ) {
         parent::__construct($factoryElement, $factoryCollection, $escaper, $data);
@@ -31,10 +38,8 @@ class Export extends \Magento\Framework\Data\Form\Element\AbstractElement
      */
     public function getElementHtml()
     {
-        /** @var \Magento\Backend\Block\Widget\Button $buttonBlock  */
-        $buttonBlock = $this->getForm()->getParent()->getLayout()->createBlock(
-            \Magento\Backend\Block\Widget\Button::class
-        );
+        /** @var Button $buttonBlock  */
+        $buttonBlock = $this->getForm()->getParent()->getLayout()->createBlock(Button::class);
 
         $params = ['website' => $buttonBlock->getRequest()->getParam('website')];
 
@@ -47,7 +52,6 @@ class Export extends \Magento\Framework\Data\Form\Element\AbstractElement
             'class' => '',
         ];
 
-        $html = $buttonBlock->setData($data)->toHtml();
-        return $html;
+        return $buttonBlock->setData($data)->toHtml();
     }
 }

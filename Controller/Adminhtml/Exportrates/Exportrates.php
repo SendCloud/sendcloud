@@ -1,38 +1,46 @@
 <?php
 namespace SendCloud\SendCloud\Controller\Adminhtml\Exportrates;
 
-use Magento\Framework\App\ResponseInterface;
+use Magento\Backend\App\Action\Context;
+use Magento\Config\Controller\Adminhtml\System\AbstractConfig;
 use Magento\Config\Controller\Adminhtml\System\ConfigSectionChecker;
+use Magento\Config\Model\Config\Structure;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\App\Response\Http\FileFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Store\Model\StoreManagerInterface;
+use SendCloud\SendCloud\Block\Adminhtml\Carrier\Servicepointrate\Grid;
 
-class Exportrates extends \Magento\Config\Controller\Adminhtml\System\AbstractConfig
+class Exportrates extends AbstractConfig
 {
     /**
-     * @var \Magento\Framework\App\Response\Http\FileFactory
+     * @var FileFactory
      */
     protected $_fileFactory;
 
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $_storeManager;
 
 
     /**
      * Exportrates constructor.
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Config\Model\Config\Structure $configStructure
+     * @param Context $context
+     * @param Structure $configStructure
      * @param ConfigSectionChecker $sectionChecker
-     * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param FileFactory $fileFactory
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Config\Model\Config\Structure $configStructure,
+        Context $context,
+        Structure $configStructure,
         ConfigSectionChecker $sectionChecker,
-        \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        FileFactory $fileFactory,
+        StoreManagerInterface $storeManager
     ) {
         $this->_storeManager = $storeManager;
         $this->_fileFactory = $fileFactory;
@@ -43,16 +51,14 @@ class Exportrates extends \Magento\Config\Controller\Adminhtml\System\AbstractCo
     /**
      * Export Servicepoint rates in csv format
      *
-     * @return ResponseInterface|\Magento\Framework\Controller\ResultInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return ResponseInterface|ResultInterface
+     * @throws LocalizedException
      */
     public function execute()
     {
         $fileName = 'sendcloud_servicepointrates.csv';
-        /** @var $gridBlock \SendCloud\SendCloud\Block\Adminhtml\Carrier\Servicepointrate\Grid */
-        $gridBlock = $this->_view->getLayout()->createBlock(
-            \SendCloud\SendCloud\Block\Adminhtml\Carrier\Servicepointrate\Grid::class
-        );
+        /** @var $gridBlock Grid */
+        $gridBlock = $this->_view->getLayout()->createBlock(Grid::class);
         $website = $this->_storeManager->getWebsite($this->getRequest()->getParam('website'));
         if ($this->getRequest()->getParam('conditionName')) {
             $conditionName = $this->getRequest()->getParam('conditionName');
