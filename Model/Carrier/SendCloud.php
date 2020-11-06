@@ -187,12 +187,37 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             return false;
         };
 
+        //TODO: can we remove this?
         if (!$request->getConditionName()) {
             $conditionName = $this->getConfigData('sen_condition_name');
             $request->setConditionName($conditionName ? $conditionName : $this->_defaultConditionName);
         }
 
-        if($request->getConditionName() !== $this->_defaultConditionName) {
+        if($request->getConditionName() == $this->_defaultConditionName || !$request->getConditionName()) {
+
+            //default fixed behaviour
+            $freeBoxes = $this->getFreeBoxesCount($request);
+            $this->setFreeBoxes($freeBoxes);
+
+            /** @var Result $result */
+            $result = $this->_rateResultFactory->create();
+
+            $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
+
+            if ($shippingPrice !== false) {
+                $method = $this->createResultMethod($shippingPrice);
+                $amount = $this->getConfigData('price');
+                if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
+                    $method->setPrice('0.00');
+                    $method->setCost('0.00');
+                } else {
+                    $method->setPrice($amount);
+                    $method->setCost($amount);
+                }
+                $result->append($method);
+            }
+        }
+        else {
 
             // exclude Virtual products price from Package value if pre-configured
             if (!$this->getConfigFlag('sen_include_virtual_price') && $request->getAllItems()) {
@@ -297,30 +322,6 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                     ]
                 );
                 $result->append($error);
-            }
-
-        }
-        else { //default fixed behaviour
-
-            $freeBoxes = $this->getFreeBoxesCount($request);
-            $this->setFreeBoxes($freeBoxes);
-
-            /** @var Result $result */
-            $result = $this->_rateResultFactory->create();
-
-            $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
-
-            if ($shippingPrice !== false) {
-                $method = $this->createResultMethod($shippingPrice);
-                $amount = $this->getConfigData('price');
-                if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
-                    $method->setPrice('0.00');
-                    $method->setCost('0.00');
-                } else {
-                    $method->setPrice($amount);
-                    $method->setCost($amount);
-                }
-                $result->append($method);
             }
         }
 
