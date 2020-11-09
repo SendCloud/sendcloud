@@ -195,12 +195,6 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 
         if($request->getSenConditionName() == $this->_defaultConditionName || !$request->getSenConditionName()) {
 
-
-            $this->sendCloudLogger->debug('We are in default fixed_mode');
-            $this->sendCloudLogger->debug(print_r(['req->getSenConditionName()', $request->getSenConditionName()], true));
-            $this->sendCloudLogger->debug(print_r(['req->getConditionName()', $request->getConditionName()], true));
-            $this->sendCloudLogger->debug(print_r(['_defaultConditionName', $this->_defaultConditionName], true));
-
             //default fixed behaviour
             $freeBoxes = $this->getFreeBoxesCount($request);
             $this->setFreeBoxes($freeBoxes);
@@ -224,11 +218,6 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             }
         }
         else {
-
-            $this->sendCloudLogger->debug('We are in servicepoint rate modus');
-            $this->sendCloudLogger->debug(print_r(['req->getSenConditionName()', $request->getSenConditionName()], true));
-            $this->sendCloudLogger->debug(print_r(['_defaultConditionName', $this->_defaultConditionName], true));
-
 
             // exclude Virtual products price from Package value if pre-configured
             if (!$this->getConfigFlag('sen_include_virtual_price') && $request->getAllItems()) {
