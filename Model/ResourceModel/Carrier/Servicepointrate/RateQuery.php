@@ -64,7 +64,7 @@ class RateQuery
             foreach (range(0, count($this->request->getSenConditionName())) as $conditionNumber) {
                 $bindNameKey = sprintf(':sen_condition_name_%d', $conditionNumber);
                 $bindValueKey = sprintf(':condition_value_%d', $conditionNumber);
-                $orWhere[] = "(condition_name = {$bindNameKey} AND condition_value <= {$bindValueKey})";
+                $orWhere[] = "(sen_condition_name = {$bindNameKey} AND condition_value <= {$bindValueKey})";
             }
 
             if ($orWhere) {
