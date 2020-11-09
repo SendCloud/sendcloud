@@ -6,7 +6,7 @@
             "dest_country_id": true,
             "dest_region_id": true,
             "dest_zip": true,
-            "condition_name": true,
+            "sen_condition_name": true,
             "condition_value": true,
             "price": true,
             "cost": true

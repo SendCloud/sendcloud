@@ -49,7 +49,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     /**
      * @var string
      */
-    protected $_defaultConditionName = 'package_fixed';
+    protected $_defaultConditionName = 'sen_package_fixed';
 
     /**
      * @var array
@@ -150,7 +150,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             $stockRegistry,
             $data
         );
-        foreach ($this->getCode('condition_name') as $k => $v) {
+        foreach ($this->getCode('sen_condition_name') as $k => $v) {
             $this->_conditionNames[] = $k;
         }
     }
@@ -188,12 +188,18 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
         };
 
         //TODO: can we remove this?
-        if (!$request->getConditionName()) {
+        if (!$request->getSenConditionName()) {
             $conditionName = $this->getConfigData('sen_condition_name');
-            $request->setConditionName($conditionName ? $conditionName : $this->_defaultConditionName);
+            $request->setSenConditionName($conditionName ? $conditionName : $this->_defaultConditionName);
         }
 
-        if($request->getConditionName() == $this->_defaultConditionName || !$request->getConditionName()) {
+        if($request->getSenConditionName() == $this->_defaultConditionName || !$request->getSenConditionName()) {
+
+
+            $this->sendCloudLogger->debug('We are in default fixed_mode');
+            $this->sendCloudLogger->debug(print_r(['req->getSenConditionName()', $request->getSenConditionName()], true));
+            $this->sendCloudLogger->debug(print_r(['req->getConditionName()', $request->getConditionName()], true));
+            $this->sendCloudLogger->debug(print_r(['_defaultConditionName', $this->_defaultConditionName], true));
 
             //default fixed behaviour
             $freeBoxes = $this->getFreeBoxesCount($request);
@@ -218,6 +224,11 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             }
         }
         else {
+
+            $this->sendCloudLogger->debug('We are in servicepoint rate modus');
+            $this->sendCloudLogger->debug(print_r(['req->getSenConditionName()', $request->getSenConditionName()], true));
+            $this->sendCloudLogger->debug(print_r(['_defaultConditionName', $this->_defaultConditionName], true));
+
 
             // exclude Virtual products price from Package value if pre-configured
             if (!$this->getConfigFlag('sen_include_virtual_price') && $request->getAllItems()) {
@@ -454,17 +465,17 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     public function getCode($type, $code = '')
     {
         $codes = [
-            'condition_name' => [
-                'package_fixed' => __('Fixed fee shipping price'),
-                'package_weight' => __('Weight vs. Destination'),
-                'package_value_with_discount' => __('Price vs. Destination'),
-                'package_qty' => __('# of Items vs. Destination'),
+            'sen_condition_name' => [
+                'sen_package_fixed' => __('Fixed fee shipping price'),
+                'sen_package_weight' => __('Weight vs. Destination'),
+                'sen_package_value_with_discount' => __('Price vs. Destination'),
+                'sen_package_qty' => __('# of Items vs. Destination'),
             ],
-            'condition_name_short' => [
-                'package_fixed' => __('Fixed fee shipping'),
-                'package_weight' => __('Weight (and above)'),
-                'package_value_with_discount' => __('Order Subtotal (and above)'),
-                'package_qty' => __('# of Items (and above)'),
+            'sen_condition_name_short' => [
+                'sen_package_fixed' => __('Fixed fee shipping'),
+                'sen_package_weight' => __('Weight (and above)'),
+                'sen_package_value_with_discount' => __('Order Subtotal (and above)'),
+                'sen_package_qty' => __('# of Items (and above)'),
             ],
         ];
 

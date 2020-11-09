@@ -264,14 +264,14 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
         $filePath = $_FILES['groups']['tmp_name']['sendcloud']['fields']['sen_import']['value'];
 
         $websiteId = $this->storeManager->getWebsite($object->getScopeId())->getId();
-        $conditionName = $this->getConditionName($object);
+        $conditionName = $this->getSenConditionName($object);
 
         $file = $this->getCsvFile($filePath);
         try {
             // delete old data by website and condition name
             $condition = [
                 'website_id = ?' => $websiteId,
-                'condition_name = ?' => $conditionName,
+                'sen_condition_name = ?' => $conditionName,
             ];
             $this->deleteByCondition($condition);
 
@@ -303,7 +303,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
      * @return mixed|string
      * @since 100.1.0
      */
-    public function getConditionName(\Magento\Framework\DataObject $object)
+    public function getSenConditionName(\Magento\Framework\DataObject $object)
     {
         if ($object->getData('groups/sendcloud/fields/sen_condition_name/inherit') == '1') {
             $conditionName = (string)$this->coreConfig->getValue('carriers/sendcloud/sen_condition_name', 'default');
@@ -340,7 +340,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
     protected function _getConditionFullName($conditionName)
     {
         if (!isset($this->_conditionFullNames[$conditionName])) {
-            $name = $this->carrierServicepointrate->getCode('condition_name_short', $conditionName);
+            $name = $this->carrierServicepointrate->getCode('sen_condition_name_short', $conditionName);
             $this->_conditionFullNames[$conditionName] = $name;
         }
 
@@ -362,7 +362,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
                 'dest_country_id',
                 'dest_region_id',
                 'dest_zip',
-                'condition_name',
+                'sen_condition_name',
                 'condition_value',
                 'price',
             ];
