@@ -269,6 +269,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                 $newPackageValue = $oldValue - $freePackageValue;
                 $request->setPackageValue($newPackageValue);
                 $request->setPackageValueWithDiscount($newPackageValue);
+                $request->setSenPackageValueWithDiscount($newPackageValue); //added so we set this according to the conditions we use in Sendcloud
             }
 
             $this->setFreeBoxes($freeBoxes);
@@ -279,6 +280,8 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 
             $request->setPackageWeight($request->getFreeMethodWeight());
             $request->setPackageQty($oldQty - $freeQty);
+            $request->setSenPackageWeight($request->getPackageWeight());
+            $request->setSenPackageQty($request->getPackageQty());
 
             /** @var \Magento\Shipping\Model\Rate\Result $result */
             $result = $this->_rateResultFactory->create();
@@ -286,16 +289,18 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 
             $request->setPackageWeight($oldWeight);
             $request->setPackageQty($oldQty);
+            $request->setSenPackageWeight($oldWeight);
+            $request->setSenPackageQty($oldQty);
 
             if (!empty($rate) && $rate['price'] >= 0) {
-                if ($request->getPackageQty() == $freeQty) {
+                if ($request->getSenPackageQty() == $freeQty) {
                     $shippingPrice = 0;
                 } else {
                     $shippingPrice = $this->getFinalPriceWithHandlingFee($rate['price']);
                 }
                 $method = $this->createShippingMethod($shippingPrice, $rate['cost']);
                 $result->append($method);
-            } elseif ($request->getPackageQty() == $freeQty) {
+            } elseif ($request->getSenPackageQty() == $freeQty) {
 
                 /**
                  * Promotion rule was applied for the whole cart.
@@ -305,7 +310,10 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                  */
                 $request->setPackageValue($freePackageValue);
                 $request->setPackageQty($freeQty);
+                $request->setSenPackageValue($freePackageValue);
+                $request->setSenPackageQty($freeQty);
                 $rate = $this->getRate($request);
+
                 if (!empty($rate) && $rate['price'] >= 0) {
                     $method = $this->createShippingMethod(0, 0);
                     $result->append($method);
