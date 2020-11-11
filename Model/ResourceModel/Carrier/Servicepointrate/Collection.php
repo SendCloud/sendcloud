@@ -83,7 +83,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     public function setConditionFilter($conditionName)
     {
-        return $this->addFieldToFilter('condition_name', $conditionName);
+        return $this->addFieldToFilter('sen_condition_name', $conditionName);
     }
 
     /**

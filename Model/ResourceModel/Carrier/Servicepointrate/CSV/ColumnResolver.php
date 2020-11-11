@@ -37,7 +37,7 @@ class ColumnResolver
     {
         $this->nameToPositionIdMap = array_merge($this->nameToPositionIdMap, $columns);
         $this->headers = array_map('trim', $headers);
-    } //*/
+    }
 
     /**
      * @param string $column

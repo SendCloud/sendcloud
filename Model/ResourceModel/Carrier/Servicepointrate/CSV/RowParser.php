@@ -36,7 +36,7 @@ class RowParser
             'dest_country_id',
             'dest_region_id',
             'dest_zip',
-            'condition_name',
+            'sen_condition_name',
             'condition_value',
             'price',
         ];
@@ -86,7 +86,7 @@ class RowParser
                 'dest_country_id' => $countryId,
                 'dest_region_id' => $regionId,
                 'dest_zip' => $zipCode,
-                'condition_name' => $conditionShortName,
+                'sen_condition_name' => $conditionShortName,
                 'condition_value' => $conditionValue,
                 'price' => $price,
             ];

@@ -33,7 +33,7 @@ class Servicepointrate implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         $arr = [];
-        foreach ($this->_carrierServicepointrate->getCode('condition_name') as $k => $v) {
+        foreach ($this->_carrierServicepointrate->getCode('sen_condition_name') as $k => $v) {
             $arr[] = ['value' => $k, 'label' => $v];
         }
         return $arr;

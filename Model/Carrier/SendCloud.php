@@ -49,7 +49,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     /**
      * @var string
      */
-    protected $_defaultConditionName = 'package_fixed';
+    protected $_defaultConditionName = 'sen_package_fixed';
 
     /**
      * @var array
@@ -150,7 +150,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             $stockRegistry,
             $data
         );
-        foreach ($this->getCode('condition_name') as $k => $v) {
+        foreach ($this->getCode('sen_condition_name') as $k => $v) {
             $this->_conditionNames[] = $k;
         }
     }
@@ -187,12 +187,37 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             return false;
         };
 
-        if (!$request->getConditionName()) {
+        //TODO: can we remove this?
+        if (!$request->getSenConditionName()) {
             $conditionName = $this->getConfigData('sen_condition_name');
-            $request->setConditionName($conditionName ? $conditionName : $this->_defaultConditionName);
+            $request->setSenConditionName($conditionName ? $conditionName : $this->_defaultConditionName);
         }
 
-        if($request->getConditionName() !== $this->_defaultConditionName) {
+        if($request->getSenConditionName() == $this->_defaultConditionName || !$request->getSenConditionName()) {
+
+            //default fixed behaviour
+            $freeBoxes = $this->getFreeBoxesCount($request);
+            $this->setFreeBoxes($freeBoxes);
+
+            /** @var Result $result */
+            $result = $this->_rateResultFactory->create();
+
+            $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
+
+            if ($shippingPrice !== false) {
+                $method = $this->createResultMethod($shippingPrice);
+                $amount = $this->getConfigData('price');
+                if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
+                    $method->setPrice('0.00');
+                    $method->setCost('0.00');
+                } else {
+                    $method->setPrice($amount);
+                    $method->setCost($amount);
+                }
+                $result->append($method);
+            }
+        }
+        else {
 
             // exclude Virtual products price from Package value if pre-configured
             if (!$this->getConfigFlag('sen_include_virtual_price') && $request->getAllItems()) {
@@ -244,6 +269,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                 $newPackageValue = $oldValue - $freePackageValue;
                 $request->setPackageValue($newPackageValue);
                 $request->setPackageValueWithDiscount($newPackageValue);
+                $request->setSenPackageValueWithDiscount($newPackageValue); //added so we set this according to the conditions we use in Sendcloud
             }
 
             $this->setFreeBoxes($freeBoxes);
@@ -254,6 +280,8 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 
             $request->setPackageWeight($request->getFreeMethodWeight());
             $request->setPackageQty($oldQty - $freeQty);
+            $request->setSenPackageWeight($request->getPackageWeight());
+            $request->setSenPackageQty($request->getPackageQty());
 
             /** @var \Magento\Shipping\Model\Rate\Result $result */
             $result = $this->_rateResultFactory->create();
@@ -261,16 +289,18 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 
             $request->setPackageWeight($oldWeight);
             $request->setPackageQty($oldQty);
+            $request->setSenPackageWeight($oldWeight);
+            $request->setSenPackageQty($oldQty);
 
             if (!empty($rate) && $rate['price'] >= 0) {
-                if ($request->getPackageQty() == $freeQty) {
+                if ($request->getSenPackageQty() == $freeQty) {
                     $shippingPrice = 0;
                 } else {
                     $shippingPrice = $this->getFinalPriceWithHandlingFee($rate['price']);
                 }
                 $method = $this->createShippingMethod($shippingPrice, $rate['cost']);
                 $result->append($method);
-            } elseif ($request->getPackageQty() == $freeQty) {
+            } elseif ($request->getSenPackageQty() == $freeQty) {
 
                 /**
                  * Promotion rule was applied for the whole cart.
@@ -280,7 +310,10 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                  */
                 $request->setPackageValue($freePackageValue);
                 $request->setPackageQty($freeQty);
+                $request->setSenPackageValue($freePackageValue);
+                $request->setSenPackageQty($freeQty);
                 $rate = $this->getRate($request);
+
                 if (!empty($rate) && $rate['price'] >= 0) {
                     $method = $this->createShippingMethod(0, 0);
                     $result->append($method);
@@ -297,30 +330,6 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                     ]
                 );
                 $result->append($error);
-            }
-
-        }
-        else { //default fixed behaviour
-
-            $freeBoxes = $this->getFreeBoxesCount($request);
-            $this->setFreeBoxes($freeBoxes);
-
-            /** @var Result $result */
-            $result = $this->_rateResultFactory->create();
-
-            $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
-
-            if ($shippingPrice !== false) {
-                $method = $this->createResultMethod($shippingPrice);
-                $amount = $this->getConfigData('price');
-                if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
-                    $method->setPrice('0.00');
-                    $method->setCost('0.00');
-                } else {
-                    $method->setPrice($amount);
-                    $method->setCost($amount);
-                }
-                $result->append($method);
             }
         }
 
@@ -453,17 +462,17 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     public function getCode($type, $code = '')
     {
         $codes = [
-            'condition_name' => [
-                'package_fixed' => __('Fixed fee shipping price'),
-                'package_weight' => __('Weight vs. Destination'),
-                'package_value_with_discount' => __('Price vs. Destination'),
-                'package_qty' => __('# of Items vs. Destination'),
+            'sen_condition_name' => [
+                'sen_package_fixed' => __('Fixed fee shipping price'),
+                'sen_package_weight' => __('Weight vs. Destination'),
+                'sen_package_value_with_discount' => __('Price vs. Destination'),
+                'sen_package_qty' => __('# of Items vs. Destination'),
             ],
-            'condition_name_short' => [
-                'package_fixed' => __('Fixed fee shipping'),
-                'package_weight' => __('Weight (and above)'),
-                'package_value_with_discount' => __('Order Subtotal (and above)'),
-                'package_qty' => __('# of Items (and above)'),
+            'sen_condition_name_short' => [
+                'sen_package_fixed' => __('Fixed fee shipping'),
+                'sen_package_weight' => __('Weight (and above)'),
+                'sen_package_value_with_discount' => __('Order Subtotal (and above)'),
+                'sen_package_qty' => __('# of Items (and above)'),
             ],
         ];
 

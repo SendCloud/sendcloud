@@ -59,19 +59,19 @@ class RateQuery
         $select->where($orWhere);
 
         // Render condition by condition name
-        if (is_array($this->request->getConditionName())) {
+        if (is_array($this->request->getSenConditionName())) {
             $orWhere = [];
-            foreach (range(0, count($this->request->getConditionName())) as $conditionNumber) {
-                $bindNameKey = sprintf(':condition_name_%d', $conditionNumber);
+            foreach (range(0, count($this->request->getSenConditionName())) as $conditionNumber) {
+                $bindNameKey = sprintf(':sen_condition_name_%d', $conditionNumber);
                 $bindValueKey = sprintf(':condition_value_%d', $conditionNumber);
-                $orWhere[] = "(condition_name = {$bindNameKey} AND condition_value <= {$bindValueKey})";
+                $orWhere[] = "(sen_condition_name = {$bindNameKey} AND condition_value <= {$bindValueKey})";
             }
 
             if ($orWhere) {
                 $select->where(implode(' OR ', $orWhere));
             }
         } else {
-            $select->where('condition_name = :condition_name');
+            $select->where('sen_condition_name = :sen_condition_name');
             $select->where('condition_value <= :condition_value');
         }
         return $select;
@@ -93,18 +93,18 @@ class RateQuery
         ];
 
         // Render condition by condition name
-        if (is_array($this->request->getConditionName())) {
+        if (is_array($this->request->getSenConditionName())) {
             $i = 0;
-            foreach ($this->request->getConditionName() as $conditionName) {
-                $bindNameKey = sprintf(':condition_name_%d', $i);
+            foreach ($this->request->getSenConditionName() as $conditionName) {
+                $bindNameKey = sprintf(':sen_condition_name_%d', $i);
                 $bindValueKey = sprintf(':condition_value_%d', $i);
                 $bind[$bindNameKey] = $conditionName;
                 $bind[$bindValueKey] = $this->request->getData($conditionName);
                 $i++;
             }
         } else {
-            $bind[':condition_name'] = $this->request->getConditionName();
-            $bind[':condition_value'] = round($this->request->getData($this->request->getConditionName()), 4);
+            $bind[':sen_condition_name'] = $this->request->getSenConditionName();
+            $bind[':condition_value'] = round($this->request->getData($this->request->getSenConditionName()), 4);
         }
 
         return $bind;
