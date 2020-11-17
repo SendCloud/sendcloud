@@ -6,5 +6,10 @@
                 <value id="sendcloud" type="host">*.sendcloud.sc</value>
             </values>
         </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="sendcloud" type="host">*.sendcloud.sc</value>
+            </values>
+        </policy>
     </policies>
 </csp_whitelist>
