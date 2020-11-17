@@ -4,8 +4,9 @@ define([
     'Magento_Checkout/js/action/select-shipping-method',
     'Magento_Checkout/js/model/quote',
     'uiRegistry',
-    'mage/translate'
-], function (rateRegistry, shippingService, selectShippingMethodAction, quote, uiRegistry, $t) {
+    'mage/translate',
+    'jquery'
+], function (rateRegistry, shippingService, selectShippingMethodAction, quote, uiRegistry, $t, $) {
     'use strict';
 
     return function (Component) {
@@ -50,7 +51,7 @@ define([
 
                         selectShippingMethodAction(selectMethod);
 
-                        if (selectMethod) {
+                        if (selectMethod && $('#sendcloud-service-point .message.warning').length === 0) {
                             if (selectMethod.carrier_code === 'sendcloud' && !servicePointData) {
                                 uiRegistry.async("checkout.steps.shipping-step.shippingAddress")(
                                     function (shippingValidation) {
