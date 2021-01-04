@@ -80,14 +80,14 @@ class OrderItemRepository
      */
     protected function setCustomAttributes($orderItem)
     {
-        $product = $this->productRepository->getById($orderItem->getProductId());
-        $countryOfManufacture = $product->getData(self::COUNTRY_OF_MANUFACTURE);
-        $hsCode = $product->getData(self::HS_CODE);
-
-        $extensionAttributes = $orderItem->getExtensionAttributes();
-        $extensionAttributes = $extensionAttributes ? $extensionAttributes : $this->extensionFactory->create();
-
         try {
+            $product = $this->productRepository->getById($orderItem->getProductId());
+            $countryOfManufacture = $product->getData(self::COUNTRY_OF_MANUFACTURE);
+            $hsCode = $product->getData(self::HS_CODE);
+
+            $extensionAttributes = $orderItem->getExtensionAttributes();
+            $extensionAttributes = $extensionAttributes ? $extensionAttributes : $this->extensionFactory->create();
+
             $extensionAttributes->setCountryOfManufacture($countryOfManufacture);
             $extensionAttributes->setHsCode($hsCode);
 
