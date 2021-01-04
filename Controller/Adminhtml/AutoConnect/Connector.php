@@ -12,7 +12,6 @@ use SendCloud\SendCloud\Logger\SendCloudLogger;
 /**
  * Class Index
  *
- * @package SendCloud\SendCloud\Controller\Adminhtml\AutoConnect
  */
 class Connector extends Action
 {

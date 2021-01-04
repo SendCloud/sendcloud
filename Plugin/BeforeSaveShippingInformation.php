@@ -12,7 +12,6 @@ use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class BeforeSaveShippingInformation
- * @package SendCloud\SendCloud\Plugin
  */
 class BeforeSaveShippingInformation
 {

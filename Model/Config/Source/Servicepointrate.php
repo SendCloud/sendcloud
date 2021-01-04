@@ -4,7 +4,6 @@ namespace SendCloud\SendCloud\Model\Config\Source;
 
 /**
  * Class Servicepointrate
- * @package SendCloud\SendCloud\Model\Config\Source
  *
  * TODO: class Servicepointrate implements \Magento\Framework\Option\OptionSourceInterface
  * use OptionSourceInterface as ArrayInterface is deprecated, but OptionSourceInterface gives compile error when used.

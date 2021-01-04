@@ -31,7 +31,6 @@ use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
 
 /**
  * Class SendCloud
- * @package SendCloud\SendCloud\Model\Carrier
  */
 class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 {

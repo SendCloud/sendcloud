@@ -5,7 +5,6 @@ namespace SendCloud\SendCloud\Block\System\Config\Form;
 /**
  * Class Button
  *
- * @package SendCloud\SendCloud\Block\System\Config\Form
  */
 class Button extends \Magento\Config\Block\System\Config\Form\Field
 {

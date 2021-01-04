@@ -13,7 +13,6 @@ use Magento\Authorization\Model\UserContextInterface;
 /**
  * Class AutoGenerateApiUser
  *
- * @package SendCloud\SendCloud\Controller\Adminhtml\AutoConnect
  */
 class AutoGenerateApiUser
 {

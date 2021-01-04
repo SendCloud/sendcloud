@@ -9,7 +9,6 @@ use Magento\Framework\Setup\UpgradeSchemaInterface;
 
 /**
  * Class UpgradeSchema
- * @package SendCloud\SendCloud\Setup
  */
 class UpgradeSchema implements UpgradeSchemaInterface
 {

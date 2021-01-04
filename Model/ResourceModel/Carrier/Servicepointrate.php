@@ -5,6 +5,7 @@ namespace SendCloud\SendCloud\Model\ResourceModel\Carrier;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Model\ResourceModel\Db\Context;
+use Magento\Backend\App\Action;
 use Magento\Store\Model\StoreManagerInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\Carrier\SendCloud;
@@ -128,6 +129,11 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
     private $rateQueryFactory;
 
     /**
+     * @var RequestInterface
+     */
+    private $request;
+
+    /**
      * Servicepointrate constructor.
      * @param Context $context
      * @param SendCloudLogger $logger
@@ -148,6 +154,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
         Filesystem $filesystem,
         Import $import,
         RateQueryFactory $rateQueryFactory,
+        Action $action,
         $connectionName = null
     ) {
         parent::__construct($context, $connectionName);
@@ -158,6 +165,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
         $this->filesystem = $filesystem;
         $this->import = $import;
         $this->rateQueryFactory = $rateQueryFactory;
+        $this->request = $action;
     }
 
     /**
@@ -255,14 +263,18 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
      */
     public function uploadAndImport(\Magento\Framework\DataObject $object)
     {
-        /**
-         * @var \Magento\Framework\App\Config\Value $object
-         */
-        if (empty($_FILES['groups']['tmp_name']['sendcloud']['fields']['sen_import']['value'])) {
-            return $this;
+        $request   = $this->getController()->getRequest();
+        $files = $request->getFiles()->toArray();
+        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/test.log');
+        $logger = new \Zend\Log\Logger();
+        $logger->addWriter($writer);
+        $logger->info(var_export($files,true));
+        if(!isset($files['groups']['sendcloud']['fields']['sen_import']['value'])){
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Something went wrong while importing Sendcloud Servicepoint rates.')
+            );
         }
-        $filePath = $_FILES['groups']['tmp_name']['sendcloud']['fields']['sen_import']['value'];
-
+        $filePath = $files['groups']['sendcloud']['fields']['sen_import']['value'];
         $websiteId = $this->storeManager->getWebsite($object->getScopeId())->getId();
         $conditionName = $this->getSenConditionName($object);
 

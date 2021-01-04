@@ -6,7 +6,6 @@ use Magento\Framework\Logger\Handler\Base;
 
 /**
  * Class SendCloudHandler
- * @package SendCloud\SendCloud\Logger
  */
 class SendCloudHandler extends Base
 {
