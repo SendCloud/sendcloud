@@ -10,6 +10,7 @@ use Magento\Store\Model\ScopeInterface;
  */
 class Config extends Template
 {
+
     /**
      * @return mixed
      */

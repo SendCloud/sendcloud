@@ -12,6 +12,7 @@ use SendCloud\SendCloud\Logger\SendCloudLogger;
  */
 class Checkout extends AbstractHelper
 {
+
     private $sendCloudLogger;
 
     /**

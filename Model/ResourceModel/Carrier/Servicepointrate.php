@@ -13,7 +13,6 @@ use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\Import;
 use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\RateQuery;
 use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\RateQueryFactory;
 
-
 /**
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -340,7 +339,6 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
 
         return $directoryRead->openFile($fileName);
     }
-
 
     /**
      * Return import condition full name by condition name code

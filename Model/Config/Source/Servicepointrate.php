@@ -15,7 +15,6 @@ class Servicepointrate implements \Magento\Framework\Option\ArrayInterface
      */
     protected $_carrierServicepointrate;
 
-
     /**
      * Servicepointrate constructor.
      * @param \SendCloud\SendCloud\Model\Carrier\SendCloud $carrierServicepointrate

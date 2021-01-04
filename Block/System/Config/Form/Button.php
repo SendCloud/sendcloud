@@ -8,6 +8,7 @@ namespace SendCloud\SendCloud\Block\System\Config\Form;
  */
 class Button extends \Magento\Config\Block\System\Config\Form\Field
 {
+
     const BUTTON_TEMPLATE = 'system/config/button/button.phtml';
 
     /**

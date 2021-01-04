@@ -34,6 +34,7 @@ use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
  */
 class SendCloud extends AbstractCarrierOnline implements CarrierInterface
 {
+
     /**
      * @var string
      */
@@ -123,8 +124,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
         Checkout $helper,
         ServicepointrateFactory $servicepointrateFactory,
         array $data = []
-    )
-    {
+    ){
         $this->_rateResultFactory = $rateResultFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
         $this->itemPriceCalculator = $itemPriceCalculator;
@@ -160,6 +160,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
      */
     protected function _doShipmentRequest(DataObject $request)
     {
+        //Do nothing at the moment
     }
 
     /**
@@ -192,7 +193,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             $request->setSenConditionName($conditionName ? $conditionName : $this->_defaultConditionName);
         }
 
-        if($request->getSenConditionName() == $this->_defaultConditionName || !$request->getSenConditionName()) {
+        if ($request->getSenConditionName() == $this->_defaultConditionName || !$request->getSenConditionName()) {
 
             //default fixed behaviour
             $freeBoxes = $this->getFreeBoxesCount($request);
@@ -206,7 +207,8 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
             if ($shippingPrice !== false) {
                 $method = $this->createResultMethod($shippingPrice);
                 $amount = $this->getConfigData('price');
-                if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
+                if ($this->getConfigData('free_shipping_enable') &&
+                    $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
                     $method->setPrice('0.00');
                     $method->setCost('0.00');
                 } else {
@@ -215,8 +217,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                 }
                 $result->append($method);
             }
-        }
-        else {
+        } else {
 
             // exclude Virtual products price from Package value if pre-configured
             if (!$this->getConfigFlag('sen_include_virtual_price') && $request->getAllItems()) {
@@ -268,7 +269,7 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
                 $newPackageValue = $oldValue - $freePackageValue;
                 $request->setPackageValue($newPackageValue);
                 $request->setPackageValueWithDiscount($newPackageValue);
-                $request->setSenPackageValueWithDiscount($newPackageValue); //added so we set this according to the conditions we use in Sendcloud
+                $request->setSenPackageValueWithDiscount($newPackageValue);
             }
 
             $this->setFreeBoxes($freeBoxes);

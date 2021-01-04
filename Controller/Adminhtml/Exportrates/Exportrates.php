@@ -20,12 +20,10 @@ class Exportrates extends AbstractConfig
      */
     protected $_fileFactory;
 
-
     /**
      * @var StoreManagerInterface
      */
     protected $_storeManager;
-
 
     /**
      * Exportrates constructor.
@@ -46,7 +44,6 @@ class Exportrates extends AbstractConfig
         $this->_fileFactory = $fileFactory;
         parent::__construct($context, $configStructure, $sectionChecker);
     }
-
 
     /**
      * Export Servicepoint rates in csv format
