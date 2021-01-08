@@ -131,7 +131,6 @@ class Grid extends Extended
         return parent::_prepareCollection();
     }
 
-
     /**
      * Prepare table columns
      *

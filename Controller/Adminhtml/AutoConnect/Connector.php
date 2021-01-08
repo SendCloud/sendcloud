@@ -12,7 +12,6 @@ use SendCloud\SendCloud\Logger\SendCloudLogger;
 /**
  * Class Index
  *
- * @package SendCloud\SendCloud\Controller\Adminhtml\AutoConnect
  */
 class Connector extends Action
 {
@@ -37,7 +36,13 @@ class Connector extends Action
      * @param Random $mathRandom
      * @param SendCloudLogger $logger
      */
-    public function __construct(Context $context, PageFactory $resultPageFactory, AutoGenerateApiUser $autoGenerateApiUser, Random $mathRandom, SendCloudLogger $logger)
+    public function __construct(
+        Context $context,
+        PageFactory $resultPageFactory,
+        AutoGenerateApiUser $autoGenerateApiUser,
+        Random $mathRandom,
+        SendCloudLogger $logger
+    )
     {
         $this->resultPageFactory = $resultPageFactory;
         $this->autoGenerateApiUser = $autoGenerateApiUser;

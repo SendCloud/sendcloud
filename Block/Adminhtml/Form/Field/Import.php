@@ -22,8 +22,8 @@ class Import extends AbstractElement
     {
         $html = '';
 
-        $html .= '<input id="time_condition_sendcloud" type="hidden" name="' . $this->getName() . '" value="' . time() . '" />';
-
+        $html .= '<input id="time_condition_sendcloud" type="hidden" name="'
+            . $this->getName() . '" value="' . time() . '" />';
         $html .= <<<EndHTML
         <script>
         require(['prototype'], function(){

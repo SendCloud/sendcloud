@@ -7,10 +7,10 @@ use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class Config
- * @package SendCloud\SendCloud\Block\Checkout
  */
 class Config extends Template
 {
+
     /**
      * @return mixed
      */
