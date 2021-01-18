@@ -269,6 +269,9 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
                 __('Something went wrong while importing Sendcloud Servicepoint rates.')
             );
         }
+        if(empty($files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'])){
+            return false;
+        }
         $filePath = $files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'];
         $websiteId = $this->storeManager->getWebsite($object->getScopeId())->getId();
         $conditionName = $this->getSenConditionName($object);
