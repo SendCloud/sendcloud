@@ -262,7 +262,6 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
      */
     public function uploadAndImport(\Magento\Framework\DataObject $object)
     {
-        
         $files = $this->request->getFiles()->toArray();
         if(!isset($files['groups']['sendcloud']['fields']['sen_import']['value'])){
             throw new \Magento\Framework\Exception\LocalizedException(
@@ -272,7 +271,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
         if(empty($files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'])){
             return false;
         }
-        $filePath = $files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'];
+        $filePath = $files['groups']['sendcloud']['fields']['sen_import']['value'];
         $websiteId = $this->storeManager->getWebsite($object->getScopeId())->getId();
         $conditionName = $this->getSenConditionName($object);
 
