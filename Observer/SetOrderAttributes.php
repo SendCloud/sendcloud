@@ -9,7 +9,6 @@ use Magento\Quote\Model\QuoteRepository;
 
 /**
  * Class SetOrderAttributes
- * @package SendCloud\SendCloud\Observer
  */
 class SetOrderAttributes implements ObserverInterface
 {

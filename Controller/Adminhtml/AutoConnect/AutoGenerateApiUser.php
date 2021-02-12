@@ -13,10 +13,10 @@ use Magento\Authorization\Model\UserContextInterface;
 /**
  * Class AutoGenerateApiUser
  *
- * @package SendCloud\SendCloud\Controller\Adminhtml\AutoConnect
  */
 class AutoGenerateApiUser
 {
+
     /** @var UserFactory  */
     private $userFactory;
 
@@ -36,7 +36,6 @@ class AutoGenerateApiUser
         'Magento_Sales::ship'
     ];
 
-
     /** @var RoleFactory  */
     private $roleFactory;
 
@@ -51,7 +50,12 @@ class AutoGenerateApiUser
      * @param RoleFactory $roleFactory
      * @param RulesFactory $rulesFactory
      */
-    public function __construct(UserFactory $userFactory, SendCloudLogger $logger, RoleFactory $roleFactory, RulesFactory $rulesFactory)
+    public function __construct(
+        UserFactory $userFactory,
+        SendCloudLogger $logger,
+        RoleFactory $roleFactory,
+        RulesFactory $rulesFactory
+    )
     {
         $this->userFactory = $userFactory;
         $this->logger = $logger;

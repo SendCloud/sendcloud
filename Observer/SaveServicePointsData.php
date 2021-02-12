@@ -8,7 +8,6 @@ use Magento\Quote\Model\QuoteRepository;
 
 /**
  * Class SaveServicePointsData
- * @package SendCloud\SendCloud\Observer
  */
 class SaveServicePointsData implements ObserverInterface
 {

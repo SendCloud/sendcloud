@@ -9,10 +9,10 @@ use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class Checkout
- * @package SendCloud\SendCloud\Helper
  */
 class Checkout extends AbstractHelper
 {
+
     private $sendCloudLogger;
 
     /**

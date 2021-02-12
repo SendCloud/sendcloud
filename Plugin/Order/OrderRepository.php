@@ -10,7 +10,6 @@ use Magento\Sales\Model\OrderRepository as MagentoOrderRepository;
 
 /**
  * Class OrderRepository
- * @package SendCloud\SendCloud\Plugin\Order
  */
 class OrderRepository
 {
