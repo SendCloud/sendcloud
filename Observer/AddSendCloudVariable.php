@@ -2,7 +2,6 @@
 
 namespace SendCloud\SendCloud\Observer;
 
-use Magento\Framework\Escaper;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Api\Data\OrderInterface;
@@ -10,18 +9,6 @@ use Magento\Sales\Api\Data\OrderInterface;
 class AddSendCloudVariable implements ObserverInterface
 {
     private $order = null;
-
-    /**
-     * @var Escaper
-     */
-    private Escaper $escaper;
-
-    public function __construct(
-        Escaper $escaper
-    )
-    {
-        $this->escaper = $escaper;
-    }
 
     public function execute(Observer $observer)
     {
