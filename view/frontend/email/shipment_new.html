@@ -13,8 +13,8 @@
 "var payment_html|raw":"Payment Details",
 "var comment|escape|nl2br":"Shipment Comment",
 "var shipment.increment_id":"Shipment Id",
-"layout handle=\"sales_email_order_shipment_items\" shipment=$shipment order=$order":"Shipment Items Grid",
-"block class='Magento\\\\Framework\\\\View\\\\Element\\\\Template' area='frontend' template='Magento_Sales::email\/shipment\/track.phtml' shipment=$shipment order=$order":"Shipment Track Details",
+"layout handle=\"sc_sales_email_order_shipment_items\" shipment=$shipment order=$order":"Shipment Items Grid",
+"block class='Magento\\\\Framework\\\\View\\\\Element\\\\Template' area='frontend' template='SendCloud_SendCloud::email\/shipment\/track.phtml' shipment=$shipment order=$order":"Shipment Track Details",
 "var formattedShippingAddress|raw":"Shipping Address",
 "var order.shipping_description":"Shipping Description",
 "var store.frontend_name":"Store Frontend Name",
@@ -64,7 +64,7 @@
                 </tr>
             </table>
             {{/depend}}
-            {{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='SendCloud_SendCloud::email/shipment/track.phtml' shipment=$shipment order=$order}}
+            {{layout handle="sc_sales_email_order_shipment_track" shipment_id=$shipment_id order_id=$order_id}}
             <table class="order-details">
                 <tr>
                     <td class="address-details">

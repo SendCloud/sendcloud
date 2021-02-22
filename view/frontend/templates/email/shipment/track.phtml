@@ -8,11 +8,14 @@
 <?php $_shipment = $block->getShipment() ?>
 <?php
 /* @var \Magento\Sales\Model\Order $_order */
-$_url = 'https://tracking.sendcloud.sc/forward?';
 $_order = $block->getOrder();
-$_countryId = $_order->getShippingAddress()->getCountryId();
-$_postcode = str_replace(' ', '+', $_order->getShippingAddress()->getPostcode())?>
+$_url = 'https://tracking.sendcloud.sc/forward?';
+?>
 <?php if ($_shipment && $_order) : ?>
+<?php
+    $_countryId = $_order->getShippingAddress()->getCountryId();
+    $_postcode = str_replace(' ', '+', $_order->getShippingAddress()->getPostcode())
+?>
     <?php $trackCollection = $_order->getTracksCollection($_shipment->getId()) ?>
     <?php if ($trackCollection) : ?>
         <br />
