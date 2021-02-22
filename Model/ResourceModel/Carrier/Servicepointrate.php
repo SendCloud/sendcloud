@@ -271,7 +271,7 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
         if(empty($files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'])){
             return false;
         }
-        $filePath = $files['groups']['sendcloud']['fields']['sen_import']['value'];
+        $filePath = $files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'];
         $websiteId = $this->storeManager->getWebsite($object->getScopeId())->getId();
         $conditionName = $this->getSenConditionName($object);
 
