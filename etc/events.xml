@@ -11,4 +11,8 @@
     <event name="email_order_set_template_vars_before">
         <observer name="add_sendcloud_variable_to_order" instance="SendCloud\SendCloud\Observer\AddSendCloudVariable"/>
     </event>
+
+    <event name="email_shipment_set_template_vars_before">
+        <observer name="add_sendcloud_variable_to_shipment" instance="SendCloud\SendCloud\Observer\AddSendCloudVariable"/>
+    </event>
 </config>
