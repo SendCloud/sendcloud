@@ -4,63 +4,69 @@
  * See COPYING.txt for license details.
  */
 
+use Magento\Framework\Escaper;
+use Magento\Sales\Block\Order\Info;
+
 // @codingStandardsIgnoreFile
 
 ?>
-<?php /** @var $block \Magento\Sales\Block\Order\Info */ ?>
+<?php
+/** @var $escaper Escaper */
+/** @var $block Info */
+?>
 <?php $_order = $block->getOrder() ?>
 <div class="block block-order-details-view">
     <div class="block-title">
-        <strong><?= /* @escapeNotVerified */ __('Order Information') ?></strong>
+        <strong><?= $escaper->escapeHtml(__('Order Information')) ?></strong>
     </div>
     <div class="block-content">
         <?php if (!$_order->getIsVirtual()) : ?>
             <div class="box box-order-shipping-address">
-                <strong class="box-title"><span><?= /* @escapeNotVerified */ __('Shipping Address') ?></span></strong>
+                <strong class="box-title"><span><?= $escaper->escapeHtml(__('Shipping Address')) ?></span></strong>
                 <div class="box-content">
-                    <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
+                    <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
                 </div>
             </div>
 
             <div class="box box-order-shipping-method">
                 <strong class="box-title">
-                    <span><?= /* @escapeNotVerified */ __('Shipping Method') ?></span>
+                    <span><?= $escaper->escapeHtml(__('Shipping Method')) ?></span>
                 </strong>
                 <div class="box-content">
-                    <?php if ($_order->getShippingDescription()) : ?>
-                        <?= /* @escapeNotVerified */ $block->escapeHtml($_order->getShippingDescription()) ?>
-                        <?php if ($_order->getSendcloudServicePointId() > 0) : ?>
-                            <div class="service-point-information">
-                                <strong><?= __('Service Point') ?></strong>
-                                <address>
-                                    <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointName() ?><br>
-                                    <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointStreet() ?> <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointHouseNumber() ?><br>
-                                    <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointZipCode() ?>  <?= /* @escapeNotVerified */ $_order->getSendcloudServicePointCity() ?><br>
-                                    <?= /* @escapeNotVerified */ $_order->getSendCloudServicePointPostnumber() ?>
-                                </address>
-                            </div>
-                        <?php endif; ?>
-                    <?php else : ?>
-                        <?= /* @escapeNotVerified */ __('No shipping information available') ?>
+                <?php if ($_order->getShippingDescription()) : ?>
+                    <?= $escaper->escapeHtml($_order->getShippingDescription()) ?>
+                    <?php if ($_order->getSendcloudServicePointId() > 0) : ?>
+                        <div class="service-point-information">
+                            <strong><?= $escaper->escapeHtml(__('Service Point')) ?></strong>
+                            <address>
+                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointName()) ?><br>
+                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointStreet()) ?> <?= $escaper->escapeHtml($_order->getSendcloudServicePointHouseNumber()) ?><br>
+                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointZipCode()) ?>  <?= $escaper->escapeHtml($_order->getSendcloudServicePointCity()) ?><br>
+                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointPostnumber()) ?>
+                            </address>
+                        </div>
                     <?php endif; ?>
+                <?php else : ?>
+                    <?= $escaper->escapeHtml(__('No shipping information available')) ?>
+                <?php endif; ?>
                 </div>
             </div>
         <?php endif; ?>
 
         <div class="box box-order-billing-address">
             <strong class="box-title">
-                <span><?= /* @escapeNotVerified */ __('Billing Address') ?></span>
+                <span><?= $escaper->escapeHtml(__('Billing Address')) ?></span>
             </strong>
             <div class="box-content">
-                <address><?= /* @escapeNotVerified */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
+                <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
             </div>
         </div>
         <div class="box box-order-billing-method">
             <strong class="box-title">
-                <span><?= /* @escapeNotVerified */ __('Payment Method') ?></span>
+                <span><?= $escaper->escapeHtml(__('Payment Method')) ?></span>
             </strong>
             <div class="box-content">
-                <?= /* @escapeNotVerified */ $block->getPaymentInfoHtml() ?>
+                <?= $block->getPaymentInfoHtml() ?>
             </div>
         </div>
     </div>
