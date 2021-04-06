@@ -21,7 +21,7 @@
         <attribute code="sendcloud_service_point_postnumber" type="string"/>
     </extension_attributes>
     <extension_attributes for="Magento\Sales\Api\Data\OrderItemInterface">
-        <attribute code="Country_of_manufacture" type="string"/>
+        <attribute code="country_of_manufacture" type="string"/>
         <attribute code="hs_code" type="string"/>
     </extension_attributes>
 </config>
