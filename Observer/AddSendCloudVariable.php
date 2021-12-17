@@ -13,6 +13,9 @@ class AddSendCloudVariable implements ObserverInterface
     public function execute(Observer $observer)
     {
         $transportObject = $observer->getEvent()->getData('transportObject');
+        if ($transportObject === null) {
+            return;
+        }
         $this->order = $transportObject->getOrder();
 
         if ($this->order !== null && $this->order->getSendcloudServicePointId()) {
