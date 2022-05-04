@@ -3,7 +3,8 @@
 ## Requirements
 This module requires Magento2 CE version 2.2 or higher.
 
-# Beta checkout installation
+## Beta checkout installation
+### Installation
 To try the beta checkout functionality please follow these instructions:
 1. Add the Sendcloud repository to the list of repositories within the `composer.json` file:
 ```
@@ -31,6 +32,19 @@ php bin/magento module:enable SendCloud_SendCloud
 php bin/magento setup:upgrade
 ```
 5. This will set up the plugin and after both commands finish their execution, the plugin will be available in the Magento admin, under Sales > Sendcloud > Configuration. 
+
+### Reverting to a previous version
+
+To revert to a previous version of the plugin, simply remove the repository from the list of repositories and set the version of the `sendcloud/sendcloud` dependency to a previous version:
+```
+"require": {
+    "sendcloud/sendcloud": "1.8.0",
+}
+```
+Please also run the Magento setup console command for the changes to take effect.
+```
+php bin/magento setup:upgrade
+```
 
 ## Installation
 This module can be installed through Composer. 
