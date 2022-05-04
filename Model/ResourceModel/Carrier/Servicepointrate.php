@@ -3,15 +3,17 @@
 namespace SendCloud\SendCloud\Model\ResourceModel\Carrier;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\DataObject;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Magento\Framework\App\RequestInterface;
+use Magento\OfflineShipping\Model\ResourceModel\Carrier\Tablerate;
+use Magento\OfflineShipping\Model\ResourceModel\Carrier\Tablerate\RateQueryFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\Carrier\SendCloud;
-use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\Import;
-use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\RateQuery;
-use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\RateQueryFactory;
+use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\FilesystemDecorator;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyFields)
@@ -20,112 +22,16 @@ use SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate\RateQueryFa
  * @api
  * @since 100.0.2
  */
-class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Servicepointrate extends Tablerate
 {
     /**
-     * Import Service point rates website ID
-     *
-     * @var int
-     */
-    protected $_importWebsiteId = 0;
-
-    /**
-     * Errors in import process
-     *
-     * @var array
-     */
-    protected $_importErrors = [];
-
-    /**
-     * Count of imported Service point rates
-     *
-     * @var int
-     */
-    protected $_importedRows = 0;
-
-    /**
-     * Array of unique table rate keys to protect from duplicates
-     *
-     * @var array
-     */
-    protected $_importUniqueHash = [];
-
-    /**
-     * Array of countries keyed by iso2 code
-     *
-     * @var array
-     */
-    protected $_importIso2Countries;
-
-    /**
-     * Array of countries keyed by iso3 code
-     *
-     * @var array
-     */
-    protected $_importIso3Countries;
-
-    /**
-     * Associative array of countries and regions
-     * [country_id][region_code] = region_id
-     *
-     * @var array
-     */
-    protected $_importRegions;
-
-    /**
-     * Import Table Rate condition name
-     *
-     * @var string
-     */
-    protected $_importConditionName;
-
-    /**
-     * Array of condition full names
-     *
-     * @var array
-     */
-    protected $_conditionFullNames = [];
-
-    /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     * @since 100.1.0
-     */
-    protected $coreConfig;
-
-    /**
-     * @var SendCloudLogger
-     */
-    protected $logger;
-
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     * @since 100.1.0
-     */
-    protected $storeManager;
-
-    /**
-     * @var \SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate
-     * @since 100.1.0
-     */
-    protected $carrierServicepointrate;
-
-    /**
-     * Filesystem instance
-     *
-     * @var \Magento\Framework\Filesystem
-     * @since 100.1.0
+     * @var Filesystem
      */
     protected $filesystem;
-
     /**
-     * @var Import
+     * @var Tablerate\Import
      */
     private $import;
-
-    /**
-     * @var RateQueryFactory
-     */
-    private $rateQueryFactory;
 
     /**
      * @var RequestInterface
@@ -140,8 +46,9 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
      * @param StoreManagerInterface $storeManager
      * @param SendCloud $carrierServicepointrate
      * @param Filesystem $filesystem
+     * @param Tablerate\Import $import
      * @param RateQueryFactory $rateQueryFactory
-     * @param Import $import
+     * @param RequestInterface $request
      * @param null $connectionName
      */
     public function __construct(
@@ -151,20 +58,33 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
         StoreManagerInterface $storeManager,
         SendCloud $carrierServicepointrate,
         Filesystem $filesystem,
-        Import $import,
+        Tablerate\Import $import,
         RateQueryFactory $rateQueryFactory,
         RequestInterface $request,
         $connectionName = null
     ) {
-        parent::__construct($context, $connectionName);
-        $this->coreConfig = $coreConfig;
-        $this->logger = $logger;
-        $this->storeManager = $storeManager;
-        $this->carrierServicepointrate = $carrierServicepointrate;
-        $this->filesystem = $filesystem;
-        $this->import = $import;
-        $this->rateQueryFactory = $rateQueryFactory;
+        /**
+         * Since Import have private uniqueHash variable without getters and setters whose value is not cleared
+         * after inserting the file, we cloned the object because we cannot insert files for servicepoint and tablerates
+         * with the same rows
+         * @see \Magento\OfflineShipping\Model\ResourceModel\Carrier\Tablerate\Import
+         */
+        $servicePointImport = clone $import;
+
+        parent::__construct(
+            $context,
+            $logger,
+            $coreConfig,
+            $storeManager,
+            $carrierServicepointrate,
+            $filesystem,
+            $servicePointImport,
+            $rateQueryFactory,
+            $connectionName
+        );
         $this->request = $request;
+        $this->import = $servicePointImport;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -178,30 +98,119 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
     }
 
     /**
-     * Return table rate array or false by rate request
-     *
-     * @param \Magento\Quote\Model\Quote\Address\RateRequest $request
-     * @return mixed
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @inheritdoc
      */
-    public function getRate(\Magento\Quote\Model\Quote\Address\RateRequest $request)
+    public function uploadAndImport(DataObject $object)
     {
-        $connection = $this->getConnection();
+        $files = $this->request->getFiles()->toArray();
 
-        $select = $connection->select()->from($this->getMainTable());
-        /** @var RateQuery $rateQuery */
-        $rateQuery = $this->rateQueryFactory->create(['request' => $request]);
-
-        $rateQuery->prepareSelect($select);
-        $bindings = $rateQuery->getBindings();
-
-        $result = $connection->fetchRow($select, $bindings);
-        // Normalize destination zip code
-        if ($result && $result['dest_zip'] == '*') {
-            $result['dest_zip'] = '';
+        if (!isset($files['groups']['sendcloud']['fields']['import']['value']) ||
+            empty($files['groups']['sendcloud']['fields']['import']['value']['tmp_name'])) {
+            return $this;
         }
 
-        return $result;
+        try {
+            $this->originalUploadAndImport($object);
+
+        } catch (\Exception $e) {
+            $this->displayErrorMessage();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param DataObject $object
+     * @return mixed|string
+     * @since 100.1.0
+     */
+    public function getConditionName(DataObject $object)
+    {
+        if ($object->getData('groups/sendcloud/fields/condition_name/inherit') == '1') {
+            $conditionName = (string)$this->coreConfig->getValue('carriers/sendcloud/condition_name', 'default');
+        } else {
+            $conditionName = $object->getData('groups/sendcloud/fields/condition_name/value');
+        }
+
+        return $conditionName;
+    }
+
+    /**
+     * START MAGENTO CODE
+     * @see \Magento\OfflineShipping\Model\ResourceModel\Carrier\Tablerate
+     */
+
+    /**
+     * This is original method from Tablerate with the only modification in taking the sendcloud servicepoint rate file
+     * instead  of the tablerate file.
+     * Since Tablerate using global files, and we have no option to set servicepoint rate file insted of tablerate file
+     * without breaking Magento coding standard by using global files, this method is copied from Tablerate with the only
+     * modification in using the servicepoint rate as file
+     * @see \Magento\OfflineShipping\Model\ResourceModel\Carrier\Tablerate
+     *
+     * @param DataObject $object
+     * @return $this
+     * @throws LocalizedException
+     */
+    private function originalUploadAndImport(\Magento\Framework\DataObject $object)
+    {
+        $files = $this->request->getFiles()->toArray();
+
+        if (!isset($files['groups']['sendcloud']['fields']['import']['value']) ||
+            empty($files['groups']['sendcloud']['fields']['import']['value']['tmp_name'])) {
+            return $this;
+        }
+
+        $filePath = $files['groups']['sendcloud']['fields']['import']['value']['tmp_name'];
+
+        $websiteId = $this->storeManager->getWebsite($object->getScopeId())->getId();
+        $conditionName = $this->getConditionName($object);
+
+        $file = $this->getCsvFile($filePath);
+        try {
+            // delete old data by website and condition name
+            $condition = [
+                'website_id = ?' => $websiteId,
+                'condition_name = ?' => $conditionName,
+            ];
+            $this->deleteByCondition($condition);
+
+            $columns = $this->import->getColumns();
+            $conditionFullName = $this->_getConditionFullName($conditionName);
+            foreach ($this->import->getData($file, $websiteId, $conditionName, $conditionFullName) as $bunch) {
+                $this->importData($columns, $bunch);
+            }
+        } catch (\Exception $e) {
+            $this->logger->critical($e);
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __($e->getMessage())
+            );
+        } finally {
+            $file->close();
+        }
+
+        if ($this->import->hasErrors()) {
+            $error = __(
+                'We couldn\'t import this file because of these errors: %1',
+                implode(" \n", $this->import->getErrors())
+            );
+            throw new \Magento\Framework\Exception\LocalizedException($error);
+        }
+    }
+
+    /**
+     * @param string $filePath
+     * @return \Magento\Framework\Filesystem\File\ReadInterface
+     */
+    private function getCsvFile($filePath)
+    {
+        $pathInfo = pathinfo($filePath);
+        $dirName = isset($pathInfo['dirname']) ? $pathInfo['dirname'] : '';
+        $fileName = isset($pathInfo['basename']) ? $pathInfo['basename'] : '';
+
+        $directoryRead = $this->filesystem->getDirectoryReadByPath($dirName);
+
+        return $directoryRead->openFile($fileName);
     }
 
     /**
@@ -226,13 +235,11 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
      */
     private function importData(array $fields, array $values)
     {
-
         $connection = $this->getConnection();
         $connection->beginTransaction();
 
         try {
             if (count($fields) && count($values)) {
-
                 $this->getConnection()->insertArray($this->getMainTable(), $fields, $values);
                 $this->_importedRows += count($values);
             }
@@ -243,141 +250,31 @@ class Servicepointrate extends \Magento\Framework\Model\ResourceModel\Db\Abstrac
             $connection->rollBack();
             $this->logger->critical($e);
             throw new \Magento\Framework\Exception\LocalizedException(
-                __('Something went wrong while importing Sendcloud servicepoint rates.')
+                __('Something went wrong while importing table rates.')
             );
         }
         $connection->commit();
     }
 
     /**
-     * Upload SendCloud Servicepoint rate file and import data from it
-     *
-     * @param \Magento\Framework\DataObject $object
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @return \SendCloud\SendCloud\Model\ResourceModel\Carrier\Servicepointrate
-     * @todo: this method should be refactored as soon as updated design will be provided
-     * @see https://wiki.corp.x.com/display/MCOMS/Magento+Filesystem+Decisions
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * END MAGENTO CODE
      */
-    public function uploadAndImport(\Magento\Framework\DataObject $object)
+
+    /**
+     * @throws LocalizedException
+     */
+    private function displayErrorMessage()
     {
-        $files = $this->request->getFiles()->toArray();
-        if(!isset($files['groups']['sendcloud']['fields']['sen_import']['value'])){
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __('Something went wrong while importing Sendcloud Servicepoint rates.')
-            );
-        }
-        if(empty($files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'])){
-            return false;
-        }
-        $filePath = $files['groups']['sendcloud']['fields']['sen_import']['value']['tmp_name'];
-        $websiteId = $this->storeManager->getWebsite($object->getScopeId())->getId();
-        $conditionName = $this->getSenConditionName($object);
-
-        $file = $this->getCsvFile($filePath);
-        try {
-            // delete old data by website and condition name
-            $condition = [
-                'website_id = ?' => $websiteId,
-                'sen_condition_name = ?' => $conditionName,
-            ];
-            $this->deleteByCondition($condition);
-
-            $columns = $this->import->getColumns();
-            $conditionFullName = $this->_getConditionFullName($conditionName);
-            foreach ($this->import->getData($file, $websiteId, $conditionName, $conditionFullName) as $bunch) {
-                $this->importData($columns, $bunch);
-            }
-        } catch (\Exception $e) {
-            $this->logger->critical($e);
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __('Something went wrong while importing Sendcloud Servicepoint rates.')
-            );
-        } finally {
-            $file->close();
-        }
-
         if ($this->import->hasErrors()) {
             $error = __(
                 'We couldn\'t import this file because of these errors: %1',
                 implode(" \n", $this->import->getErrors())
             );
-            throw new \Magento\Framework\Exception\LocalizedException($error);
-        }
-    }
-
-    /**
-     * @param \Magento\Framework\DataObject $object
-     * @return mixed|string
-     * @since 100.1.0
-     */
-    public function getSenConditionName(\Magento\Framework\DataObject $object)
-    {
-        if ($object->getData('groups/sendcloud/fields/sen_condition_name/inherit') == '1') {
-            $conditionName = (string)$this->coreConfig->getValue('carriers/sendcloud/sen_condition_name', 'default');
+            throw new LocalizedException($error);
         } else {
-            $conditionName = $object->getData('groups/sendcloud/fields/sen_condition_name/value');
+            throw new LocalizedException(
+                __('Something went wrong while importing servicepoint rates.')
+            );
         }
-        return $conditionName;
-    }
-
-    /**
-     * @param string $filePath
-     * @return Filesystem\File\ReadInterface
-     * @throws \Magento\Framework\Exception\FileSystemException
-     */
-    private function getCsvFile($filePath)
-    {
-        $pathInfo = pathinfo($filePath);
-        $dirName = isset($pathInfo['dirname']) ? $pathInfo['dirname'] : '';
-        $fileName = isset($pathInfo['basename']) ? $pathInfo['basename'] : '';
-
-        $directoryRead = $this->filesystem->getDirectoryReadByPath($dirName);
-
-        return $directoryRead->openFile($fileName);
-    }
-
-    /**
-     * Return import condition full name by condition name code
-     *
-     * @param string $conditionName
-     * @return string
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    protected function _getConditionFullName($conditionName)
-    {
-        if (!isset($this->_conditionFullNames[$conditionName])) {
-            $name = $this->carrierServicepointrate->getCode('sen_condition_name_short', $conditionName);
-            $this->_conditionFullNames[$conditionName] = $name;
-        }
-
-        return $this->_conditionFullNames[$conditionName];
-    }
-
-    /**
-     * Save import data batch
-     *
-     * @param array $data
-     * @return $this
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    protected function _saveImportData(array $data)
-    {
-        if (!empty($data)) {
-            $columns = [
-                'website_id',
-                'dest_country_id',
-                'dest_region_id',
-                'dest_zip',
-                'sen_condition_name',
-                'condition_value',
-                'price',
-            ];
-            $this->getConnection()->insertArray($this->getMainTable(), $columns, $data);
-            $this->_importedRows += count($data);
-        }
-
-        return $this;
     }
 }

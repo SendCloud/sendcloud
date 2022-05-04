@@ -18,8 +18,7 @@ class AdminAccessTokenServicePlugin
      */
     public function __construct(
         AdminTokenServiceInterface $adminTokenService
-    )
-    {
+    ) {
         $this->adminTokenService = $adminTokenService;
     }
 
@@ -37,7 +36,7 @@ class AdminAccessTokenServicePlugin
      */
     public function aroundCreateAdminAccessToken(AdminAccessTokenService $subject, callable $proceed, $username, $password)
     {
-        if ($username === 'sendcloud') {
+        if (strpos($username, 'sendcloud') !== false) {
             return $this->adminTokenService->createAdminAccessToken($username, $password);
         }
 

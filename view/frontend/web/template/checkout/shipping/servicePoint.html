@@ -1,27 +1,24 @@
 <div id="sendcloud-service-point" data-bind="visible: selectedMethod() == 'sendcloud_sendcloud'">
-    <div id="selectedServicePoint" data-bind="afterRender: sessionData">
+    <div id="selectedServicePoint">
+        <!-- ko if: isServicePointSelected() -->
         <div class="col">
-            <div id="servicePointName"></div>
-            <div id="servicePointStreetAndHouseNumber"></div>
-            <div id="servicePointZipCode"></div>
-            <div id="servicePointCity"></div>
-            <div id="servicePointPostnumber"></div>
+            <div id="servicePointName" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_name"></div>
+            <div id="servicePointStreetAndHouseNumber">
+                <!-- ko text: quote.getExtensionAttributes().sendcloud_service_point_street --><!-- /ko -->
+                <!-- ko text: quote.getExtensionAttributes().sendcloud_service_point_house_number --><!-- /ko -->
+            </div>
+            <div id="servicePointZipCode" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_zip_code"></div>
+            <div id="servicePointCity" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_city"></div>
+            <div id="servicePointPostnumber" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_postnumber"></div>
         </div>
-
-        <span class="button-service-point" data-bind="click: openSendCloudMap, i18n: 'Select service point',text: servicePointButton,">
+        <!-- /ko -->
+        <span class="button-service-point"
+              data-bind="click: openSendCloudMap, i18n: 'Select service point',text: servicePointButton,">
         </span>
-
-        <input name="sendcloud_service_point_id" type="hidden"/>
-        <input name="sendcloud_service_point_name" type="hidden"/>
-        <input name="sendcloud_service_point_street" type="hidden"/>
-        <input name="sendcloud_service_point_house_number" type="hidden"/>
-        <input name="sendcloud_service_point_zip_code" type="hidden"/>
-        <input name="sendcloud_service_point_city" type="hidden"/>
-        <input name="sendcloud_service_point_country" type="hidden"/>
-        <input name="sendcloud_service_point_postnumber" type="hidden"/>
     </div>
 
-    <!-- ko ifnot: servicePointData() -->
-        <div class="message warning" generated="true"><span data-bind="i18n: 'Please select a service point'"></span></div>
+    <!-- ko ifnot: isServicePointSelected() -->
+    <div class="message warning" generated="true"><span data-bind="i18n: 'Please select a service point'"></span></div>
     <!-- /ko -->
+
 </div>

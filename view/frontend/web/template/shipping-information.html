@@ -27,19 +27,41 @@
                 <span data-bind="i18n: 'edit'"></span>
             </button>
         </div>
-        <div class="shipping-information-content">
+        <div class="shipping-information-content" data-bind="visible: quote.shippingMethod() && quote.shippingMethod().carrier_code !== 'sendcloud_checkout'">
             <span class="value" data-bind="text: getShippingMethodTitle()"></span>
 
-            <!-- ko if: (getServicePointInformation()) -->
+            <!-- ko if: (quote.getExtensionAttributes()) -->
             <div class="service-point-information" data-bind="visible: selectedMethod() == 'sendcloud_sendcloud'">
-                <strong data-bind="text: getServicePointInformation().name"></strong><br>
+                <strong data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_name"></strong><br>
                 <span>
-                    <!-- ko text: getServicePointInformation().street --><!-- /ko -->
-                    <!-- ko text: getServicePointInformation().house_number --><!-- /ko -->
+                    <!-- ko text: quote.getExtensionAttributes().sendcloud_service_point_street --><!-- /ko -->
+                    <!-- ko text: quote.getExtensionAttributes().sendcloud_service_point_house_number --><!-- /ko -->
                 </span><br>
-                <span data-bind="text: getServicePointInformation().postal_code"></span>
-                <span data-bind="text: getServicePointInformation().city"></span><br>
-                <span data-bind="text: getServicePointInformation().postnumber"></span>
+                <span data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_zip_code"></span>
+                <span data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_city"></span><br>
+                <span data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_postnumber"></span>
+            </div>
+            <!--/ko-->
+        </div>
+        <div class="shipping-information-content" data-bind="visible: quote.shippingMethod() && quote.shippingMethod().carrier_code == 'sendcloud_checkout'">
+            <span>SendCloud - </span><span class="value" data-bind="text: getShippingMethodTitle()"></span>
+
+            <!-- ko if: (extensionData().delivery_method_data.formatted_delivery_date && (selectedMethod() == 'sendcloud_checkout_nominated_day_delivery' || selectedMethod() == 'sendcloud_checkout_same_day_delivery')) -->
+            <div class="service-point-information">
+                <strong>Expected delivery date</strong><br>
+                <span data-bind="text: extensionData().delivery_method_data.formatted_delivery_date"></span>
+            </div>
+            <!--/ko-->
+            <!-- ko if: (selectedMethod() == 'sendcloud_checkout_service_point_delivery' && extensionData().delivery_method_data.service_point) -->
+            <div class="service-point-information">
+                <strong data-bind="text: extensionData().delivery_method_data.service_point.name"></strong><br>
+                <span>
+                    <!-- ko text: extensionData().delivery_method_data.service_point.street --><!-- /ko -->
+                    <!-- ko text: extensionData().delivery_method_data.service_point.house_number --><!-- /ko -->
+                </span><br>
+                <span data-bind="text: extensionData().delivery_method_data.service_point.postal_code"></span>
+                <span data-bind="text: extensionData().delivery_method_data.service_point.city"></span><br>
+                <span data-bind="text: extensionData().delivery_method_data.post_number"></span>
             </div>
             <!--/ko-->
         </div>

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
     <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
         <attribute code="sendcloud_service_point_id" type="int"/>
         <attribute code="sendcloud_service_point_name" type="string"/>
@@ -9,6 +10,20 @@
         <attribute code="sendcloud_service_point_city" type="string"/>
         <attribute code="sendcloud_service_point_country" type="string"/>
         <attribute code="sendcloud_service_point_postnumber" type="string"/>
+        <attribute code="sendcloud_data" type="string"/>
+    </extension_attributes>
+    <extension_attributes for="Magento\Quote\Api\Data\CartInterface">
+        <attribute code="sendcloud_service_point_id" type="int"/>
+        <attribute code="sendcloud_service_point_name" type="string"/>
+        <attribute code="sendcloud_service_point_street" type="string"/>
+        <attribute code="sendcloud_service_point_house_number" type="string"/>
+        <attribute code="sendcloud_service_point_zip_code" type="string"/>
+        <attribute code="sendcloud_service_point_city" type="string"/>
+        <attribute code="sendcloud_service_point_country" type="string"/>
+        <attribute code="sendcloud_service_point_postnumber" type="string"/>
+        <attribute code="sendcloud_checkout_data" type="string"/>
+        <attribute code="sendcloud_multishipping_data" type="string"/>
+        <attribute code="weight_in_grams" type="float"/>
     </extension_attributes>
     <extension_attributes for="Magento\Checkout\Api\Data\ShippingInformationInterface">
         <attribute code="sendcloud_service_point_id" type="int"/>
@@ -19,9 +34,14 @@
         <attribute code="sendcloud_service_point_city" type="string"/>
         <attribute code="sendcloud_service_point_country" type="string"/>
         <attribute code="sendcloud_service_point_postnumber" type="string"/>
+        <attribute code="sendcloud_checkout_data" type="string"/>
     </extension_attributes>
     <extension_attributes for="Magento\Sales\Api\Data\OrderItemInterface">
         <attribute code="Country_of_manufacture" type="string"/>
         <attribute code="hs_code" type="string"/>
     </extension_attributes>
+    <extension_attributes for="Magento\Quote\Api\Data\ShippingMethodInterface">
+        <attribute code="methodConfiguration" type="string"/>
+    </extension_attributes>
+
 </config>

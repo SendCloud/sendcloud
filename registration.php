@@ -1,6 +1,11 @@
 <?php
-    \Magento\Framework\Component\ComponentRegistrar::register(
-        \Magento\Framework\Component\ComponentRegistrar::MODULE,
-        'SendCloud_SendCloud',
-        __DIR__
-    );
+
+use Magento\Framework\Component\ComponentRegistrar;
+
+// SETUP DEVELOPMENT ENVIRONMENT
+
+ComponentRegistrar::register(
+    ComponentRegistrar::MODULE,
+    'SendCloud_SendCloud',
+    __DIR__
+);

@@ -4,11 +4,22 @@ namespace SendCloud\SendCloud\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Sales\Api\Data\OrderInterface;
 
 class AddSendCloudVariable implements ObserverInterface
 {
+    /**
+     * @var Json
+     */
+    private $serializer;
+
     private $order = null;
+
+    public function __construct(Json $serializer)
+    {
+        $this->serializer = $serializer;
+    }
 
     public function execute(Observer $observer)
     {

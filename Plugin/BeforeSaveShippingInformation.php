@@ -3,12 +3,12 @@
 namespace SendCloud\SendCloud\Plugin;
 
 use Magento\Checkout\Api\Data\ShippingInformationInterface;
+use Magento\Checkout\Model\PaymentDetails;
 use Magento\Checkout\Model\ShippingInformationManagement;
 use Magento\Framework\App\RequestInterface;
 use Magento\Quote\Api\Data\ShippingMethodInterface;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Helper\Checkout;
-use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class BeforeSaveShippingInformation
@@ -32,6 +32,7 @@ class BeforeSaveShippingInformation
 
     /**
      * BeforeSaveShippingInformation constructor.
+     *
      * @param RequestInterface $request
      * @param QuoteRepository $quoteRepository
      * @param Checkout $helper
@@ -40,8 +41,7 @@ class BeforeSaveShippingInformation
         RequestInterface $request,
         QuoteRepository $quoteRepository,
         Checkout $helper
-    )
-    {
+    ) {
         $this->request = $request;
         $this->quoteRepository = $quoteRepository;
         $this->helper = $helper;
@@ -49,16 +49,22 @@ class BeforeSaveShippingInformation
 
     /**
      * @param ShippingInformationManagement $subject
+     * @param PaymentDetails $paymentDetails
      * @param $cartId
      * @param ShippingInformationInterface $addressInformation
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return PaymentDetails
      */
-    public function beforeSaveAddressInformation(ShippingInformationManagement $subject, $cartId, ShippingInformationInterface $addressInformation)
-    {
+    public function afterSaveAddressInformation(
+        ShippingInformationManagement $subject,
+        PaymentDetails $paymentDetails,
+        $cartId,
+        ShippingInformationInterface $addressInformation
+    ) {
         $extensionAttributes = $addressInformation->getExtensionAttributes();
 
-        if ($this->helper->checkForScriptUrl() && $extensionAttributes != null && $this->helper->checkIfModuleIsActive()) {
+        if (!empty($extensionAttributes) && $this->helper->checkIfModuleIsActive()) {
+            $quote = $this->quoteRepository->getActive($cartId);
+
             $spId = $extensionAttributes->getSendcloudServicePointId();
             $spName = $extensionAttributes->getSendcloudServicePointName();
             $spStreet = $extensionAttributes->getSendcloudServicePointStreet();
@@ -68,7 +74,6 @@ class BeforeSaveShippingInformation
             $spCountry = $extensionAttributes->getSendcloudServicePointCountry();
             $spPostnumber = $extensionAttributes->getSendcloudServicePointPostnumber();
 
-            $quote = $this->quoteRepository->getActive($cartId);
             $quote->setSendcloudServicePointId($spId);
             $quote->setSendcloudServicePointName($spName);
             $quote->setSendcloudServicePointStreet($spStreet);
@@ -77,6 +82,10 @@ class BeforeSaveShippingInformation
             $quote->setSendcloudServicePointCity($spCity);
             $quote->setSendcloudServicePointCountry($spCountry);
             $quote->setSendcloudServicePointPostnumber($spPostnumber);
+
+            $this->quoteRepository->save($quote);
         }
+
+        return $paymentDetails;
     }
 }

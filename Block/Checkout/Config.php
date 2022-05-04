@@ -10,12 +10,19 @@ use Magento\Store\Model\ScopeInterface;
  */
 class Config extends Template
 {
-
     /**
      * @return mixed
      */
     public function getScriptUrl()
     {
         return $this->_scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return $this->_scopeConfig->getValue('general/locale/code', ScopeInterface::SCOPE_STORE);
     }
 }

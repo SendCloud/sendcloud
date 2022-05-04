@@ -5,8 +5,11 @@ define([
     'Magento_Checkout/js/model/quote',
     'uiRegistry',
     'mage/translate',
-    'jquery'
-], function (rateRegistry, shippingService, selectShippingMethodAction, quote, uiRegistry, $t, $) {
+    'jquery',
+    'SendCloud_SendCloud/js/servicePoint/mixins/shipping',
+    'SendCloud_SendCloud/js/checkout/nominatedDay/shipping',
+    'SendCloud_SendCloud/js/checkout/servicePoint/shipping',
+], function (rateRegistry, shippingService, selectShippingMethodAction, quote, uiRegistry, $t, $, servicePoint, nominatedDay, checkoutServicePoint) {
     'use strict';
 
     return function (Component) {
@@ -20,9 +23,8 @@ define([
                 if (typeof data.data.shippingMethod !== "undefined" && data.data.shippingMethod.length > 0) {
                     var equal = false;
                     var methods = data.data.shippingMethod;
-                    var servicePointData = JSON.parse(window.sessionStorage.getItem('service-point-data'));
                     if (this.rateCacheKey) {
-                        equal = _.isEqual(rateRegistry.get(this.rateCacheKey),methods);
+                        equal = _.isEqual(rateRegistry.get(this.rateCacheKey), methods);
                     }
 
                     if (!equal) {
@@ -31,9 +33,9 @@ define([
                     } else if (equal && this._has(data, "data.shippingMethod")) {
                         shippingService.setShippingRates(methods);
                     }
-                    if (this._has(data, "data.selectedShippingMethod") ) {
+                    if (this._has(data, "data.selectedShippingMethod")) {
                         var selectMethod, findMethod;
-                        if(data.data.selectedShippingMethod === ""){
+                        if (data.data.selectedShippingMethod === "") {
                             selectMethod = null;
                         } else {
                             findMethod = _.find(
@@ -43,7 +45,7 @@ define([
                                 }
                             );
 
-                            if(typeof findMethod !== "undefined"){
+                            if (typeof findMethod !== "undefined") {
                                 selectMethod = findMethod;
                             }
 
@@ -51,15 +53,20 @@ define([
 
                         selectShippingMethodAction(selectMethod);
 
-                        if (selectMethod && $('#sendcloud-service-point .message.warning').length === 0) {
-                            if (selectMethod.carrier_code === 'sendcloud' && !servicePointData) {
-                                uiRegistry.async("checkout.steps.shipping-step.shippingAddress")(
-                                    function (shippingValidation) {
-                                        shippingValidation.errorValidationMessage($t('Please select a service point'));
-                                    }
-                                );
-                            }
+                        let method = quote.getSendcloudDeliveryMethodType();
+
+                        switch (method) {
+                            case 'service_point_legacy' :
+                                servicePoint.successHandler(selectMethod);
+                                break;
+                            case 'nominated_day_delivery':
+                                nominatedDay.successHandler(selectMethod);
+                                break;
+                            case 'service_point_delivery':
+                                checkoutServicePoint.successHandler(selectMethod);
+                                break;
                         }
+
 
                         window.checkoutConfig.selectedShippingMethod = selectMethod;
                     }

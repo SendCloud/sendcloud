@@ -37,30 +37,65 @@ $order = $block->getShipment()->getOrder();
                     <?php if ($block->getShipment()->getTracksCollection()->count()) : ?>
                         <p>
                             <a
-                                href="#"
-                                id="linkId"
-                                onclick="popWin('<?= $block->escapeUrl($this->helper('Magento\Shipping\Helper\Data')->getTrackingPopupUrlBySalesModel($block->getShipment())); ?>','trackshipment','width=800,height=600,resizable=yes,scrollbars=yes')"
-                                title="<?= $block->escapeHtml(__('Track this shipment')); ?>">
+                                    href="#"
+                                    id="linkId"
+                                    onclick="popWin('<?= $block->escapeUrl($this->helper('Magento\Shipping\Helper\Data')->getTrackingPopupUrlBySalesModel($block->getShipment())); ?>','trackshipment','width=800,height=600,resizable=yes,scrollbars=yes')"
+                                    title="<?= $block->escapeHtml(__('Track this shipment')); ?>">
                                 <?= $block->escapeHtml(__('Track this shipment')); ?>
                             </a>
                         </p>
                     <?php endif; ?>
+                    <?php $checkoutData = !empty($order->getSendcloudData()) ? $block->getSerializer()->unserialize($order->getSendcloudData()) : null ?>
                     <div class="shipping-description-title">
                         <?= $block->escapeHtml($order->getShippingDescription()); ?>
                     </div>
-
                     <?php if ($order->getSendcloudServicePointId() > 0) : ?>
                         <div class="service-point-information">
-                            <strong><?= /* @escapeNotVerified */ __('Service Point') ?></strong>
+                            <strong><?= /* @escapeNotVerified */
+                                __('Service Point') ?></strong>
                             <address>
                                 <?= $order->getSendcloudServicePointName() ?><br>
-                                <?= $order->getSendcloudServicePointStreet() ?> <?= $order->getSendcloudServicePointHouseNumber() ?><br>
-                                <?= $order->getSendcloudServicePointZipCode() ?>  <?= $order->getSendcloudServicePointCity() ?><br>
+                                <?= $order->getSendcloudServicePointStreet() ?> <?= $order->getSendcloudServicePointHouseNumber() ?>
+                                <br>
+                                <?= $order->getSendcloudServicePointZipCode() ?>  <?= $order->getSendcloudServicePointCity() ?>
+                                <br>
                                 <?= $order->getSendcloudServicePointPostnumber() ?>
                             </address>
                         </div>
                     <?php endif; ?>
-
+                    <?php if (
+                        !empty($checkoutData) &&
+                        array_key_exists('delivery_method_data', $checkoutData) &&
+                        array_key_exists('formatted_delivery_date', $checkoutData['delivery_method_data'])
+                    ) : ?>
+                        <div class="service-point-information">
+                            <strong><?= $block->escapeHtml(__('Expected delivery date')) ?></strong>
+                            <address>
+                                <?= $block->escapeHtml($checkoutData['delivery_method_data']['formatted_delivery_date']) ?>
+                                <br>
+                            </address>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($checkoutData && array_key_exists('delivery_method_data', $checkoutData) &&
+                        array_key_exists('service_point', $checkoutData['delivery_method_data']) &&
+                        array_key_exists('id', $checkoutData['delivery_method_data']['service_point']) &&
+                        $checkoutData['delivery_method_data']['service_point']['id'] > 0) : ?>
+                        <div class="service-point-information">
+                            <strong><?= __('Service Point') ?></strong>
+                            <address>
+                                <?= /* @escapeNotVerified */
+                                $checkoutData['delivery_method_data']['service_point']['name'] ?><br>
+                                <?= /* @escapeNotVerified */
+                                $checkoutData['delivery_method_data']['service_point']['street'] ?> <?= /* @escapeNotVerified */
+                                $checkoutData['delivery_method_data']['service_point']['house_number'] ?><br>
+                                <?= /* @escapeNotVerified */
+                                $checkoutData['delivery_method_data']['service_point']['postal_code'] ?>  <?= /* @escapeNotVerified */
+                                $checkoutData['delivery_method_data']['service_point']['city'] ?><br>
+                                <?= /* @escapeNotVerified */
+                                $checkoutData['delivery_method_data']['post_number'] ?>
+                            </address>
+                        </div>
+                    <?php endif; ?>
                     <?= $block->escapeHtml(__('Total Shipping Charges')); ?>:
 
                     <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()) : ?>
@@ -70,21 +105,26 @@ $order = $block->getShipment()->getOrder();
                     <?php endif; ?>
                     <?php $incl = $block->displayShippingPriceInclTax($order); ?>
 
-                    <?= /* @noEscape */ $excl; ?>
+                    <?= /* @noEscape */
+                    $excl; ?>
                     <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $incl != $excl) : ?>
-                        (<?= $block->escapeHtml(__('Incl. Tax')); ?> <?= /* @noEscape */ $incl; ?>)
+                        (<?= $block->escapeHtml(__('Incl. Tax')); ?> <?= /* @noEscape */
+                        $incl; ?>)
                     <?php endif; ?>
                 </div>
 
                 <p>
                     <?php if ($block->canCreateShippingLabel()) : ?>
-                        <?= /* @noEscape */ $block->getCreateLabelButton(); ?>
+                        <?= /* @noEscape */
+                        $block->getCreateLabelButton(); ?>
                     <?php endif ?>
                     <?php if ($block->getShipment()->getShippingLabel()) : ?>
-                        <?= /* @noEscape */ $block->getPrintLabelButton(); ?>
+                        <?= /* @noEscape */
+                        $block->getPrintLabelButton(); ?>
                     <?php endif ?>
                     <?php if ($block->getShipment()->getPackages()) : ?>
-                        <?= /* @noEscape */ $block->getShowPackagesButton(); ?>
+                        <?= /* @noEscape */
+                        $block->getShowPackagesButton(); ?>
                     <?php endif ?>
                 </p>
                 <?= $block->getChildHtml('shipment_tracking'); ?>

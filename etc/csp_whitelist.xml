@@ -4,11 +4,31 @@
         <policy id="script-src">
             <values>
                 <value id="sendcloud" type="host">*.sendcloud.sc</value>
+                <value id="sendcloud-checkout" type="host">*.jsdelivr.net</value>
+            </values>
+        </policy>
+        <policy id="style-src">
+            <values>
+                <value id="sendcloud" type="host">*.sendcloud.sc</value>
+                <value id="sendcloud-checkout" type="host">*.jsdelivr.net</value>
             </values>
         </policy>
         <policy id="frame-src">
             <values>
                 <value id="sendcloud" type="host">*.sendcloud.sc</value>
+                <value id="sendcloud-checkout" type="host">*.jsdelivr.net</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="sendcloud" type="host">*.sendcloud.sc</value>
+                <value id="sendcloud-checkout" type="host">*.cdn.jsdelivr.net</value>
+                <value id="map" type="host">*.mapbox.com</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="sendcloud" type="host">*.amazonaws.com</value>
             </values>
         </policy>
     </policies>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">configuration_form.configuration_form_data_ source</item>
+            <item name="deps" xsi:type="string">configuration_form.configuration_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Configuration Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">configuration_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="save" xsi:type="array">
+                <item name="name" xsi:type="string">save</item>
+                <item name="label" xsi:type="string" translate="true">Save Config</item>
+                <item name="class" xsi:type="string">primary</item>
+            </item>
+        </item>
+    </argument>
+    <dataSource name="configuration_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">SendCloud\SendCloud\Ui\Component\Form\ConfigurationDataProvider
+            </argument>
+            <argument name="name" xsi:type="string">configuration_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">store</argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+                <item name="submit_url" path="sendcloud/configuration/save" xsi:type="url"/>
+            </item>
+        </argument>
+    </dataSource>
+
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">General Configuration</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <container name="general_global_message">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="string">1</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\GeneralMessage
+                </argument>
+            </htmlContent>
+        </container>
+        <container name="plugin_version_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="string">10</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\PluginVersion
+                </argument>
+            </htmlContent>
+        </container>
+        <field name="is_active" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Module Enable</label>
+                <switcherConfig>
+                    <rules>
+                        <rule name="0">
+                            <value>0</value>
+                            <actions>
+                                <action name="0">
+                                    <target>
+                                        configuration_form.configuration_form.general.custom_tab_container.html_content
+                                    </target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="1">
+                            <value>1</value>
+                            <actions>
+                                <action name="0">
+                                    <target>
+                                        configuration_form.configuration_form.general.custom_tab_container.html_content
+                                    </target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                    </rules>
+                    <enabled>true</enabled>
+                </switcherConfig>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">0</item>
+                                <item name="label" xsi:type="string">No</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">1</item>
+                                <item name="label" xsi:type="string">Yes</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="store_id" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <container name="custom_tab_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="string">30</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content" component="SendCloud_SendCloud/js/form/elements/container">
+                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\Button
+                </argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+    <fieldset name="dynamic_checkout">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Dynamic Checkout</item>
+                <item name="sortOrder" xsi:type="number">21</item>
+            </item>
+        </argument>
+        <insertListing name="dynamic_checkout_grid">
+
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataLinks" xsi:type="array">
+                        <item name="imports" xsi:type="boolean">false</item>
+                        <item name="exports" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="autoRender" xsi:type="boolean">true</item>
+                    <item name="ns" xsi:type="string">dynamic_checkout_grid</item>
+                    <item name="render_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="filter_url_params" xsi:type="array">
+                        <item name="id" xsi:type="string">*</item>
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">id</item>
+                    </item>
+                </item>
+            </argument>
+        </insertListing>
+        <modal name="rates_modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string" translate="true">Shipping rates</option>
+                    <option name="type">popup</option>
+                </options>
+            </settings>
+            <insertForm name="shipping_rates_listing" component="SendCloud_SendCloud/js/form/components/insert-form">
+                <settings>
+                    <renderUrl path="mui/index/render">
+                        <param name="handle">shipping_rates</param>
+                    </renderUrl>
+                    <autoRender>true</autoRender>
+                    <toolbarContainer>${ $.parentName }</toolbarContainer>
+                    <ns>shipping_rates</ns>
+                </settings>
+            </insertForm>
+        </modal>
+    </fieldset>
+    <fieldset name="dynamic_message">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Dynamic Checkout</item>
+                <item name="sortOrder" xsi:type="number">21</item>
+            </item>
+        </argument>
+        <container name="general_global_message">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="string">1</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\DynamicMessage
+                </argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+    <htmlContent name="html_content">
+        <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\Branding
+        </argument>
+    </htmlContent>
+</form>

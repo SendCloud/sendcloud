@@ -1,0 +1,19 @@
+<?php
+/**
+ * Multishipping checkout shipping template
+ *
+ * @var $block \SendCloud\SendCloud\Block\Checkout\MultiShipping
+ */
+?>
+<script type="text/javascript">
+    require([
+        "jquery",
+        "SendCloud_SendCloud/js/multishipping/multishipping"
+    ], function ($, multishipping) {
+        multishipping.initialize({
+            methods: <?= json_encode($block->getMethods(), JSON_HEX_TAG); ?>,
+            addresses: <?= json_encode($block->getAddressesFormated(), JSON_HEX_TAG); ?>
+        });
+    });
+</script>
+

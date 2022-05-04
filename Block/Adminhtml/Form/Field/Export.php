@@ -48,7 +48,7 @@ class Export extends AbstractElement
             'label' => __('Export SendCloud CSV'),
             'onclick' => "setLocation('" .
             $url .
-            "conditionName/' + $('carriers_sendcloud_sen_condition_name').value + '/sendcloud_servicepointrates.csv' )",
+            "conditionName/' + $('carriers_sendcloud_condition_name').value + '/sendcloud_servicepointrates.csv' )",
             'class' => '',
         ];
 

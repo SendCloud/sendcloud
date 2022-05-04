@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="SendCloud_SendCloud::sendcloud_configuration_title"
+             title="Sendcloud"
+             translate="title"
+             module="Magento_Sales"
+             sortOrder="10"
+             parent="Magento_Sales::sales"
+             resource="Magento_Sales::sales"
+        />
+
+        <add id="SendCloud_SendCloud::sendcloud_configuration"
+             title="Configuration"
+             module="SendCloud_SendCloud"
+             sortOrder="40"
+             resource="SendCloud_SendCloud::sendcloud"
+             parent="SendCloud_SendCloud::sendcloud_configuration_title"
+             action="sendcloud/configuration/index"
+             translate="true"
+        />
+    </menu>
+</config>

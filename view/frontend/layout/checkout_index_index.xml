@@ -22,18 +22,10 @@
                                                                 <item name="displayArea" xsi:type="string">shippingAdditional</item>
                                                                 <item name="children" xsi:type="array">
                                                                     <item name="service-point" xsi:type="array">
-                                                                        <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/checkout/shipping/servicePoint</item>
+                                                                        <item name="component" xsi:type="string">SendCloud_SendCloud/js/servicePoint/view/checkout/shipping/servicePoint</item>
                                                                     </item>
-                                                                </item>
-                                                            </item>
-                                                        </item>
-                                                    </item>
-                                                    <item name="step-config" xsi:type="array">
-                                                        <item name="children" xsi:type="array">
-                                                            <item name="shipping-rates-validation" xsi:type="array">
-                                                                <item name="children" xsi:type="array">
-                                                                    <item name="servicepoint-rates-validation" xsi:type="array">
-                                                                        <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/shipping-rates-validation</item>
+                                                                    <item name="sendcloud-checkout" xsi:type="array">
+                                                                        <item name="component" xsi:type="string">SendCloud_SendCloud/js/checkout/checkout</item>
                                                                     </item>
                                                                 </item>
                                                             </item>

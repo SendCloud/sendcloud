@@ -4,9 +4,12 @@ namespace SendCloud\SendCloud\Controller\Adminhtml\AutoConnect;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Config\ReinitableConfigInterface;
+use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\Controller\ResultFactory;
 use \Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Math\Random;
+use Magento\Store\Model\ScopeInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
@@ -28,6 +31,15 @@ class Connector extends Action
     private $logger;
 
     /**
+     * @var WriterInterface
+     */
+    private $writer;
+    /**
+     * @var ReinitableConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
      * Index constructor.
      *
      * @param Context $context
@@ -35,19 +47,23 @@ class Connector extends Action
      * @param AutoGenerateApiUser $autoGenerateApiUser
      * @param Random $mathRandom
      * @param SendCloudLogger $logger
+     * @param WriterInterface $writer
      */
     public function __construct(
+        ReinitableConfigInterface $scopeConfig,
         Context $context,
         PageFactory $resultPageFactory,
         AutoGenerateApiUser $autoGenerateApiUser,
         Random $mathRandom,
-        SendCloudLogger $logger
-    )
-    {
+        SendCloudLogger $logger,
+        WriterInterface $writer
+    ) {
+        $this->scopeConfig = $scopeConfig;
         $this->resultPageFactory = $resultPageFactory;
         $this->autoGenerateApiUser = $autoGenerateApiUser;
         $this->mathRandom = $mathRandom;
         $this->logger = $logger;
+        $this->writer = $writer;
 
         parent::__construct($context);
     }
@@ -59,10 +75,14 @@ class Connector extends Action
     public function execute()
     {
         $password = $this->generatePassword();
-        $apiUserInfo = $this->autoGenerateApiUser->getApiUser($password);
+        $store = null;
+        if ($this->getRequest()->getParam('store')) {
+            $store = $this->getRequest()->getParam('store');
+        }
+        $apiUserInfo = $this->autoGenerateApiUser->getApiUser($password, $store);
 
         if (!$apiUserInfo) {
-            $apiUserInfo = $this->autoGenerateApiUser->createApiUser($password);
+            $apiUserInfo = $this->autoGenerateApiUser->createApiUser($password, $store);
         }
 
         $url = $this->generateUrl($apiUserInfo);
@@ -73,6 +93,15 @@ class Connector extends Action
 
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
         $resultJson->setData($responseData);
+
+        if (empty($this->getRequest()->getParam('store'))) {
+            $this->writer->save('sendcloud/general/enable', 1);
+
+        } else {
+            $this->writer->save('sendcloud/general/enable', 1, ScopeInterface::SCOPE_STORES, (int)$this->getRequest()->getParam('store'));
+        }
+
+        $this->scopeConfig->reinit();
 
         return $resultJson;
     }
@@ -85,6 +114,9 @@ class Connector extends Action
     private function generateUrl($apiUserInfo)
     {
         $baseUrl = $this->_backendUrl->getBaseUrl();
+        if (defined('SC_NGROK_URL')) {
+            $baseUrl = SC_NGROK_URL;
+        }
 
         $url = sprintf(
             '%s/shops/magento_v2/connect/?shop_url=%s&username=%s&password=%s',
@@ -93,6 +125,10 @@ class Connector extends Action
             $apiUserInfo['username'],
             $apiUserInfo['password']
         );
+
+        if (isset($apiUserInfo['store_view_id'])) {
+            $url = $url . "&store_view_id={$apiUserInfo['store_view_id']}";
+        }
 
         return $url;
     }
