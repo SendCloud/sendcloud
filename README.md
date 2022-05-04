@@ -1,7 +1,7 @@
 # SendCloud Magento 2 module
 
 ## Requirements
-This module requires Magento2 CE version 2.2 or higher.
+This module requires Magento2 CE version 2.3 or higher.
 
 ## Beta checkout installation
 ### Installation
