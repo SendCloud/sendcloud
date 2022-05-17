@@ -103,12 +103,12 @@
                 comment="Store view ID"/>
         <column xsi:type="varchar" name="external_id" nullable="false" length="64"
                 comment="External id"/>
-        <column xsi:type="longtext" name="data" nullable="true" default="NULL"
+        <column xsi:type="longtext" name="data" nullable="true"
                 comment="Shipping zone data"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
-        <constraint xsi:type="unique">
+        <constraint xsi:type="unique" referenceId="SENDCLOUD_SHIPPING_ZONES_EXTERNAL_ID">
             <column name="external_id"/>
         </constraint>
     </table>
@@ -120,9 +120,9 @@
                 comment="Store view ID"/>
         <column xsi:type="varchar" name="external_id" nullable="false" length="300"
                 comment="External id"/>
-        <column xsi:type="varchar" name="delivery_zone_id"  nullable="false" length="64"
+        <column xsi:type="varchar" name="delivery_zone_id" nullable="false" length="64"
                 comment="Delivery zone id"/>
-        <column xsi:type="longtext" name="data" nullable="true" default="NULL"
+        <column xsi:type="longtext" name="data" nullable="true"
                 comment="Shipping method data"/>
         <column xsi:type="varchar" length="100" name="country" nullable="false"
                 comment="Shipping method country"/>
@@ -139,7 +139,7 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
-        <constraint xsi:type="unique">
+        <constraint xsi:type="unique" referenceId="SENDCLOUD_SHIPPING_METHODS_EXTERNAL_ID">
             <column name="external_id"/>
         </constraint>
         <index referenceId="fulltext" indexType="fulltext">
