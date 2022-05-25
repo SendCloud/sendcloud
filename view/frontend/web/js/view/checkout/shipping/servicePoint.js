@@ -10,23 +10,27 @@ define([
     'https://embed.sendcloud.sc/spp/1.0.0/api.min.js'
 ], function ($, ko, Component, quote, customer, setShippingInformationAction, registry) {
     'use strict';
-    var self = this,
-        servicePointData = ko.observable(false);
+    var self = this;
 
     return Component.extend({
         defaults: {
             template: 'SendCloud_SendCloud/checkout/shipping/servicePoint',
             scriptUrl: ''
         },
-        servicePointData: servicePointData,
         servicePointButton: ko.observable($.mage.__("Select service point")),
+        quote: quote,
         initObservable: function () {
             this.selectedMethod = ko.computed(function() {
                 var method = quote.shippingMethod();
                 var selectedMethod = method != null ? method.carrier_code + '_' + method.method_code : null;
-
+                this.servicePoint(quote.getSendcloudServicePoint())
                 return selectedMethod;
             }, this);
+
+            this.isServicePointSelected = ko.computed(function() {
+                return quote.getSendcloudServicePoint() && quote.getSendcloudServicePoint().sendcloud_service_point_id;
+            }, this);
+
             var sendCloudScript = document.createElement('script');
 
             sendCloudScript.setAttribute('src', this.scriptUrl);
@@ -35,34 +39,11 @@ define([
             return this;
         },
         servicePoint: function (serviceObject) {
-            if (serviceObject) {
-                this.servicePointButton = $.mage.__("Change service point");
-                servicePointData(serviceObject);
-
-                $('.button-service-point').text(this.servicePointButton);
-
-                $('#servicePointName').html("<strong>" + serviceObject.name + "</strong>");
-                $('#servicePointStreetAndHouseNumber').html(serviceObject.street + " " + serviceObject.house_number);
-                $('#servicePointZipCode').html(serviceObject.postal_code);
-                $('#servicePointCity').html(serviceObject.city);
-                $('#servicePointPostnumber').html(serviceObject.postnumber);
-
-                $('input[name="sendcloud_service_point_id"]').val(serviceObject.id);
-                $('input[name="sendcloud_service_point_name"]').val(serviceObject.name);
-                $('input[name="sendcloud_service_point_street"]').val(serviceObject.street);
-                $('input[name="sendcloud_service_point_house_number"]').val(serviceObject.house_number);
-                $('input[name="sendcloud_service_point_zip_code"]').val(serviceObject.postal_code);
-                $('input[name="sendcloud_service_point_city"]').val(serviceObject.city);
-                $('input[name="sendcloud_service_point_country"]').val(serviceObject.country);
-                $('input[name="sendcloud_service_point_postnumber"]').val(serviceObject.postnumber);
+            if (!serviceObject || !serviceObject.sendcloud_service_point_id) {
+                this.servicePointButton($.mage.__("Select service point"));
+            }else{
+                this.servicePointButton($.mage.__("Change service point"));
             }
-        },
-        sessionData: function() {
-            var serviceObject = JSON.parse(window.sessionStorage.getItem('service-point-data'));
-
-            this.servicePoint(serviceObject);
-
-            return serviceObject;
         },
         openSendCloudMap: function (e) {
             var zipCode = $('[name="postcode"]').val(),
@@ -82,12 +63,12 @@ define([
             var servicePointId = null;
             var postNumber = null;
 
-            if (self.sessionData() && self.sessionData()['id']) {
-                servicePointId = self.sessionData()[['id']];
+            if (quote.getSendcloudServicePoint() && quote.getSendcloudServicePoint()['sendcloud_service_point_id']) {
+                servicePointId = quote.getSendcloudServicePoint()['sendcloud_service_point_id'];
             }
 
-            if (self.sessionData() && self.sessionData()['postNumber']) {
-                postNumber = self.sessionData()[['postNumber']];
+            if (quote.getSendcloudServicePoint() && quote.getSendcloudServicePoint()['sendcloud_service_point_postnumber']) {
+                postNumber = quote.getSendcloudServicePoint()['sendcloud_service_point_postnumber'];
             }
 
             var lang = document.documentElement.lang;
@@ -114,23 +95,20 @@ define([
             sendcloud.servicePoints.open(
                 config,
                 function(servicePointObject, postNumber) {
-                    var sessionData = {
-                            id: servicePointObject.id,
-                            name: servicePointObject.name,
-                            street: servicePointObject.street,
-                            house_number: servicePointObject.house_number,
-                            postal_code: servicePointObject.postal_code,
-                            city: servicePointObject.city,
-                            country: servicePointObject.country,
-                            formatted_opening_times: servicePointObject.formatted_opening_times,
-                            postnumber: postNumber
-                        };
-                    window.checkoutConfig.quoteData
+                    var servicePoinData = {
+                        sendcloud_service_point_id: servicePointObject.id,
+                        sendcloud_service_point_name: servicePointObject.name,
+                        sendcloud_service_point_street: servicePointObject.street,
+                        sendcloud_service_point_house_number: servicePointObject.house_number,
+                        sendcloud_service_point_zip_code: servicePointObject.postal_code,
+                        sendcloud_service_point_city: servicePointObject.city,
+                        sendcloud_service_point_country: servicePointObject.country,
+                        sendcloud_service_point_postnumber: postNumber
+                    };
 
-                    self.servicePoint(sessionData);
+                    self.servicePoint(servicePoinData);
 
-                    window.sessionStorage.setItem("service-point-data", JSON.stringify(sessionData));
-
+                    quote.setSendcloudServicePoint(servicePoinData);
                     var shipping = registry.get('checkout.steps.shipping-step.shippingAddress'),
                         result;
 

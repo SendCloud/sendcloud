@@ -44,7 +44,7 @@ class Checkout extends AbstractHelper
     }
 
     /**
-     * @return bool|mixed
+     * @return bool
      */
     public function checkIfModuleIsActive()
     {
@@ -53,6 +53,6 @@ class Checkout extends AbstractHelper
             ScopeInterface::SCOPE_STORE
         );
 
-        return $isActive;
+        return (bool)$isActive;
     }
 }

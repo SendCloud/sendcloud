@@ -27,7 +27,7 @@ class Import extends AbstractElement
         $html .= <<<EndHTML
         <script>
         require(['prototype'], function(){
-        Event.observe($('carriers_sendcloud_sen_condition_name'), 'change', checkConditionName.bind(this));
+        Event.observe($('carriers_sendcloud_condition_name'), 'change', checkConditionName.bind(this));
         function checkConditionName(event)
         {
             var conditionNameElement = Event.element(event);

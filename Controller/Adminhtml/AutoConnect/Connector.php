@@ -42,8 +42,7 @@ class Connector extends Action
         AutoGenerateApiUser $autoGenerateApiUser,
         Random $mathRandom,
         SendCloudLogger $logger
-    )
-    {
+    ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->autoGenerateApiUser = $autoGenerateApiUser;
         $this->mathRandom = $mathRandom;
@@ -85,6 +84,10 @@ class Connector extends Action
     private function generateUrl($apiUserInfo)
     {
         $baseUrl = $this->_backendUrl->getBaseUrl();
+
+        if (defined('SC_NGROK_URL')) {
+            $baseUrl = SC_NGROK_URL;
+        }
 
         $url = sprintf(
             '%s/shops/magento_v2/connect/?shop_url=%s&username=%s&password=%s',

@@ -60,9 +60,9 @@ class Exportrates extends AbstractConfig
         if ($this->getRequest()->getParam('conditionName')) {
             $conditionName = $this->getRequest()->getParam('conditionName');
         } else {
-            $conditionName = $website->getConfig('carriers/sendcloud/sen_condition_name');
+            $conditionName = $website->getConfig('carriers/sendcloud/condition_name');
         }
-        $gridBlock->setWebsiteId($website->getId())->setSenConditionName($conditionName);
+        $gridBlock->setWebsiteId($website->getId())->setConditionName($conditionName);
         $content = $gridBlock->getCsvFile();
         return $this->_fileFactory->create($fileName, $content, DirectoryList::VAR_DIR);
     }

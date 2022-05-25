@@ -55,8 +55,7 @@ class AutoGenerateApiUser
         SendCloudLogger $logger,
         RoleFactory $roleFactory,
         RulesFactory $rulesFactory
-    )
-    {
+    ) {
         $this->userFactory = $userFactory;
         $this->logger = $logger;
         $this->roleFactory = $roleFactory;

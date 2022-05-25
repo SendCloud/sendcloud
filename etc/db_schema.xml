@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="sendcloud_servicepointrate" resource="default" engine="innodb" comment="Shipping SendCloud Servicepoint Rates">
+    <table name="sendcloud_servicepointrate" resource="default" engine="innodb"
+           comment="Shipping SendCloud Servicepoint Rates">
         <column xsi:type="int" name="pk" unsigned="true" nullable="false" identity="true"
                 comment="Primary key"/>
         <column xsi:type="int" name="website_id" unsigned="false" nullable="false" identity="false"
@@ -12,6 +13,8 @@
                 default="0" comment="Destination Region ID"/>
         <column xsi:type="varchar" name="dest_zip" nullable="false" length="10" default="*"
                 comment="Destination Post Code (Zip)"/>
+        <column xsi:type="varchar" name="condition_name" nullable="false" length="64" comment="Rate Condition name"
+                onCreate="migrateDataFrom(sen_condition_name)"/>
         <column xsi:type="varchar" name="sen_condition_name" nullable="false" length="64" comment="Rate Condition name"/>
         <column xsi:type="decimal" name="condition_value" scale="4" precision="12" unsigned="false" nullable="false"
                 default="0" comment="Rate condition value"/>
@@ -22,13 +25,67 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="pk"/>
         </constraint>
-        <constraint xsi:type="unique" referenceId="UNQ_D8DHAGSD72O9FDHLA020ILKAHSDALDS8">
+        <constraint xsi:type="unique" referenceId="UNQ_C0DB67076EAA5EA868F15196691297E7">
             <column name="website_id"/>
             <column name="dest_country_id"/>
             <column name="dest_region_id"/>
             <column name="dest_zip"/>
-            <column name="sen_condition_name"/>
+            <column name="condition_name"/>
             <column name="condition_value"/>
         </constraint>
+    </table>
+    <table name="sales_order" resource="default" engine="innodb">
+        <column xsi:type="int" name="sendcloud_service_point_id" nullable="true"
+                comment="service point id"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_name" length="255" nullable="true"
+                comment="service point name"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_street" length="255" nullable="true"
+                comment="service point street"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_house_number" length="255" nullable="true"
+                comment="service point house number"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_zip_code" length="255" nullable="true"
+                comment="service point zip code"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_city" length="255" nullable="true"
+                comment="service point city"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_country" length="255" nullable="true"
+                comment="service point country"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_postnumber" length="255" nullable="true"
+                comment="service point post number"/>
+    </table>
+    <table name="sales_order_grid" resource="default" engine="innodb">
+        <column xsi:type="int" name="sendcloud_service_point_id" nullable="true"
+                comment="service point id"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_name" length="255" nullable="true"
+                comment="service point name"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_street" length="255" nullable="true"
+                comment="service point street"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_house_number" length="255" nullable="true"
+                comment="service point house number"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_zip_code" length="255" nullable="true"
+                comment="service point zip code"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_city" length="255" nullable="true"
+                comment="service point city"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_country" length="255" nullable="true"
+                comment="service point country"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_postnumber" length="255" nullable="true"
+                comment="service point post number"/>
+    </table>
+    <table name="quote" resource="default" engine="innodb">
+        <column xsi:type="int" name="sendcloud_service_point_id" nullable="true"
+                comment="service point id"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_name" length="255" nullable="true"
+                comment="service point name"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_street" length="255" nullable="true"
+                comment="service point street"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_house_number" length="255" nullable="true"
+                comment="service point house number"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_zip_code" length="255" nullable="true"
+                comment="service point zip code"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_city" length="255" nullable="true"
+                comment="service point city"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_country" length="255" nullable="true"
+                comment="service point country"/>
+        <column xsi:type="varchar" name="sendcloud_service_point_postnumber" length="255" nullable="true"
+                comment="service point post number"/>
     </table>
 </schema>

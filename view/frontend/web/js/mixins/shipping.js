@@ -20,7 +20,7 @@ define([
                 if (typeof data.data.shippingMethod !== "undefined" && data.data.shippingMethod.length > 0) {
                     var equal = false;
                     var methods = data.data.shippingMethod;
-                    var servicePointData = JSON.parse(window.sessionStorage.getItem('service-point-data'));
+                    var servicePointData = quote.getSendcloudServicePoint();
                     if (this.rateCacheKey) {
                         equal = _.isEqual(rateRegistry.get(this.rateCacheKey),methods);
                     }
@@ -52,7 +52,10 @@ define([
                         selectShippingMethodAction(selectMethod);
 
                         if (selectMethod && $('#sendcloud-service-point .message.warning').length === 0) {
-                            if (selectMethod.carrier_code === 'sendcloud' && !servicePointData) {
+                            if (
+                                selectMethod.carrier_code === 'sendcloud' &&
+                                (!servicePointData || !servicePointData['sendcloud_service_point_id'])
+                            ) {
                                 uiRegistry.async("checkout.steps.shipping-step.shippingAddress")(
                                     function (shippingValidation) {
                                         shippingValidation.errorValidationMessage($t('Please select a service point'));

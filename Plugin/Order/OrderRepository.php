@@ -77,7 +77,9 @@ class OrderRepository
             $extensionAttributes->setSendcloudServicePointCountry($order->getSendcloudServicePointCountry());
             $extensionAttributes->setSendcloudServicePointPostnumber($order->getSendcloudServicePointPostnumber());
         } catch (NoSuchEntityException $e) {
-            return $this;
+            $this->logger->debug($e->getMessage());
         }
+
+        return $this;
     }
 }

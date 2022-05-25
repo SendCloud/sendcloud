@@ -1,19 +1,57 @@
 {
-    "sendcloud_servicepointrate": {
-        "column": {
-            "pk": true,
-            "website_id": true,
-            "dest_country_id": true,
-            "dest_region_id": true,
-            "dest_zip": true,
-            "sen_condition_name": true,
-            "condition_value": true,
-            "price": true,
-            "cost": true
-        },
-        "constraint": {
-            "PRIMARY": true,
-            "UNQ_D8DHAGSD72O9FDHLA020ILKAHSDALDS8": true
-        }
+  "sendcloud_servicepointrate": {
+    "column": {
+      "pk": true,
+      "website_id": true,
+      "dest_country_id": true,
+      "dest_region_id": true,
+      "dest_zip": true,
+      "condition_name": true,
+      "sen_condition_name": true,
+      "condition_value": true,
+      "price": true,
+      "cost": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "UNQ_D8DHAGSD72O9FDHLA020ILKAHSDALDS8": false,
+      "UNQ_C0DB67076EAA5EA868F15196691297E7": true
     }
+  },
+  "sales_order": {
+    "column": {
+      "sendcloud_service_point_id": true,
+      "sendcloud_service_point_name": true,
+      "sendcloud_service_point_street": true,
+      "sendcloud_service_point_house_number": true,
+      "sendcloud_service_point_zip_code": true,
+      "sendcloud_service_point_city": true,
+      "sendcloud_service_point_country": true,
+      "sendcloud_service_point_postnumber": true
+    }
+  },
+  "sales_order_grid": {
+    "column": {
+      "sendcloud_service_point_id": true,
+      "sendcloud_service_point_name": true,
+      "sendcloud_service_point_street": true,
+      "sendcloud_service_point_house_number": true,
+      "sendcloud_service_point_zip_code": true,
+      "sendcloud_service_point_city": true,
+      "sendcloud_service_point_country": true,
+      "sendcloud_service_point_postnumber": true
+    }
+  },
+  "quote": {
+    "column": {
+      "sendcloud_service_point_id": true,
+      "sendcloud_service_point_name": true,
+      "sendcloud_service_point_street": true,
+      "sendcloud_service_point_house_number": true,
+      "sendcloud_service_point_zip_code": true,
+      "sendcloud_service_point_city": true,
+      "sendcloud_service_point_country": true,
+      "sendcloud_service_point_postnumber": true
+    }
+  }
 }

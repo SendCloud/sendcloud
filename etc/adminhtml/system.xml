@@ -2,11 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="sendcloud" translate="label" sortOrder="10">
-            <label>SendCloud</label>
+            <label>Sendcloud</label>
         </tab>
         <section id="sendcloud" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>SendCloud</label>
+            <label>Sendcloud</label>
             <tab>sales</tab>
             <resource>SendCloud_SendCloud::sendcloud_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
@@ -29,7 +29,7 @@
         </section>
         <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
             <group id="sendcloud" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>SendCloud service point</label>
+                <label>Sendcloud service point</label>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -63,18 +63,18 @@
                         <field id="free_shipping_enable">1</field>
                     </depends>
                 </field>
-                <field id="sen_condition_name" translate="label" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="condition_name" translate="label" type="select" sortOrder="21" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Condition</label>
                     <source_model>SendCloud\SendCloud\Model\Config\Source\Servicepointrate</source_model>
                 </field>
-                <field id="sen_include_virtual_price" translate="label" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" canRestore="1">
+                <field id="include_virtual_price" translate="label" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" canRestore="1">
                     <label>Include Virtual Products in Price Calculation</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="sen_export" translate="label" type="SendCloud\SendCloud\Block\Adminhtml\Form\Field\Export" sortOrder="23" showInWebsite="1">
+                <field id="export" translate="label" type="SendCloud\SendCloud\Block\Adminhtml\Form\Field\Export" sortOrder="23" showInWebsite="1">
                     <label>Export</label>
                 </field>
-                <field id="sen_import" translate="label" type="SendCloud\SendCloud\Block\Adminhtml\Form\Field\Import" sortOrder="24" showInWebsite="1">
+                <field id="import" translate="label" type="SendCloud\SendCloud\Block\Adminhtml\Form\Field\Import" sortOrder="24" showInWebsite="1">
                     <label>Import</label>
                     <backend_model>SendCloud\SendCloud\Model\Config\Backend\Servicepointrate</backend_model>
                 </field>

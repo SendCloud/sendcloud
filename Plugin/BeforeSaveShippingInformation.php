@@ -3,6 +3,7 @@
 namespace SendCloud\SendCloud\Plugin;
 
 use Magento\Checkout\Api\Data\ShippingInformationInterface;
+use Magento\Checkout\Model\PaymentDetails;
 use Magento\Checkout\Model\ShippingInformationManagement;
 use Magento\Framework\App\RequestInterface;
 use Magento\Quote\Api\Data\ShippingMethodInterface;
@@ -40,8 +41,7 @@ class BeforeSaveShippingInformation
         RequestInterface $request,
         QuoteRepository $quoteRepository,
         Checkout $helper
-    )
-    {
+    ) {
         $this->request = $request;
         $this->quoteRepository = $quoteRepository;
         $this->helper = $helper;
@@ -49,12 +49,12 @@ class BeforeSaveShippingInformation
 
     /**
      * @param ShippingInformationManagement $subject
+     * @param PaymentDetails $paymentDetails
      * @param $cartId
      * @param ShippingInformationInterface $addressInformation
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return PaymentDetails
      */
-    public function beforeSaveAddressInformation(ShippingInformationManagement $subject, $cartId, ShippingInformationInterface $addressInformation)
+    public function afterSaveAddressInformation(ShippingInformationManagement $subject, PaymentDetails $paymentDetails, $cartId, ShippingInformationInterface $addressInformation)
     {
         $extensionAttributes = $addressInformation->getExtensionAttributes();
 
@@ -77,6 +77,8 @@ class BeforeSaveShippingInformation
             $quote->setSendcloudServicePointCity($spCity);
             $quote->setSendcloudServicePointCountry($spCountry);
             $quote->setSendcloudServicePointPostnumber($spPostnumber);
+            $this->quoteRepository->save($quote);
         }
+        return $paymentDetails;
     }
 }

@@ -32,14 +32,14 @@
 
             <!-- ko if: (getServicePointInformation()) -->
             <div class="service-point-information" data-bind="visible: selectedMethod() == 'sendcloud_sendcloud'">
-                <strong data-bind="text: getServicePointInformation().name"></strong><br>
+                <strong data-bind="text: getServicePointInformation().sendcloud_service_point_name"></strong><br>
                 <span>
-                    <!-- ko text: getServicePointInformation().street --><!-- /ko -->
-                    <!-- ko text: getServicePointInformation().house_number --><!-- /ko -->
+                    <!-- ko text: getServicePointInformation().sendcloud_service_point_street --><!-- /ko -->
+                    <!-- ko text: getServicePointInformation().sendcloud_service_point_house_number --><!-- /ko -->
                 </span><br>
-                <span data-bind="text: getServicePointInformation().postal_code"></span>
-                <span data-bind="text: getServicePointInformation().city"></span><br>
-                <span data-bind="text: getServicePointInformation().postnumber"></span>
+                <span data-bind="text: getServicePointInformation().sendcloud_service_point_zip_code"></span>
+                <span data-bind="text: getServicePointInformation().sendcloud_service_point_city"></span><br>
+                <span data-bind="text: getServicePointInformation().sendcloud_service_point_postnumber"></span>
             </div>
             <!--/ko-->
         </div>

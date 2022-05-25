@@ -1,6 +1,6 @@
 <?php
 
-namespace SendCloud\SendCloud\Setup;
+namespace SendCloud\SendCloud\Setup\Patch\Data;
 
 use Magento\Catalog\Model\Config as CatalogConfig;
 use Magento\Catalog\Model\Product;
@@ -10,15 +10,21 @@ use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\CollectionFactory;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Framework\Setup\UpgradeDataInterface;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Framework\Setup\Patch\PatchVersionInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
-class UpgradeData implements UpgradeDataInterface
+class UpdateInternationalShipping implements DataPatchInterface
 {
+
     const COUNTRY_OF_MANUFACTURE = 'country_of_manufacture';
     const ATTRIBUTE_GROUP = 'general';
+
+    /**
+     * @var ModuleDataSetupInterface
+     */
+    private $moduleDataSetup;
 
     /**
      * Eav setup factory
@@ -52,7 +58,8 @@ class UpgradeData implements UpgradeDataInterface
     private $attributeManagement;
 
     /**
-     * InstallData constructor.
+     * PatchInitial constructor.
+     * @param ModuleDataSetupInterface $moduleDataSetup
      * @param EavSetupFactory $eavSetupFactory
      * @param CollectionFactory $attributeSetCollection
      * @param Config $eavConfig
@@ -60,8 +67,16 @@ class UpgradeData implements UpgradeDataInterface
      * @param AttributeManagementInterface $attributeManagement
      * @param SendCloudLogger $logger
      */
-    public function __construct(EavSetupFactory $eavSetupFactory, CollectionFactory $attributeSetCollection, Config $eavConfig, CatalogConfig $catalogConfig, AttributeManagementInterface $attributeManagement, SendCloudLogger $logger)
-    {
+    public function __construct(
+        ModuleDataSetupInterface $moduleDataSetup,
+        EavSetupFactory $eavSetupFactory,
+        CollectionFactory $attributeSetCollection,
+        Config $eavConfig,
+        CatalogConfig $catalogConfig,
+        AttributeManagementInterface $attributeManagement,
+        SendCloudLogger $logger
+    ) {
+        $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
         $this->attributeSetCollection = $attributeSetCollection;
         $this->eavConfig = $eavConfig;
@@ -71,22 +86,43 @@ class UpgradeData implements UpgradeDataInterface
     }
 
     /**
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-     * @param ModuleDataSetupInterface $setup
-     * @param ModuleContextInterface $context
+     * @inheritdoc
      */
-    public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    public function apply()
     {
-        if (version_compare($context->getVersion(), '1.5.0', '<=')) {
-            $this->addHsCode();
-            $this->assignsCountryOfManufactureToAllSets();
-        }
+        $this->moduleDataSetup->getConnection()->startSetup();
+        $connection = $this->moduleDataSetup->getConnection();
+
+        $this->addHsCode();
+        $this->assignsCountryOfManufactureToAllSets();
+
+        $this->moduleDataSetup->getConnection()->endSetup();
+
+        $connection->endSetup();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getDependencies()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAliases()
+    {
+        return [];
     }
 
     private function addHsCode()
     {
         $eavSetup = $this->eavSetupFactory->create();
+        if ($eavSetup->getAttribute(Product::ENTITY, 'hs_code')) {
+            return;
+        }
         $eavSetup->addAttribute(
             Product::ENTITY,
             'hs_code',
@@ -110,13 +146,15 @@ class UpgradeData implements UpgradeDataInterface
 
         foreach ($attributeSets as $attributeSet) {
             $attributeGroupId = $this->catalogConfig->getAttributeGroupId($attributeSet->getAttributeSetId(), self::ATTRIBUTE_GROUP);
-            $this->attributeManagement->assign(
-                Product::ENTITY,
-                $attributeSet->getAttributeSetId(),
-                $attributeGroupId,
-                self::COUNTRY_OF_MANUFACTURE,
-                999
-            );
+            if (!empty($attributeGroupId)) {
+                $this->attributeManagement->assign(
+                    Product::ENTITY,
+                    $attributeSet->getAttributeSetId(),
+                    $attributeGroupId,
+                    self::COUNTRY_OF_MANUFACTURE,
+                    999
+                );
+            }
         }
     }
 

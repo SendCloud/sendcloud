@@ -51,19 +51,8 @@ define([
             };
 
             if (quote.shippingMethod().method_code === 'sendcloud') {
-
-                if ($('[name="sendcloud_service_point_id"]').val() > 0) {
-                    sendCloudAttributes = {
-                        sendcloud_service_point_id: $('[name="sendcloud_service_point_id"]').val(),
-                        sendcloud_service_point_name: $('[name="sendcloud_service_point_name"]').val(),
-                        sendcloud_service_point_street: $('[name="sendcloud_service_point_street"]').val(),
-                        sendcloud_service_point_house_number: $('[name="sendcloud_service_point_house_number"]').val(),
-                        sendcloud_service_point_zip_code: $('[name="sendcloud_service_point_zip_code"]').val(),
-                        sendcloud_service_point_city: $('[name="sendcloud_service_point_city"]').val(),
-                        sendcloud_service_point_country: $('[name="sendcloud_service_point_country"]').val(),
-                        sendcloud_service_point_postnumber: $('[name="sendcloud_service_point_postnumber"]').val()
-                    };
-                    payload['addressInformation']['extension_attributes'] = sendCloudAttributes;
+                if (quote.getSendcloudServicePoint()['sendcloud_service_point_id'] > 0) {
+                    payload['addressInformation']['extension_attributes'] = quote.getSendcloudServicePoint();
                 }
             }
 

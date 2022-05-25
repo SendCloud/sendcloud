@@ -12,6 +12,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Xml\Security;
 use Magento\OfflineShipping\Model\Carrier\Flatrate\ItemPriceCalculator;
+use Magento\OfflineShipping\Model\Carrier\Tablerate;
+use Magento\OfflineShipping\Model\ResourceModel\Carrier\TablerateFactory;
 use Magento\Quote\Api\Data\ShippingMethodInterface;
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory;
@@ -21,9 +23,7 @@ use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Shipping\Model\Rate\Result;
 use Magento\Shipping\Model\Rate\ResultFactory;
 use Magento\Shipping\Model\Simplexml\ElementFactory;
-use Magento\Shipping\Model\Tracking\Result\ErrorFactory as TrackErrorFactory;
 use Magento\Shipping\Model\Tracking\Result\StatusFactory;
-use Magento\Shipping\Model\Tracking\ResultFactory as TrackFactory;
 use Psr\Log\LoggerInterface;
 use SendCloud\SendCloud\Helper\Checkout;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
@@ -32,7 +32,7 @@ use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
 /**
  * Class SendCloud
  */
-class SendCloud extends AbstractCarrierOnline implements CarrierInterface
+class SendCloud extends Tablerate
 {
 
     /**
@@ -40,39 +40,15 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
      */
     protected $_code = 'sendcloud';
 
-    //begin: SEN-166
-    /**
-     * @var bool
-     */
-    protected $_isFixed = true;
-
     /**
      * @var string
      */
-    protected $_defaultConditionName = 'sen_package_fixed';
-
-    /**
-     * @var array
-     */
-    protected $_conditionNames = [];
+    protected $_defaultConditionName = 'package_fixed';
 
     /**
      * @var ServicepointrateFactory
      */
     protected $_servicepiontrateFactory;
-
-    //end: SEN-166
-
-    /** @var ResultFactory */
-    private $_rateResultFactory;
-
-    /** @var SendCloudLogger */
-    private $sendCloudLogger;
-
-    /**
-     * @var ItemPriceCalculator
-     */
-    private $itemPriceCalculator;
 
     /**
      * @var Checkout
@@ -83,20 +59,8 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
      * SendCloud constructor.
      * @param ScopeConfigInterface $scopeConfig
      * @param ErrorFactory $rateErrorFactory
-     * @param LoggerInterface $logger
-     * @param Security $xmlSecurity
-     * @param ElementFactory $xmlElFactory
      * @param ResultFactory $rateResultFactory
      * @param MethodFactory $rateMethodFactory
-     * @param TrackFactory $trackFactory
-     * @param TrackErrorFactory $trackErrorFactory
-     * @param StatusFactory $trackStatusFactory
-     * @param RegionFactory $regionFactory
-     * @param CountryFactory $countryFactory
-     * @param CurrencyFactory $currencyFactory
-     * @param Data $directoryData
-     * @param StockRegistryInterface $stockRegistry
-     * @param ItemPriceCalculator $itemPriceCalculator
      * @param SendCloudLogger $sendCloudLogger
      * @param Checkout $helper
      * @param ServicepointrateFactory $servicepointrateFactory
@@ -106,66 +70,29 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         ErrorFactory $rateErrorFactory,
-        LoggerInterface $logger,
-        Security $xmlSecurity,
-        ElementFactory $xmlElFactory,
         ResultFactory $rateResultFactory,
         MethodFactory $rateMethodFactory,
-        TrackFactory $trackFactory,
-        TrackErrorFactory $trackErrorFactory,
-        StatusFactory $trackStatusFactory,
-        RegionFactory $regionFactory,
-        CountryFactory $countryFactory,
-        CurrencyFactory $currencyFactory,
-        Data $directoryData,
-        StockRegistryInterface $stockRegistry,
-        ItemPriceCalculator $itemPriceCalculator,
         SendCloudLogger $sendCloudLogger,
         Checkout $helper,
         ServicepointrateFactory $servicepointrateFactory,
+        TablerateFactory $tablerateFactory,
         array $data = []
-    ){
-        $this->_rateResultFactory = $rateResultFactory;
-        $this->_rateMethodFactory = $rateMethodFactory;
-        $this->itemPriceCalculator = $itemPriceCalculator;
-        $this->sendCloudLogger = $sendCloudLogger;
+    ) {
         $this->helper = $helper;
         $this->_servicepiontrateFactory = $servicepointrateFactory;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
-            $logger,
-            $xmlSecurity,
-            $xmlElFactory,
+            $sendCloudLogger,
             $rateResultFactory,
             $rateMethodFactory,
-            $trackFactory,
-            $trackErrorFactory,
-            $trackStatusFactory,
-            $regionFactory,
-            $countryFactory,
-            $currencyFactory,
-            $directoryData,
-            $stockRegistry,
+            $tablerateFactory,
             $data
         );
-        foreach ($this->getCode('sen_condition_name') as $k => $v) {
-            $this->_conditionNames[] = $k;
-        }
     }
 
     /**
-     * @param DataObject $request
-     * @return DataObject|void
-     */
-    protected function _doShipmentRequest(DataObject $request)
-    {
-        //Do nothing at the moment
-    }
-
-    /**
-     * get allowed methods
-     * @return array
+     * @inheritdoc
      */
     public function getAllowedMethods()
     {
@@ -173,306 +100,24 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
     }
 
     /**
-     * @param RateRequest $request
-     * @return bool|Result|DataObject|null
-     * @throws LocalizedException
+     * @inheritdoc
      */
-    public function collectRates(RateRequest $request)
+    public function getRate(RateRequest $request)
     {
-        if (!$this->getConfigFlag('active')) {
-            return false;
-        }
-
-        if ($this->helper->checkForScriptUrl() == false || $this->helper->checkIfModuleIsActive() == false) {
-            return false;
-        };
-
-        //TODO: can we remove this?
-        if (!$request->getSenConditionName()) {
-            $conditionName = $this->getConfigData('sen_condition_name');
-            $request->setSenConditionName($conditionName ? $conditionName : $this->_defaultConditionName);
-        }
-
-        if ($request->getSenConditionName() == $this->_defaultConditionName || !$request->getSenConditionName()) {
-
-            //default fixed behaviour
-            $freeBoxes = $this->getFreeBoxesCount($request);
-            $this->setFreeBoxes($freeBoxes);
-
-            /** @var Result $result */
-            $result = $this->_rateResultFactory->create();
-
-            $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
-
-            if ($shippingPrice !== false) {
-                $method = $this->createResultMethod($shippingPrice);
-                $amount = $this->getConfigData('price');
-                if ($this->getConfigData('free_shipping_enable') &&
-                    $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
-                    $method->setPrice('0.00');
-                    $method->setCost('0.00');
-                } else {
-                    $method->setPrice($amount);
-                    $method->setCost($amount);
-                }
-                $result->append($method);
-            }
-        } else {
-
-            // exclude Virtual products price from Package value if pre-configured
-            if (!$this->getConfigFlag('sen_include_virtual_price') && $request->getAllItems()) {
-                foreach ($request->getAllItems() as $item) {
-                    if ($item->getParentItem()) {
-                        continue;
-                    }
-                    if ($item->getHasChildren() && $item->isShipSeparately()) {
-                        foreach ($item->getChildren() as $child) {
-                            if ($child->getProduct()->isVirtual()) {
-                                $request->setPackageValue($request->getPackageValue() - $child->getBaseRowTotal());
-                            }
-                        }
-                    } elseif ($item->getProduct()->isVirtual()) {
-                        $request->setPackageValue($request->getPackageValue() - $item->getBaseRowTotal());
-                    }
-                }
-            }
-
-            // Free shipping by qty
-            $freeQty = 0;
-            $freePackageValue = 0;
-            $freeBoxes = 0;
-            if ($request->getAllItems()) {
-                foreach ($request->getAllItems() as $item) {
-                    if ($item->getProduct()->isVirtual() || $item->getParentItem()) {
-                        continue;
-                    }
-
-                    if ($item->getHasChildren() && $item->isShipSeparately()) {
-                        foreach ($item->getChildren() as $child) {
-                            if ($child->getFreeShipping() && !$child->getProduct()->isVirtual()) {
-                                $freeShipping = is_numeric($child->getFreeShipping()) ? $child->getFreeShipping() : 0;
-                                $freeQty += $item->getQty() * ($child->getQty() - $freeShipping);
-                                $freeQty += $item->getQty() * ($child->getQty() - $freeShipping);
-                                $freeBoxes += $item->getQty() * $child->getQty();
-                            }
-                        }
-                    } elseif ($item->getFreeShipping() || $item->getAddress()->getFreeShipping()) {
-                        $freeShipping = $item->getFreeShipping() ?
-                            $item->getFreeShipping() : $item->getAddress()->getFreeShipping();
-                        $freeShipping = is_numeric($freeShipping) ? $freeShipping : 0;
-                        $freeQty += $item->getQty() - $freeShipping;
-                        $freePackageValue += $item->getBaseRowTotal();
-                        $freeBoxes += $item->getQty();
-                    }
-                }
-                $oldValue = $request->getPackageValue();
-                $newPackageValue = $oldValue - $freePackageValue;
-                $request->setPackageValue($newPackageValue);
-                $request->setPackageValueWithDiscount($newPackageValue);
-                $request->setSenPackageValueWithDiscount($newPackageValue);
-            }
-
-            $this->setFreeBoxes($freeBoxes);
-
-            // Package weight and qty free shipping
-            $oldWeight = $request->getPackageWeight();
-            $oldQty = $request->getPackageQty();
-
-            $request->setPackageWeight($request->getFreeMethodWeight());
-            $request->setPackageQty($oldQty - $freeQty);
-            $request->setSenPackageWeight($request->getPackageWeight());
-            $request->setSenPackageQty($request->getPackageQty());
-
-            /** @var \Magento\Shipping\Model\Rate\Result $result */
-            $result = $this->_rateResultFactory->create();
-            $rate = $this->getRate($request);
-
-            $request->setPackageWeight($oldWeight);
-            $request->setPackageQty($oldQty);
-            $request->setSenPackageWeight($oldWeight);
-            $request->setSenPackageQty($oldQty);
-
-            if (!empty($rate) && $rate['price'] >= 0) {
-                if ($request->getSenPackageQty() == $freeQty) {
-                    $shippingPrice = 0;
-                } else {
-                    $shippingPrice = $this->getFinalPriceWithHandlingFee($rate['price']);
-                }
-                $method = $this->createShippingMethod($shippingPrice, $rate['cost']);
-                $result->append($method);
-            } elseif ($request->getSenPackageQty() == $freeQty) {
-
-                /**
-                 * Promotion rule was applied for the whole cart.
-                 *  In this case all other shipping methods could be omitted
-                 * Table rate shipping method with 0$ price must be shown if grand total is more than minimal value.
-                 * Free package weight has been already taken into account.
-                 */
-                $request->setPackageValue($freePackageValue);
-                $request->setPackageQty($freeQty);
-                $request->setSenPackageValue($freePackageValue);
-                $request->setSenPackageQty($freeQty);
-                $rate = $this->getRate($request);
-
-                if (!empty($rate) && $rate['price'] >= 0) {
-                    $method = $this->createShippingMethod(0, 0);
-                    $result->append($method);
-                }
-            } else {
-                /** @var \Magento\Quote\Model\Quote\Address\RateResult\Error $error */
-                $error = $this->_rateErrorFactory->create(
-                    [
-                        'data' => [
-                            'carrier' => $this->_code,
-                            'carrier_title' => $this->getConfigData('title'),
-                            'error_message' => $this->getConfigData('specificerrmsg'),
-                        ],
-                    ]
-                );
-                $result->append($error);
-            }
-        }
-
-        return $result;
+        return $this->_servicepiontrateFactory->create()->getRate($request);
     }
 
     /**
-     * @param RateRequest $request
-     * @param $freeBoxes
-     * @return float|string
-     */
-    private function getShippingPrice(RateRequest $request, $freeBoxes)
-    {
-        $configPrice = $this->getConfigData('price');
-
-        $shippingPrice = $this->itemPriceCalculator->getShippingPricePerOrder($request, $configPrice, $freeBoxes);
-        $shippingPrice = $this->getFinalPriceWithHandlingFee($shippingPrice);
-
-        if ($shippingPrice !== false && $request->getPackageQty() == $freeBoxes) {
-            $shippingPrice = '0.00';
-        }
-        return $shippingPrice;
-    }
-
-    /**
-     * @param $shippingPrice
-     * @param $cost
-     * @return ShippingMethodInterface
-     */
-    private function createShippingMethod($shippingPrice, $cost)
-    {
-        /** @var ShippingMethodInterface $method */
-        $method = $this->_rateMethodFactory->create();
-
-        $method->setCarrier($this->_code);
-        $method->setCarrierTitle($this->getConfigData('title'));
-
-        $method->setMethod($this->_code);
-        $method->setMethodTitle($this->getConfigData('name'));
-
-        $method->setPrice($shippingPrice);
-        $method->setCost($cost);
-        return $method;
-    }
-
-    /**
-     * @param $shippingPrice
-     * @return ShippingMethodInterface
-     */
-    private function createResultMethod($shippingPrice)
-    {
-        /** @var ShippingMethodInterface $method */
-        $method = $this->_rateMethodFactory->create();
-
-        $method->setCarrier($this->_code);
-        $method->setCarrierTitle($this->getConfigData('title'));
-
-        $method->setMethod($this->_code);
-        $method->setMethodTitle($this->getConfigData('name'));
-
-        $method->setPrice($shippingPrice);
-        $method->setCost($shippingPrice);
-        return $method;
-    }
-
-    /**
-     * @param DataObject $request
-     * @return bool
-     */
-    public function proccessAdditionalValidation(DataObject $request)
-    {
-        return $this->processAdditionalValidation($request);
-    }
-
-    /**
-     * @param DataObject $request
-     * @return bool
-     */
-    public function processAdditionalValidation(DataObject $request)
-    {
-        return true;
-    }
-
-    /**
-     * @param RateRequest $request
-     * @return int
-     */
-    private function getFreeBoxesCount(RateRequest $request)
-    {
-        $freeBoxes = 0;
-        if ($request->getAllItems()) {
-            foreach ($request->getAllItems() as $item) {
-                if ($item->getProduct()->isVirtual() || $item->getParentItem()) {
-                    continue;
-                }
-
-                if ($item->getHasChildren() && $item->isShipSeparately()) {
-                    $freeBoxes += $this->getFreeBoxesCountFromChildren($item);
-                } elseif ($item->getFreeShipping()) {
-                    $freeBoxes += $item->getQty();
-                }
-            }
-        }
-        return $freeBoxes;
-    }
-
-    /**
-     * @param mixed $item
-     * @return mixed
-     */
-    private function getFreeBoxesCountFromChildren($item)
-    {
-        $freeBoxes = 0;
-        foreach ($item->getChildren() as $child) {
-            if ($child->getFreeShipping() && !$child->getProduct()->isVirtual()) {
-                $freeBoxes += $item->getQty() * $child->getQty();
-            }
-        }
-        return $freeBoxes;
-    }
-
-    /**
-     * Get code.
-     *
-     * @param string $type
-     * @param string $code
-     * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @inheritdoc
      */
     public function getCode($type, $code = '')
     {
         $codes = [
-            'sen_condition_name' => [
-                'sen_package_fixed' => __('Fixed fee shipping price'),
-                'sen_package_weight' => __('Weight vs. Destination'),
-                'sen_package_value_with_discount' => __('Price vs. Destination'),
-                'sen_package_qty' => __('# of Items vs. Destination'),
+            'condition_name' => [
+                'package_fixed' => __('Fixed fee shipping price')
             ],
-            'sen_condition_name_short' => [
-                'sen_package_fixed' => __('Fixed fee shipping'),
-                'sen_package_weight' => __('Weight (and above)'),
-                'sen_package_value_with_discount' => __('Order Subtotal (and above)'),
-                'sen_package_qty' => __('# of Items (and above)'),
+            'condition_name_short' => [
+                'package_fixed' => __('Fixed fee shipping')
             ],
         ];
 
@@ -483,27 +128,131 @@ class SendCloud extends AbstractCarrierOnline implements CarrierInterface
         }
 
         if ('' === $code) {
-            return $codes[$type];
+            return array_merge($codes[$type], parent::getCode($type));
         }
 
-        if (!isset($codes[$type][$code])) {
-            throw new LocalizedException(
-                __('The "%1: %2" code type for Sendcloud Servicepoint is incorrect. Verify the type and try again.', $type, $code)
-            );
+        if ($code === $this->_defaultConditionName) {
+            return $codes[$type][$code];
         }
 
-        return $codes[$type][$code];
+        return parent::getCode($type, $code);
     }
 
     /**
-     * Get rate.
-     *
+     * @inheritdoc
+     */
+    public function collectRates(RateRequest $request)
+    {
+        if (!$this->getConfigFlag('active')) {
+            return false;
+        }
+
+        if (!$this->helper->checkForScriptUrl() || !$this->helper->checkIfModuleIsActive()) {
+            return false;
+        }
+
+        $conditionName = $this->getConfigData('condition_name');
+        $request->setConditionName($conditionName ?: $this->_defaultConditionName);
+
+        return $this->isFlatRateRequest($request) ? $this->collectFlatRate($request) : $this->collectTableRates($request);
+    }
+
+    /**
+     * @param RateRequest $request
+     * @return bool
+     */
+    private function isFlatRateRequest(RateRequest $request): bool
+    {
+        return $request->getConditionName() == $this->_defaultConditionName || !$request->getConditionName();
+    }
+
+    /**
+     * @param RateRequest $request
+     * @return Result
+     */
+    private function collectFlatRate(RateRequest $request): Result
+    {
+        /** @var Result $result */
+        $result = $this->_rateResultFactory->create();
+        $amount = $this->getConfigData('price');
+
+        if ($amount === false) {
+            return $result;
+        }
+
+        $method = $this->createShippingMethod($amount, $amount);
+        if ($this->getConfigData('free_shipping_enable') &&
+            $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
+            $method->setPrice('0.00');
+            $method->setCost('0.00');
+        }
+
+        $result->append($method);
+
+        return $result;
+    }
+
+    /**
      * @param RateRequest $request
      * @return mixed
-     * @throws LocalizedException
      */
-    public function getRate(\Magento\Quote\Model\Quote\Address\RateRequest $request)
+    private function collectTableRates(RateRequest $request)
     {
-        return $this->_servicepiontrateFactory->create()->getRate($request);
+        $request = clone $request;
+
+        /**
+         * Since Tablerate directly change package value in request object without restoring the initial value,
+         * it is necessary to set old package value in request object.
+         */
+        $this->setOldPackageValue($request);
+
+        $result = parent::collectRates($request);
+
+        /** @var ShippingMethodInterface[] $method */
+        foreach ($result->getRatesByCarrier($this->_code) as $method) {
+            $method->setMethod($this->_code);
+        }
+
+        //Magento 2.3.2 version bug fix
+        /** @var ShippingMethodInterface[] $method */
+        foreach ($result->getRatesByCarrier('tablerate') as $method) {
+            $method->setMethod($this->_code);
+            $method->setCarrier($this->_code);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $shippingPrice
+     * @param $cost
+     * @return ShippingMethodInterface
+     */
+    private function createShippingMethod($shippingPrice, $cost)
+    {
+        /** @var ShippingMethodInterface $method */
+        $method = $this->_resultMethodFactory->create();
+
+        $method->setCarrier($this->_code);
+        $method->setCarrierTitle($this->getConfigData('title'));
+
+        $method->setMethod($this->_code);
+        $method->setMethodTitle($this->getConfigData('name'));
+
+        $method->setPrice($shippingPrice);
+        $method->setCost($cost);
+
+        return $method;
+    }
+
+    /**
+     * @param RateRequest $request
+     */
+    private function setOldPackageValue(RateRequest $request)
+    {
+        if ($request->getPackageValue() === 0.0 && $request->getPackageValue() !== $request->getPackagePhysicalValue()) {
+            $request->setPackageValue($request->getPackagePhysicalValue());
+            $request->setPackageValueWithDiscount($request->getPackagePhysicalValue());
+        }
     }
 }

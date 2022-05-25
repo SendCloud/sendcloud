@@ -94,8 +94,8 @@ class OrderItemRepository
             $orderItem->setExtensionAttributes($extensionAttributes);
         } catch (NoSuchEntityException $e) {
             $this->logger->debug($e->getMessage());
-
-            return $this;
         }
+
+        return $this;
     }
 }

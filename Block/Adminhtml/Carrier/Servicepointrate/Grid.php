@@ -100,7 +100,7 @@ class Grid extends Extended
      * @param string $name
      * @return $this
      */
-    public function setSenConditionName($name)
+    public function setConditionName($name)
     {
         $this->_conditionName = $name;
         return $this;
@@ -111,7 +111,7 @@ class Grid extends Extended
      *
      * @return int
      */
-    public function getSenConditionName()
+    public function getConditionName()
     {
         return $this->_conditionName;
     }
@@ -124,7 +124,7 @@ class Grid extends Extended
     protected function _prepareCollection()
     {
         $collection = $this->_collectionFactory->create();
-        $collection->setConditionFilter($this->getSenConditionName())->setWebsiteFilter($this->getWebsiteId());
+        $collection->setConditionFilter($this->getConditionName())->setWebsiteFilter($this->getWebsiteId());
 
         $this->setCollection($collection);
 
@@ -154,7 +154,7 @@ class Grid extends Extended
             ['header' => __('Zip/Postal Code'), 'index' => 'dest_zip', 'default' => '*']
         );
 
-        $label = $this->_servicepointrate->getCode('sen_condition_name_short', $this->getSenConditionName());
+        $label = $this->_servicepointrate->getCode('condition_name_short', $this->getConditionName());
         $this->addColumn('condition_value', ['header' => $label, 'index' => 'condition_value']);
 
         $this->addColumn('price', ['header' => __('Shipping Price'), 'index' => 'price']);

@@ -18,8 +18,7 @@ class AdminAccessTokenServicePlugin
      */
     public function __construct(
         AdminTokenServiceInterface $adminTokenService
-    )
-    {
+    ) {
         $this->adminTokenService = $adminTokenService;
     }
 

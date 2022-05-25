@@ -1,8 +1,7 @@
 var config = {
     "map": {
         "*": {
-            'Magento_Checkout/js/model/shipping-save-processor/default': 'SendCloud_SendCloud/js/model/shipping-save-processor/servicepoint',
-            'Amasty_Checkout/js/model/shipping-save-processor/default': 'SendCloud_SendCloud/js/model/shipping-save-processor/amasty-servicepoint',
+            'Amasty_Checkout/js/model/shipping-save-processor/default': 'SendCloud_SendCloud/js/model/shipping-save-processor/amasty-servicepoint'
         }
     },
     config: {
@@ -13,9 +12,6 @@ var config = {
             'Magento_Checkout/js/view/shipping': {
                 'SendCloud_SendCloud/js/mixins/checkout/view/shipping-mixin': true
             },
-            'Magento_Checkout/js/view/payment/default': {
-                'SendCloud_SendCloud/js/mixins/checkout/view/payment/default-mixin': true
-            },
             'Mageplaza_Osc/js/model/shipping-save-processor/checkout': {
                 'SendCloud_SendCloud/js/model/shipping-save-processor/mageplaza-servicepoint': true
             },
@@ -24,6 +20,15 @@ var config = {
             },
             'Onestepcheckout_Iosc/js/shipping': {
                 'SendCloud_SendCloud/js/mixins/shipping': true
+            },
+            'Magento_Checkout/js/model/quote': {
+                'SendCloud_SendCloud/js/mixins/quote': true
+            },
+            'Magento_Checkout/js/model/shipping-save-processor/payload-extender': {
+                'SendCloud_SendCloud/js/model/shipping-save-processor/payload-extender-mixin': true
+            },
+            'Magento_Checkout/js/action/select-shipping-method': {
+                'SendCloud_SendCloud/js/action/select-shipping-method-mixin': true
             }
         }
     }
