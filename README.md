@@ -38,7 +38,7 @@ php bin/magento setup:upgrade
 To revert to a previous version of the plugin, simply remove the repository from the list of repositories and set the version of the `sendcloud/sendcloud` dependency to a previous version:
 ```
 "require": {
-    "sendcloud/sendcloud": "1.8.0",
+    "sendcloud/sendcloud": "1.8.6",
 }
 ```
 Please also run the Magento setup console command for the changes to take effect.
