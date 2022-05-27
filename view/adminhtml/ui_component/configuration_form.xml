@@ -165,7 +165,6 @@
             <settings>
                 <options>
                     <option name="title" xsi:type="string" translate="true">Shipping rates</option>
-                    <option name="type">popup</option>
                 </options>
             </settings>
             <insertForm name="shipping_rates_listing" component="SendCloud_SendCloud/js/form/components/insert-form">
