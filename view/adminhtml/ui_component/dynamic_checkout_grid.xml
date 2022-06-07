@@ -11,12 +11,6 @@
         </deps>
     </settings>
     <dataSource name="sendcloud_delivery_methods_grid_data_source" component="SendCloud_SendCloud/js/form/components/provider">
-        <settings>
-            <storageConfig>
-                <param name="indexField" xsi:type="string">id</param>
-            </storageConfig>
-            <updateUrl path="mui/index/render"/>
-        </settings>
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="component" xsi:type="string">SendCloud_SendCloud/js/form/components/provider</item>
@@ -29,13 +23,16 @@
                 </item>
             </item>
         </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
         <dataProvider class="SendCloud\SendCloud\Ui\Component\Form\GridDataProvider" name="sendcloud_delivery_methods_grid_data_source">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
-                <storageConfig>
-                    <param name="indexField" xsi:type="string">id</param>
-                </storageConfig>
             </settings>
         </dataProvider>
     </dataSource>
@@ -61,7 +58,7 @@
         <column name="country">
             <settings>
                 <filter>text</filter>
-                <sorting>asc</sorting>>
+                <sorting>asc</sorting>
                 <label translate="true">Country</label>
             </settings>
         </column>

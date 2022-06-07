@@ -39,7 +39,6 @@
     <fieldset name="general">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
-                <item name="collapsible" xsi:type="boolean">true</item>
                 <item name="label" xsi:type="string" translate="true">General Configuration</item>
                 <item name="sortOrder" xsi:type="number">20</item>
             </item>
@@ -135,7 +134,6 @@
     <fieldset name="dynamic_checkout">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
-                <item name="collapsible" xsi:type="boolean">true</item>
                 <item name="label" xsi:type="string" translate="true">Dynamic Checkout</item>
                 <item name="sortOrder" xsi:type="number">21</item>
             </item>
@@ -165,7 +163,7 @@
             <settings>
                 <options>
                     <option name="title" xsi:type="string" translate="true">Shipping rates</option>
-                    <option name="type">popup</option>
+                    <option name="type" xsi:type="string">popup</option>
                 </options>
             </settings>
             <insertForm name="shipping_rates_listing" component="SendCloud_SendCloud/js/form/components/insert-form">
@@ -183,7 +181,6 @@
     <fieldset name="dynamic_message">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
-                <item name="collapsible" xsi:type="boolean">true</item>
                 <item name="label" xsi:type="string" translate="true">Dynamic Checkout</item>
                 <item name="sortOrder" xsi:type="number">21</item>
             </item>
