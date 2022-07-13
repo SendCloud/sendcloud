@@ -1,18 +1,16 @@
-define(
-    [],
-    function () {
-        'use strict';
-        return {
-            getRules: function () {
-                return {
-                    'sendcloud_service_point_id': {
-                        'required': true
-                    },
-                    'sendcloud_service_point_name': {
-                        'required': true
-                    }
+define([], function () {
+    'use strict';
+
+    return {
+        /**
+         * @return {Object}
+         */
+        getRules: function () {
+            return {
+                'country_id': {
+                    'required': true
                 }
-            }
+            };
         }
-    }
-)
+    };
+});
