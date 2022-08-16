@@ -15,3 +15,7 @@
     border-left: 1px solid #cccccc;
     vertical-align: sub;
 }
+
+#menu-sendcloud-sendcloud-menu > a:before {
+    content: url('../images/sendcloud-menu.svg');
+}

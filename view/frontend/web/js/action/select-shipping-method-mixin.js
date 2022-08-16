@@ -2,7 +2,9 @@ define([
     'jquery',
     'mage/utils/wrapper',
     'Magento_Checkout/js/model/quote',
-], function ($, wrapper, quote) {
+    'SendCloud_SendCloud/js/servicePoint/action/reset-service-point',
+    'SendCloud_SendCloud/js/checkout/action/reset-service-point'
+], function ($, wrapper, quote, servicePoint, checkout) {
     'use strict';
     var lastKnownShippingAddressZip,
         lastKnownShippingAddressCountry;
@@ -20,12 +22,9 @@ define([
             lastKnownShippingAddressCountry = countryCode;
             lastKnownShippingAddressZip = zipCode;
 
-            if(!quote.getSendcloudServicePoint() ||
-                quote.getSendcloudServicePoint()['sendcloud_service_point_country'] !== countryCode ||
-                quote.getSendcloudServicePoint()['sendcloud_service_point_zip_code'] !== zipCode)
-            {
-                quote.setSendcloudServicePoint(null);
-            }
+            checkout.resetServicePoint(countryCode, zipCode);
+            servicePoint.resetServicePoint(countryCode, zipCode);
+
         });
     };
 });

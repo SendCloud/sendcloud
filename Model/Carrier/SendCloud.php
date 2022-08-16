@@ -186,7 +186,7 @@ class SendCloud extends Tablerate
             $method->setPrice('0.00');
             $method->setCost('0.00');
         }
-
+        $method->setData('methodType', 'service_point_legacy');
         $result->append($method);
 
         return $result;
@@ -211,6 +211,7 @@ class SendCloud extends Tablerate
         /** @var ShippingMethodInterface[] $method */
         foreach ($result->getRatesByCarrier($this->_code) as $method) {
             $method->setMethod($this->_code);
+            $method->setData('methodType', 'service_point_legacy');
         }
 
         //Magento 2.3.2 version bug fix

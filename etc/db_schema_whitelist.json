@@ -1,57 +1,97 @@
 {
-  "sendcloud_servicepointrate": {
-    "column": {
-      "pk": true,
-      "website_id": true,
-      "dest_country_id": true,
-      "dest_region_id": true,
-      "dest_zip": true,
-      "condition_name": true,
-      "sen_condition_name": true,
-      "condition_value": true,
-      "price": true,
-      "cost": true
+    "sendcloud_servicepointrate": {
+        "column": {
+            "pk": true,
+            "website_id": true,
+            "dest_country_id": true,
+            "dest_region_id": true,
+            "dest_zip": true,
+            "condition_name": true,
+            "sen_condition_name": false,
+            "condition_value": true,
+            "price": true,
+            "cost": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "UNQ_D8DHAGSD72O9FDHLA020ILKAHSDALDS8": false,
+            "UNQ_C0DB67076EAA5EA868F15196691297E7": true
+        }
     },
-    "constraint": {
-      "PRIMARY": true,
-      "UNQ_D8DHAGSD72O9FDHLA020ILKAHSDALDS8": false,
-      "UNQ_C0DB67076EAA5EA868F15196691297E7": true
+    "sales_order": {
+        "column": {
+            "sendcloud_service_point_id": true,
+            "sendcloud_service_point_name": true,
+            "sendcloud_service_point_street": true,
+            "sendcloud_service_point_house_number": true,
+            "sendcloud_service_point_zip_code": true,
+            "sendcloud_service_point_city": true,
+            "sendcloud_service_point_country": true,
+            "sendcloud_service_point_postnumber": true,
+            "sendcloud_data": true
+        }
+    },
+    "sales_order_grid": {
+        "column": {
+            "sendcloud_service_point_id": true,
+            "sendcloud_service_point_name": true,
+            "sendcloud_service_point_street": true,
+            "sendcloud_service_point_house_number": true,
+            "sendcloud_service_point_zip_code": true,
+            "sendcloud_service_point_city": true,
+            "sendcloud_service_point_country": true,
+            "sendcloud_service_point_postnumber": true,
+            "sendcloud_data": true
+        }
+    },
+    "quote": {
+        "column": {
+            "sendcloud_service_point_id": true,
+            "sendcloud_service_point_name": true,
+            "sendcloud_service_point_street": true,
+            "sendcloud_service_point_house_number": true,
+            "sendcloud_service_point_zip_code": true,
+            "sendcloud_service_point_city": true,
+            "sendcloud_service_point_country": true,
+            "sendcloud_service_point_postnumber": true,
+            "sendcloud_checkout_data": true,
+            "sendcloud_multishipping_data": true
+        }
+    },
+    "sendcloud_shipping_zones": {
+        "column": {
+            "id": true,
+            "store_view_id": true,
+            "external_id": true,
+            "data": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SENDCLOUD_SHIPPING_ZONES_EXTERNAL_ID": true
+        }
+    },
+    "sendcloud_shipping_methods": {
+        "column": {
+            "id": true,
+            "store_view_id": true,
+            "external_id": true,
+            "delivery_zone_id": true,
+            "data": true,
+            "country": true,
+            "internal_title": true,
+            "shipping_product": true,
+            "rates_enabled": true,
+            "delivery_method": true,
+            "external_title": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SENDCLOUD_SHIPPING_METHODS_DELIVERY_ZONE_ID": true,
+            "SENDCLOUD_SHIPPING_METHODS_EXTERNAL_ID": true
+        },
+        "index": {
+            "SENDCLOUD_SHIPPING_METHODS_COUNTRY_INTERNAL_TITLE": true,
+            "SENDCLOUD_SHIPPING_METHODS_EXTERNAL_TITLE_INTERNAL_TITLE": true
+        }
     }
-  },
-  "sales_order": {
-    "column": {
-      "sendcloud_service_point_id": true,
-      "sendcloud_service_point_name": true,
-      "sendcloud_service_point_street": true,
-      "sendcloud_service_point_house_number": true,
-      "sendcloud_service_point_zip_code": true,
-      "sendcloud_service_point_city": true,
-      "sendcloud_service_point_country": true,
-      "sendcloud_service_point_postnumber": true
-    }
-  },
-  "sales_order_grid": {
-    "column": {
-      "sendcloud_service_point_id": true,
-      "sendcloud_service_point_name": true,
-      "sendcloud_service_point_street": true,
-      "sendcloud_service_point_house_number": true,
-      "sendcloud_service_point_zip_code": true,
-      "sendcloud_service_point_city": true,
-      "sendcloud_service_point_country": true,
-      "sendcloud_service_point_postnumber": true
-    }
-  },
-  "quote": {
-    "column": {
-      "sendcloud_service_point_id": true,
-      "sendcloud_service_point_name": true,
-      "sendcloud_service_point_street": true,
-      "sendcloud_service_point_house_number": true,
-      "sendcloud_service_point_zip_code": true,
-      "sendcloud_service_point_city": true,
-      "sendcloud_service_point_country": true,
-      "sendcloud_service_point_postnumber": true
-    }
-  }
 }

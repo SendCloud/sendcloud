@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="order_tab_info">
-            <block class="Magento\Sales\Block\Adminhtml\Order\AbstractOrder" name="order_shipping_view" template="SendCloud_SendCloud::order/view/info.phtml"/>
+            <block class="SendCloud\SendCloud\Block\Adminhtml\AbstractOrder" name="order_shipping_view" template="SendCloud_SendCloud::order/view/info.phtml"/>
         </referenceBlock>
     </body>
 </page>

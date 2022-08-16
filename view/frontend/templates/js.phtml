@@ -4,11 +4,14 @@
             "Magento_Ui/js/core/app": {
                 "components": {
                     "sendcloud": {
-                        "component": "SendCloud_SendCloud/js/view/checkout/shipping/servicePoint",
+                        "component": "SendCloud_SendCloud/js/servicePoint/view/checkout/shipping/servicePoint",
                         "scriptUrl": "<?= /* @escapeNotVerified */ $block->getScriptUrl()?>"
                     }
                 }
             }
         }
     }
+</script>
+<script>
+    var storeLocale = "<?= /* @escapeNotVerified */ $block->getLocale()?>";
 </script>

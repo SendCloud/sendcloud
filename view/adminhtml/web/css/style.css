@@ -1,0 +1,52 @@
+.general_message {
+    background: #fffbbb;
+    border: solid #d1d1d1;
+    border-width: 0.1rem;
+    position: relative;
+    padding: 15px 30px;
+    margin-bottom: 1rem;
+}
+.plugin_version{
+    width: calc( (100%) * .25 - 30px );
+    float: left;
+    margin-left: 45px;
+}
+.plugin-version-label{
+    margin-bottom:3rem
+}
+.modal-field-label {
+    margin-top: 2rem;
+    margin-left: 30px;
+    width: 100%;
+}
+
+b {
+    float: left;
+}
+table{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.pp-buttons-container{
+    margin-top: 2rem;
+}
+#edit_btn{
+    float: right;
+    font-size: 1.5rem;
+    color: white;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #514943;
+    margin-bottom: 2rem;
+}
+.pp-buttons-container {
+    margin-left: calc((100%) * .25);
+}
+td>.action-menu-item[href^="No"]{
+    color: black;
+    pointer-events: none;
+}

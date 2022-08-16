@@ -14,6 +14,27 @@
         </resources>
     </route>
 
+    <route url="/V1/sendcloud/checkout/configuration" method="PUT">
+        <service class="SendCloud\SendCloud\Api\CheckoutConfigurationInterface" method="update"/>
+        <resources>
+            <resource ref="Magento_Sales::sales"/>
+        </resources>
+    </route>
+
+    <route url="/V1/sendcloud/checkout/configuration" method="DELETE">
+        <service class="SendCloud\SendCloud\Api\CheckoutConfigurationInterface" method="delete"/>
+        <resources>
+            <resource ref="Magento_Sales::sales"/>
+        </resources>
+    </route>
+
+    <route url="/V1/sendcloud/integration" method="DELETE">
+        <service class="SendCloud\SendCloud\Api\CheckoutConfigurationInterface" method="deleteIntegration"/>
+        <resources>
+            <resource ref="Magento_Sales::sales"/>
+        </resources>
+    </route>
+
     <route url="/V1/shipping-email" method="PUT">
         <service class="SendCloud\SendCloud\Api\ServicePointInterface" method="shippingEmail"/>
         <resources>

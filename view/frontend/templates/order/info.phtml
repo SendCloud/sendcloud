@@ -17,53 +17,91 @@ use Magento\Sales\Block\Order\Info;
 <?php $_order = $block->getOrder() ?>
 <div class="block block-order-details-view">
     <div class="block-title">
-        <strong><?= $escaper->escapeHtml(__('Order Information')) ?></strong>
+        <strong><?= $block->escapeHtml(__('Order Information')) ?></strong>
     </div>
     <div class="block-content">
         <?php if (!$_order->getIsVirtual()) : ?>
             <div class="box box-order-shipping-address">
-                <strong class="box-title"><span><?= $escaper->escapeHtml(__('Shipping Address')) ?></span></strong>
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Shipping Address')) ?></span></strong>
                 <div class="box-content">
-                    <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
+                    <address><?= /* @noEscape */
+                        $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
                 </div>
             </div>
 
             <div class="box box-order-shipping-method">
                 <strong class="box-title">
-                    <span><?= $escaper->escapeHtml(__('Shipping Method')) ?></span>
+                    <span><?= $block->escapeHtml(__('Shipping Method')) ?></span>
                 </strong>
                 <div class="box-content">
-                <?php if ($_order->getShippingDescription()) : ?>
-                    <?= $escaper->escapeHtml($_order->getShippingDescription()) ?>
-                    <?php if ($_order->getSendcloudServicePointId() > 0) : ?>
-                        <div class="service-point-information">
-                            <strong><?= $escaper->escapeHtml(__('Service Point')) ?></strong>
-                            <address>
-                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointName()) ?><br>
-                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointStreet()) ?> <?= $escaper->escapeHtml($_order->getSendcloudServicePointHouseNumber()) ?><br>
-                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointZipCode()) ?>  <?= $escaper->escapeHtml($_order->getSendcloudServicePointCity()) ?><br>
-                                <?= $escaper->escapeHtml($_order->getSendcloudServicePointPostnumber()) ?>
-                            </address>
-                        </div>
+                    <?php $checkoutData = !empty($_order->getSendcloudData()) ? $block->getSerializer()->unserialize($_order->getSendcloudData()) : null ?>
+                    <?php if ($_order->getShippingDescription()) : ?>
+                        <?= $block->escapeHtml($_order->getShippingDescription()) ?>
+                        <?php if ($_order->getSendcloudServicePointId() > 0) : ?>
+                            <div class="service-point-information">
+                                <strong><?= $block->escapeHtml(__('Service Point')) ?></strong>
+                                <address>
+                                    <?= $block->escapeHtml($_order->getSendcloudServicePointName()) ?><br>
+                                    <?= $block->escapeHtml($_order->getSendcloudServicePointStreet()) ?> <?= $block->escapeHtml($_order->getSendcloudServicePointHouseNumber()) ?>
+                                    <br>
+                                    <?= $block->escapeHtml($_order->getSendcloudServicePointZipCode()) ?>  <?= $block->escapeHtml($_order->getSendcloudServicePointCity()) ?>
+                                    <br>
+                                    <?= $block->escapeHtml($_order->getSendcloudServicePointPostnumber()) ?>
+                                </address>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (
+                            !empty($checkoutData) &&
+                            array_key_exists('delivery_method_data', $checkoutData) &&
+                            array_key_exists('formatted_delivery_date', $checkoutData['delivery_method_data'])
+                        ) : ?>
+                            <div class="service-point-information">
+                                <strong><?= $block->escapeHtml(__('Expected delivery date')) ?></strong>
+                                <address>
+                                    <?= $block->escapeHtml($checkoutData['delivery_method_data']['formatted_delivery_date']) ?>
+                                    <br>
+                                </address>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($checkoutData && array_key_exists('delivery_method_data', $checkoutData) &&
+                            array_key_exists('service_point', $checkoutData['delivery_method_data']) &&
+                            array_key_exists('id', $checkoutData['delivery_method_data']['service_point']) &&
+                            $checkoutData['delivery_method_data']['service_point']['id'] > 0) : ?>
+                            <div class="service-point-information">
+                                <strong><?= __('Service Point') ?></strong>
+                                <address>
+                                    <?= /* @escapeNotVerified */
+                                    $checkoutData['delivery_method_data']['service_point']['name'] ?><br>
+                                    <?= /* @escapeNotVerified */
+                                    $checkoutData['delivery_method_data']['service_point']['street'] ?> <?= /* @escapeNotVerified */
+                                    $checkoutData['delivery_method_data']['service_point']['house_number'] ?><br>
+                                    <?= /* @escapeNotVerified */
+                                    $checkoutData['delivery_method_data']['service_point']['postal_code'] ?>  <?= /* @escapeNotVerified */
+                                    $checkoutData['delivery_method_data']['service_point']['city'] ?><br>
+                                    <?= /* @escapeNotVerified */
+                                    $checkoutData['delivery_method_data']['post_number'] ?>
+                                </address>
+                            </div>
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <?= $block->escapeHtml(__('No shipping information available')) ?>
                     <?php endif; ?>
-                <?php else : ?>
-                    <?= $escaper->escapeHtml(__('No shipping information available')) ?>
-                <?php endif; ?>
                 </div>
             </div>
         <?php endif; ?>
 
         <div class="box box-order-billing-address">
             <strong class="box-title">
-                <span><?= $escaper->escapeHtml(__('Billing Address')) ?></span>
+                <span><?= $block->escapeHtml(__('Billing Address')) ?></span>
             </strong>
             <div class="box-content">
-                <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
+                <address><?= /* @noEscape */
+                    $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
             </div>
         </div>
         <div class="box box-order-billing-method">
             <strong class="box-title">
-                <span><?= $escaper->escapeHtml(__('Payment Method')) ?></span>
+                <span><?= $block->escapeHtml(__('Payment Method')) ?></span>
             </strong>
             <div class="box-content">
                 <?= $block->getPaymentInfoHtml() ?>

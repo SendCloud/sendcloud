@@ -21,6 +21,14 @@
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.
                 </specificerrmsg>
             </sendcloud>
+            <sendcloud_checkout>
+                <active>0</active>
+                <name>Sendcloud</name>
+                <title>Sendcloud</title>
+                <model>SendCloud\SendCloud\Model\Carrier\SendcloudCheckout</model>
+                <price>15.00</price>
+                <sort_order>500</sort_order>
+            </sendcloud_checkout>
         </carriers>
     </default>
 </config>

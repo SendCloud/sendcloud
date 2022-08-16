@@ -1,4 +1,4 @@
-# Sendcloud Magento 2 module
+# SendCloud Magento 2 module
 
 ## Requirements
 This module requires Magento2 CE version 2.3 or higher.

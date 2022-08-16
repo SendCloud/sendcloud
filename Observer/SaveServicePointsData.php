@@ -30,14 +30,16 @@ class SaveServicePointsData implements ObserverInterface
     {
         $order = $observer->getOrder();
         $quote = $this->quoteRepository->get($order->getQuoteId());
-        $order->setSendcloudServicePointId($quote->getSendcloudServicePointId());
-        $order->setSendcloudServicePointName($quote->getSendcloudServicePointName());
-        $order->setSendcloudServicePointStreet($quote->getSendcloudServicePointStreet());
-        $order->setSendcloudServicePointHouseNumber($quote->getSendcloudServicePointHouseNumber());
-        $order->setSendcloudServicePointZipCode($quote->getSendcloudServicePointZipCode());
-        $order->setSendcloudServicePointCity($quote->getSendcloudServicePointCity());
-        $order->setSendcloudServicePointCountry($quote->getSendcloudServicePointCountry());
-        $order->setSendcloudServicePointPostnumber($quote->getSendcloudServicePointPostnumber());
+        if ($order->getShippingMethod() === 'sendcloud_sendcloud') {
+            $order->setSendcloudServicePointId($quote->getSendcloudServicePointId());
+            $order->setSendcloudServicePointName($quote->getSendcloudServicePointName());
+            $order->setSendcloudServicePointStreet($quote->getSendcloudServicePointStreet());
+            $order->setSendcloudServicePointHouseNumber($quote->getSendcloudServicePointHouseNumber());
+            $order->setSendcloudServicePointZipCode($quote->getSendcloudServicePointZipCode());
+            $order->setSendcloudServicePointCity($quote->getSendcloudServicePointCity());
+            $order->setSendcloudServicePointCountry($quote->getSendcloudServicePointCountry());
+            $order->setSendcloudServicePointPostnumber($quote->getSendcloudServicePointPostnumber());
+        }
 
         return $this;
     }

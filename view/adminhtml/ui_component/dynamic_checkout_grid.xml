@@ -1,0 +1,97 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">dynamic_checkout_grid.sendcloud_delivery_methods_grid_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>columns</spinner>
+        <deps>
+            <dep>dynamic_checkout_grid.sendcloud_delivery_methods_grid_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="sendcloud_delivery_methods_grid_data_source" component="SendCloud_SendCloud/js/form/components/provider">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="component" xsi:type="string">SendCloud_SendCloud/js/form/components/provider</item>
+                <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                <item name="storageConfig" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+                <item name="filter_url_params" xsi:type="array">
+                    <item name="id" xsi:type="string">*</item>
+                </item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <dataProvider class="SendCloud\SendCloud\Ui\Component\Form\GridDataProvider" name="sendcloud_delivery_methods_grid_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters">
+            <filterSelect name="rates_enabled" provider="${ $.parentName }">
+                <settings>
+                    <options class="SendCloud\SendCloud\Model\Grid\Status"/>
+                    <dataType>select</dataType>
+                    <label translate="true">Rates enabled</label>
+                    <caption translate="true">Select option</caption>
+                    <dataScope>rates_enabled</dataScope>
+                </settings>
+            </filterSelect>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="columns">
+        <column name="country">
+            <settings>
+                <filter>text</filter>
+                <sorting>asc</sorting>
+                <label translate="true">Country</label>
+            </settings>
+        </column>
+        <column name="internal_title">
+            <settings>
+                <sortable>false</sortable>
+                <label translate="true">Internal title</label>
+            </settings>
+        </column>
+        <column name="public_title">
+            <settings>
+                <sortable>false</sortable>
+                <label translate="true">Public title</label>
+            </settings>
+        </column>
+        <column name="shipping_product">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping product</label>
+            </settings>
+        </column>
+        <actionsColumn name="enabled" class="SendCloud\SendCloud\Ui\Component\Listing\Columns\Status">
+            <settings>
+                <label translate="true">Rates enabled</label>
+            </settings>
+        </actionsColumn>
+        <column name="delivery_method">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Delivery method</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="SendCloud\SendCloud\Ui\Component\Listing\Columns\EditAction">
+        </actionsColumn>
+    </columns>
+</listing>

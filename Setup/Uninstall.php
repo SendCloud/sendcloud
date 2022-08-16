@@ -54,16 +54,9 @@ class Uninstall implements UninstallInterface
      */
     private function cleanConfigData()
     {
-        $carrierData = $this->collectionFactory->create()
-            ->addPathFilter('carriers/sendcloud');
-        foreach ($carrierData as $config) {
-            $this->configResource->delete($config);
-        }
-        $scripts = $this->collectionFactory->create()
-            ->addPathFilter('sendcloud');
-        foreach ($scripts as $script) {
-            $this->configResource->delete($script);
-        }
+        $this->deleteByFilter('carriers/sendcloud');
+        $this->deleteByFilter('carriers/sendcloud_checkout');
+        $this->deleteByFilter('sendcloud');
     }
 
     /**
@@ -75,6 +68,24 @@ class Uninstall implements UninstallInterface
     {
         if ($setup->tableExists('sendcloud_servicepointrate')) {
             $setup->getConnection()->dropTable('sendcloud_servicepointrate');
+        }
+        if ($setup->tableExists('sendcloud_shipping_zones')) {
+            $setup->getConnection()->dropTable('sendcloud_shipping_zones');
+        }
+        if ($setup->tableExists('sendcloud_shipping_methods')) {
+            $setup->getConnection()->dropTable('sendcloud_shipping_methods');
+        }
+    }
+
+    /**
+     * @param string $filter
+     * @return void
+     */
+    private function deleteByFilter(string $filter)
+    {
+        $data = $this->collectionFactory->create()->addPathFilter($filter);
+        foreach ($data as $config) {
+            $this->configResource->delete($config);
         }
     }
 }

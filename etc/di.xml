@@ -3,6 +3,8 @@
     <preference for="SendCloud\SendCloud\Api\ServicePointInterface" type="SendCloud\SendCloud\Model\ServicePoint" />
     <preference for="SendCloud\SendCloud\Api\SettingsInterface" type="SendCloud\SendCloud\Model\Settings"/>
     <preference for="Magento\Sales\Block\Order\Info" type="SendCloud\SendCloud\Block\Order\Info"/>
+    <preference for="SendCloud\SendCloud\Api\CheckoutConfigurationInterface" type="SendCloud\SendCloud\Model\CheckoutConfiguration" />
+    <preference for="SendCloud\SendCloud\CheckoutCore\Contracts\Storage\CheckoutStorage" type="SendCloud\SendCloud\Checkout\Storage\CheckoutStorage" />
 
     <type name="SendCloud\SendCloud\Logger\SendCloudHandler">
         <arguments>
@@ -21,10 +23,16 @@
 
     <type name="Magento\Sales\Model\OrderRepository">
         <plugin sortOrder="1" name="SendCloud_SendCloud::OrderRepository" type="SendCloud\SendCloud\Plugin\Order\OrderRepository"/>
+        <plugin sortOrder="2" name="SendCloud_SendCloud::CheckoutOrderRepository" type="SendCloud\SendCloud\Plugin\Order\CheckoutOrderRepository"/>
     </type>
 
     <type name="Magento\Checkout\Model\ShippingInformationManagement">
         <plugin sortOrder="1" name="SendCloud_SendCloud::ShippingInformationManagement" type="SendCloud\SendCloud\Plugin\BeforeSaveShippingInformation"/>
+        <plugin sortOrder="2" name="SendCloud_SendCloud::ShippingInformationCheckoutManagement" type="SendCloud\SendCloud\Plugin\CheckoutBeforeSaveShippingInformation"/>
+    </type>
+
+    <type name="\Magento\Config\Controller\Adminhtml\System\Config\Save">
+        <plugin sortOrder="1" name="SendCloud_SendCloud::MultiCurrncySupport" type="SendCloud\SendCloud\Plugin\CurrencyConfigurationChange"/>
     </type>
 
     <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
@@ -47,5 +55,30 @@
     </type>
     <type name="Magento\Quote\Api\CartRepositoryInterface">
         <plugin name="SendCloud_SendCloud::CartRepository" type="SendCloud\SendCloud\Plugin\Cart\CartRepository"/>
+        <plugin name="SendCloud_SendCloud::CheckoutCartRepository" type="SendCloud\SendCloud\Plugin\Cart\CheckoutCartRepository"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Cart\ShippingMethodConverter">
+        <plugin name="add_extension_attributes_to_method" type="SendCloud\SendCloud\Plugin\Carrier\ExtensionAttributes"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Quote\Address\Rate">
+        <plugin name="add_extension_attributes_to_method_rate" type="SendCloud\SendCloud\Plugin\Quote\Address\Rate"/>
+    </type>
+
+    <type name="Magento\Framework\Webapi\Rest\Response">
+        <plugin name="add_sendcloud_exception" type="SendCloud\SendCloud\Plugin\Webapi\Rest\Response"/>
+    </type>
+
+    <type name="Magento\Framework\Webapi\ServiceOutputProcessor">
+        <plugin name="add_extension_attributes_to_method_rate" type="SendCloud\SendCloud\Plugin\Webapi\ServiceOutputProcessor"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sendcloud_delivery_methods_grid_data_source" xsi:type="string">SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryMethod\StoreViewCollection</item>
+            </argument>
+        </arguments>
     </type>
 </config>

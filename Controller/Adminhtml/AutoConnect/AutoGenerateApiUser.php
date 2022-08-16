@@ -9,6 +9,7 @@ use Magento\Setup\Exception;
 use Magento\User\Model\UserFactory;
 use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
 use Magento\Authorization\Model\UserContextInterface;
+use Magento\Authorization\Model\ResourceModel\Role\CollectionFactory as RoleCollectionFactory;
 
 /**
  * Class AutoGenerateApiUser
@@ -17,9 +18,11 @@ use Magento\Authorization\Model\UserContextInterface;
 class AutoGenerateApiUser
 {
 
-    /** @var UserFactory  */
+    /** @var UserFactory */
     private $userFactory;
-
+    /**
+     * @var SendCloudLogger
+     */
     private $logger;
 
     /**
@@ -36,42 +39,53 @@ class AutoGenerateApiUser
         'Magento_Sales::ship'
     ];
 
-    /** @var RoleFactory  */
+    /** @var RoleFactory */
     private $roleFactory;
 
-    /** @var RulesFactory  */
+    /** @var RulesFactory */
     private $rulesFactory;
+    /**
+     * @var RoleCollectionFactory
+     */
+    protected $roleCollectionFactory;
 
     /**
-     * AutoGenerateApiUser constructor.
-     *
      * @param UserFactory $userFactory
      * @param SendCloudLogger $logger
      * @param RoleFactory $roleFactory
      * @param RulesFactory $rulesFactory
+     * @param RoleCollectionFactory $collectionFactory
      */
     public function __construct(
         UserFactory $userFactory,
         SendCloudLogger $logger,
         RoleFactory $roleFactory,
-        RulesFactory $rulesFactory
+        RulesFactory $rulesFactory,
+        RoleCollectionFactory $collectionFactory
     ) {
         $this->userFactory = $userFactory;
         $this->logger = $logger;
         $this->roleFactory = $roleFactory;
         $this->rulesFactory = $rulesFactory;
+        $this->roleCollectionFactory = $collectionFactory;
     }
 
     /**
      * @param $password
-     *
-     * @return array|bool
+     * @param int|null $store
+     * @return array|false
      * @throws Exception
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getApiUser($password)
+    public function getApiUser($password, $store)
     {
         $userFactory = $this->userFactory->create();
-        $apiUser = $userFactory->loadByUsername('sendcloud');
+
+        if (!empty($store)) {
+            $apiUser = $userFactory->loadByUsername("sendcloud_$store");
+        } else {
+            $apiUser = $userFactory->loadByUsername("sendcloud");
+        }
 
         if (!$apiUser->getUsername()) {
             return false;
@@ -85,30 +99,42 @@ class AutoGenerateApiUser
         }
 
         $apiUserArray = [
-            'username' => 'sendcloud',
+            'username' => $apiUser->getUsername(),
             'password' => $password
         ];
+
+        if (!empty($store)) {
+            $apiUserArray['store_view_id'] = $store;
+        }
 
         return $apiUserArray;
     }
 
     /**
      * @param $password
-     * @return mixed
+     * @param int|null $store
+     * @return array
      * @throws Exception
      */
-    public function createApiUser($password)
+    public function createApiUser($password, $store)
     {
+
         $apiUserInfo = [
-            'username'  => 'sendcloud',
             'firstname' => 'rob',
-            'lastname'    => 'api',
-            'email'     => 'sendcloud@api.com',
-            'password'  => $password,
+            'lastname' => 'api',
+            'password' => $password,
             'interface_locale' => 'en_US',
-            'role_id' => $this->generateApiRole()->getId(),
+            'role_id' => $this->generateApiRole(),
             'is_active' => 1
         ];
+
+        if (!empty($store)) {
+            $apiUserInfo['username'] = "sendcloud_$store";
+            $apiUserInfo['email'] = "sendcloud_$store@api.com";
+        } else {
+            $apiUserInfo['username'] = "sendcloud";
+            $apiUserInfo['email'] = "sendcloud@api.com";
+        }
 
         try {
             $userFactory = $this->userFactory->create();
@@ -124,6 +150,10 @@ class AutoGenerateApiUser
             'password' => $apiUserInfo['password']
         ];
 
+        if (!empty($store)) {
+            $apiUserArray['store_view_id'] = $store;
+        }
+
         return $apiUserArray;
     }
 
@@ -135,6 +165,14 @@ class AutoGenerateApiUser
      */
     private function generateApiRole()
     {
+        $roles = $this->getRoles();
+
+        if (!empty($roles)) {
+            return $roles[0]['role_id'];
+        }
+
+        $roleFactory = $this->roleFactory->create();
+        $roles = $roleFactory->getData();
         $roleData = [
             'name' => 'SendCloudApi',
             'pid' => 0,
@@ -156,6 +194,16 @@ class AutoGenerateApiUser
             ->setData('resources', $this->resource)
             ->saveRel();
 
-        return $role;
+        return $role->getId();
+    }
+
+    /**
+     * @return array|null
+     */
+    private function getRoles()
+    {
+        $roleCollectionFacotry = $this->roleCollectionFactory->create();
+        $roleCollectionFacotry->addFieldToFilter('role_name', 'SendCloudApi');
+        return $roleCollectionFacotry->getData();
     }
 }

@@ -1,29 +1,20 @@
 define([
     'mage/utils/wrapper',
     'Magento_Checkout/js/model/quote',
-    'underscore'
-], function (wrapper, quote, _) {
+    'SendCloud_SendCloud/js/servicePoint/mixins/payload-extender',
+    'SendCloud_SendCloud/js/checkout/payload-extender',
+], function (wrapper, quote, servicePoint, checkout) {
     'use strict';
 
     return function (payloadExtender) {
         return wrapper.wrap(payloadExtender, function (originalAction, payload) {
             payload = originalAction(payload);
 
-            if (quote.shippingMethod() && quote.shippingMethod()['method_code'] === 'sendcloud') {
-                let servicePointAttributes = quote.getSendcloudServicePoint();
-                if (servicePointAttributes && servicePointAttributes['sendcloud_service_point_id'] > 0) {
-                    let sendCloudAttributes = {
-                        sendcloud_service_point_id: servicePointAttributes['sendcloud_service_point_id'],
-                        sendcloud_service_point_name: servicePointAttributes['sendcloud_service_point_name'],
-                        sendcloud_service_point_street: servicePointAttributes['sendcloud_service_point_street'],
-                        sendcloud_service_point_house_number: servicePointAttributes['sendcloud_service_point_house_number'],
-                        sendcloud_service_point_zip_code: servicePointAttributes['sendcloud_service_point_zip_code'],
-                        sendcloud_service_point_city: servicePointAttributes['sendcloud_service_point_city'],
-                        sendcloud_service_point_country: servicePointAttributes['sendcloud_service_point_country'],
-                        sendcloud_service_point_postnumber: servicePointAttributes['sendcloud_service_point_postnumber']
-                    };
-                    _.extend(payload['addressInformation']['extension_attributes'], sendCloudAttributes);
-                }
+            switch (quote.shippingMethod().carrier_code) {
+                case 'sendcloud' :
+                    return servicePoint.extendData(payload);
+                case 'sendcloud_checkout' :
+                    return checkout.extendData(payload);
             }
 
             return payload;

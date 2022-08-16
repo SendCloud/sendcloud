@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
+        <route id="sendcloud" frontName="sendcloud">
+            <module name="SendCloud_SendCloud" before="Magento_Backend" />
+        </route>
         <route id="sendcloud_autoconnect" frontName="sendcloud_autoconnect">
             <module name="SendCloud_SendCloud"/>
         </route>

@@ -9,7 +9,6 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Quote\Api\Data\ShippingMethodInterface;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Helper\Checkout;
-use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class BeforeSaveShippingInformation
@@ -33,6 +32,7 @@ class BeforeSaveShippingInformation
 
     /**
      * BeforeSaveShippingInformation constructor.
+     *
      * @param RequestInterface $request
      * @param QuoteRepository $quoteRepository
      * @param Checkout $helper
@@ -54,11 +54,17 @@ class BeforeSaveShippingInformation
      * @param ShippingInformationInterface $addressInformation
      * @return PaymentDetails
      */
-    public function afterSaveAddressInformation(ShippingInformationManagement $subject, PaymentDetails $paymentDetails, $cartId, ShippingInformationInterface $addressInformation)
-    {
+    public function afterSaveAddressInformation(
+        ShippingInformationManagement $subject,
+        PaymentDetails $paymentDetails,
+        $cartId,
+        ShippingInformationInterface $addressInformation
+    ) {
         $extensionAttributes = $addressInformation->getExtensionAttributes();
 
-        if ($this->helper->checkForScriptUrl() && $extensionAttributes != null && $this->helper->checkIfModuleIsActive()) {
+        if (!empty($extensionAttributes) && $this->helper->checkIfModuleIsActive()) {
+            $quote = $this->quoteRepository->getActive($cartId);
+
             $spId = $extensionAttributes->getSendcloudServicePointId();
             $spName = $extensionAttributes->getSendcloudServicePointName();
             $spStreet = $extensionAttributes->getSendcloudServicePointStreet();
@@ -68,7 +74,6 @@ class BeforeSaveShippingInformation
             $spCountry = $extensionAttributes->getSendcloudServicePointCountry();
             $spPostnumber = $extensionAttributes->getSendcloudServicePointPostnumber();
 
-            $quote = $this->quoteRepository->getActive($cartId);
             $quote->setSendcloudServicePointId($spId);
             $quote->setSendcloudServicePointName($spName);
             $quote->setSendcloudServicePointStreet($spStreet);
@@ -77,8 +82,10 @@ class BeforeSaveShippingInformation
             $quote->setSendcloudServicePointCity($spCity);
             $quote->setSendcloudServicePointCountry($spCountry);
             $quote->setSendcloudServicePointPostnumber($spPostnumber);
+
             $this->quoteRepository->save($quote);
         }
+
         return $paymentDetails;
     }
 }

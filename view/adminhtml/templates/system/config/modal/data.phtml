@@ -1,0 +1,55 @@
+<div class="admin__field">
+    <div class="admin__field-label modal-field-label">
+        <b><?= /* @escapeNotVerified */
+            $block->escapeHtml($block->getFreeShipping()); ?></b>
+    </div>
+    <div class="admin__field-label modal-field-label">
+        <b><?= /* @escapeNotVerified */
+            $block->escapeHtml($block->getDefaultRate()); ?></b>
+    </div>
+</div>
+<?php if ($block->getRates()): ?>
+    <table class="data-grid data-grid-draggable">
+        <thead>
+        <tr>
+            <?php if ($block->isServicePoint()): ?>
+                <th class="data-grid-th">
+                    <span class="data-grid-cell-content">Carriers</span>
+                </th>
+            <?php else: ?>
+                <th class="data-grid-th">
+                    <span class="data-grid-cell-content">Weight class</span>
+                </th>
+                <th class="data-grid-th">
+                    <span class="data-grid-cell-content">Shipping rate</span>
+                </th>
+            <?php endif; ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if ($block->isServicePoint()): ?>
+            <?php foreach ($block->getRates() as $rate): ?>
+                <tr>
+                    <td>
+                        <div class="data-grid-cell-content"><?= $rate; ?></div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <?php foreach ($block->getRates() as $rate): ?>
+                <tr>
+                    <td>
+                        <div class="data-grid-cell-content"><?= $rate['weight']; ?></div>
+                    </td>
+                    <td>
+                        <div class="data-grid-cell-content"><?= $rate['rate']; ?></div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+<div class="pp-buttons-container">
+    <a href=<?= $block->getEditLink(); ?> target="_blank"><input id="edit_btn" type="button" value="Edit rates in Sendcloud"></a>
+</div>

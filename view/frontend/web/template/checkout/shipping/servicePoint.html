@@ -2,14 +2,14 @@
     <div id="selectedServicePoint">
         <!-- ko if: isServicePointSelected() -->
         <div class="col">
-            <div id="servicePointName" data-bind="text: quote.getSendcloudServicePoint().sendcloud_service_point_name"></div>
+            <div id="servicePointName" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_name"></div>
             <div id="servicePointStreetAndHouseNumber">
-                <!-- ko text: quote.getSendcloudServicePoint().sendcloud_service_point_street --><!-- /ko -->
-                <!-- ko text: quote.getSendcloudServicePoint().sendcloud_service_point_house_number --><!-- /ko -->
+                <!-- ko text: quote.getExtensionAttributes().sendcloud_service_point_street --><!-- /ko -->
+                <!-- ko text: quote.getExtensionAttributes().sendcloud_service_point_house_number --><!-- /ko -->
             </div>
-            <div id="servicePointZipCode" data-bind="text: quote.getSendcloudServicePoint().sendcloud_service_point_zip_code"></div>
-            <div id="servicePointCity" data-bind="text: quote.getSendcloudServicePoint().sendcloud_service_point_city"></div>
-            <div id="servicePointPostnumber" data-bind="text: quote.getSendcloudServicePoint().sendcloud_service_point_postnumber"></div>
+            <div id="servicePointZipCode" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_zip_code"></div>
+            <div id="servicePointCity" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_city"></div>
+            <div id="servicePointPostnumber" data-bind="text: quote.getExtensionAttributes().sendcloud_service_point_postnumber"></div>
         </div>
         <!-- /ko -->
         <span class="button-service-point"

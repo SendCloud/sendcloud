@@ -30,7 +30,8 @@
 "var sc_servicepoint_house_no": "Service Point House No.",
 "var sc_servicepoint_zipcode": "Service Point Zipcode",
 "var sc_servicepoint_city": "Service Point City",
-"var sc_servicepoint_post_no": "Service Point Post No."
+"var sc_servicepoint_post_no": "Service Point Post No.",
+"var sc_expected_delivery_date": "Expected delivery day"
 } @-->
 {{template config_path="design/email/header_template"}}
 
@@ -94,6 +95,12 @@
                             {{var sc_servicepoint_street}} {{var sc_servicepoint_house_no}}<br>
                             {{var sc_servicepoint_zipcode}} {{var sc_servicepoint_city}}<br>
                             {{var sc_servicepoint_post_no}}
+                        </p>
+                        {{/if}}
+                        {{if sc_expected_delivery_date}}
+                        <p>
+                            <strong>{{trans "Expected delivery day"}}</strong><br>
+                            {{var sc_expected_delivery_date}}
                         </p>
                         {{/if}}
                     </td>
