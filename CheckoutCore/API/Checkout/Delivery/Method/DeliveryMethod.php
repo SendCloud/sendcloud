@@ -200,16 +200,16 @@ abstract class DeliveryMethod extends DataTransferObject
      */
     public function toArray()
     {
-        return [
+        return array(
             'id' => $this->getId(),
             'delivery_method_type' => $this->getType(),
             'external_title' => $this->getExternalTitle(),
             'internal_title' => $this->getInternalTitle(),
             'sender_address_id' => $this->getSenderAddressId(),
             'show_carrier_information_in_checkout' => $this->isShowCarrierInformationInCheckout(),
-            'shipping_rate_data' => $this->getShippingRateData()->isEnabled() ? $this->getShippingRateData()->toArray() : [],
+            'shipping_rate_data' => $this->getShippingRateData()->isEnabled() ? $this->getShippingRateData()->toArray() : array(),
             'time_zone_name' => $this->getTimeZoneName(),
-        ];
+        );
     }
 
     /**
@@ -226,7 +226,7 @@ abstract class DeliveryMethod extends DataTransferObject
         $this->setSenderAddressId($rawData['sender_address_id']);
         $this->setShowCarrierInformationInCheckout($rawData['show_carrier_information_in_checkout']);
         $this->setTimeZoneName($rawData['time_zone_name']);
-        $this->setShippingRateData(ShippingRateData::fromArray(static::getValue($rawData, 'shipping_rate_data', [])));
+        $this->setShippingRateData(ShippingRateData::fromArray(static::getValue($rawData, 'shipping_rate_data', array())));
         $this->setRawData($rawData);
     }
 

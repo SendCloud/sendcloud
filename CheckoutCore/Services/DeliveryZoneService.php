@@ -46,9 +46,9 @@ class DeliveryZoneService implements BaseService
         $newHashMap = ArrayToHashMap::convert($newDeliveryZones);
         $existingHashMap = ArrayToHashMap::convert($this->storage->findAllZoneConfigs());
 
-        $new = [];
-        $changed = [];
-        $deleted = [];
+        $new = array();
+        $changed = array();
+        $deleted = array();
 
         // Identify created and updated zones.
         foreach ($newHashMap as $zone) {
@@ -70,11 +70,11 @@ class DeliveryZoneService implements BaseService
             }
         }
 
-        return [
+        return array(
             'new' => $new,
             'changed' => $changed,
             'deleted' => $deleted,
-        ];
+        );
     }
 
     /**
@@ -86,9 +86,7 @@ class DeliveryZoneService implements BaseService
      */
     public function deleteSpecific(array $zones)
     {
-        $ids = array_map(function (DeliveryZone $zone) {
-            return $zone->getId();
-        }, $zones);
+        $ids = array_map(function (DeliveryZone $zone) {return $zone->getId();}, $zones);
         $this->storage->deleteSpecificZoneConfigs($ids);
     }
 

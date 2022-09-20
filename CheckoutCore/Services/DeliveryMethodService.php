@@ -45,9 +45,9 @@ class DeliveryMethodService implements BaseService
         $newHashMap = ArrayToHashMap::convert($newDeliveryMethods);
         $existingHashMap = ArrayToHashMap::convert($this->storage->findAllMethodConfigs());
 
-        $new = [];
-        $changed = [];
-        $deleted = [];
+        $new = array();
+        $changed = array();
+        $deleted = array();
 
         foreach ($newHashMap as $newMethod) {
             if (!empty($existingHashMap[$newMethod->getId()])) {
@@ -69,11 +69,11 @@ class DeliveryMethodService implements BaseService
             }
         }
 
-        return [
+        return array(
             'new' => $new,
             'changed' => $changed,
             'deleted' => $deleted,
-        ];
+        );
     }
 
     /**

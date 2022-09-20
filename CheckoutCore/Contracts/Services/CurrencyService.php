@@ -2,6 +2,7 @@
 
 namespace SendCloud\SendCloud\CheckoutCore\Contracts\Services;
 
+
 interface CurrencyService
 {
     /**

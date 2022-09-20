@@ -125,12 +125,9 @@ class NominatedDayDelivery extends DeliveryMethod
         $this->setCarrier(Carrier::fromArray($rawData['carrier']));
         $this->setShippingProduct(ShippingProduct::fromArray($rawData['shipping_product']));
         /** @noinspection PhpParamsInspection */
-        $this->setHandoverDays(HandoverDay::fromArrayBatch(static::getValue(
-            $rawData,
-            'parcel_handover_days',
-            []
-        )));
+        $this->setHandoverDays(HandoverDay::fromArrayBatch(static::getValue($rawData, 'parcel_handover_days',
+            array())));
         /** @noinspection PhpParamsInspection */
-        $this->setHolidays(Holiday::fromArrayBatch(static::getValue($rawData, 'holidays', [])));
+        $this->setHolidays(Holiday::fromArrayBatch(static::getValue($rawData, 'holidays', array())));
     }
 }

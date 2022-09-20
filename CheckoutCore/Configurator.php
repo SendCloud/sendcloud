@@ -44,7 +44,8 @@ class Configurator
         RequestValidator $updateValidator,
         RequestValidator $deleteValidator,
         CheckoutServiceInterface $checkoutService
-    ) {
+    )
+    {
         $this->updateValidator = $updateValidator;
         $this->checkoutService = $checkoutService;
         $this->deleteValidator = $deleteValidator;

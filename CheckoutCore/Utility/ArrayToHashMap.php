@@ -19,7 +19,7 @@ class ArrayToHashMap
      */
     public static function convert(array $collection)
     {
-        $result = [];
+        $result = array();
         foreach ($collection as $item) {
             $result[$item->getId()] = $item;
         }

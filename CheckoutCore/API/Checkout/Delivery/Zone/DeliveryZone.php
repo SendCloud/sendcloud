@@ -81,11 +81,11 @@ class DeliveryZone extends DataTransferObject
      */
     public function toArray()
     {
-        return [
+        return array(
             'id' => $this->getId(),
             'location' => $this->getLocation()->toArray(),
             'delivery_methods' => static::toArrayBatch($this->getDeliveryMethods()),
-        ];
+        );
     }
 
     /**
@@ -114,7 +114,7 @@ class DeliveryZone extends DataTransferObject
         $entity->setId($rawData['id']);
         $entity->setLocation(Location::fromArray($rawData['location']));
         /** @noinspection PhpParamsInspection */
-        $entity->setDeliveryMethods(DeliveryMethod::fromArrayBatch(self::getValue($rawData, 'delivery_methods', [])));
+        $entity->setDeliveryMethods(DeliveryMethod::fromArrayBatch(self::getValue($rawData, 'delivery_methods', array())));
 
         return $entity;
     }

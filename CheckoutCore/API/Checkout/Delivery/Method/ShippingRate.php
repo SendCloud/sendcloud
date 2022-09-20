@@ -113,13 +113,13 @@ class ShippingRate extends DataTransferObject
      */
     public function toArray()
     {
-        return [
+        return array(
             'rate' => $this->getRate(),
             'enabled' => $this->isEnabled(),
             'is_default' => $this->isDefault(),
             'max_weight' => $this->getMaxWeight(),
             'min_weight' => $this->getMinWeight()
-        ];
+        );
     }
 
     /**

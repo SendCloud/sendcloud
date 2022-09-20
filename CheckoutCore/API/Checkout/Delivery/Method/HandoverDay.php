@@ -79,11 +79,11 @@ class HandoverDay extends DataTransferObject
      */
     public function toArray()
     {
-        return [
+        return array(
             'enabled' => $this->isEnabled(),
             'cut_off_time_hours' => $this->getCutOffTimeHours(),
             'cut_off_time_minutes' => $this->getCutOffTimeMinutes(),
-        ];
+        );
     }
 
     /**

@@ -60,7 +60,8 @@ class CheckoutService implements BaseService
         DeliveryMethodService $methodService,
         DeliveryMethodSetupService $methodSetupService,
         CheckoutProxy $proxy
-    ) {
+    )
+    {
         $this->zoneService = $zoneService;
         $this->methodService = $methodService;
         $this->methodSetupService = $methodSetupService;
@@ -79,8 +80,8 @@ class CheckoutService implements BaseService
      */
     public function update(Checkout $checkout)
     {
-        $deliveryZones = [];
-        $deliveryMethods = [];
+        $deliveryZones = array();
+        $deliveryMethods = array();
 
         foreach ($checkout->getDeliveryZones() as $zone) {
             $deliveryZones[] = DeliveryZone::fromDTO($zone);
@@ -177,7 +178,7 @@ class CheckoutService implements BaseService
      */
     private function extractDeliveryMethods(API\Checkout\Delivery\Zone\DeliveryZone $zone)
     {
-        $result = [];
+        $result = array();
         foreach ($zone->getDeliveryMethods() as $method) {
             $deliveryMethod = DeliveryMethod::fromDTO($method);
             $deliveryMethod->setDeliveryZoneId($zone->getId());

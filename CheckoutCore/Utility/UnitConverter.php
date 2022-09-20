@@ -8,7 +8,7 @@ use SendCloud\SendCloud\CheckoutCore\Exceptions\Unit\UnitNotSupportedException;
 class UnitConverter
 {
 
-    protected static $supportedUnits = [WeightUnits::KILOGRAM, WeightUnits::GRAM, WeightUnits::POUNDS, WeightUnits::OUNCES];
+    protected static $supportedUnits = array(WeightUnits::KILOGRAM, WeightUnits::GRAM, WeightUnits::POUNDS, WeightUnits::OUNCES);
 
     /**
      * Converts a weight to grams.

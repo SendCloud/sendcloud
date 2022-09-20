@@ -61,12 +61,12 @@ class Location extends DataTransferObject
      */
     public function toArray()
     {
-        return [
-            'country' => [
+        return array(
+            'country' => array(
                 'iso_2' => $this->getIsoCode(),
                 'name' => $this->getName(),
-            ],
-        ];
+            ),
+        );
     }
 
     /**

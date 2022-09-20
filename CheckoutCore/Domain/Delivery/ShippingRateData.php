@@ -24,7 +24,7 @@ class ShippingRateData implements DTOInstantiable, Comparable
     /**
      * @var ShippingRate[]
      */
-    protected $shippingRates = [];
+    protected $shippingRates = array();
 
     /**
      * @param bool $enabled
@@ -124,7 +124,7 @@ class ShippingRateData implements DTOInstantiable, Comparable
      */
     public static function fromDTO($object)
     {
-        $shippingRates = [];
+        $shippingRates = array();
         foreach ($object->getShippingRates() as $index => $shippingRate) {
             $shippingRates[$index] = $shippingRate !== null ? ShippingRate::fromDTO($shippingRate) : null;
         }
@@ -136,4 +136,6 @@ class ShippingRateData implements DTOInstantiable, Comparable
             $shippingRates
         );
     }
+
+
 }

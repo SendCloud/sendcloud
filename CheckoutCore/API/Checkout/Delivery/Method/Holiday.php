@@ -118,13 +118,13 @@ class Holiday extends DataTransferObject
      */
     public function toArray()
     {
-        return [
+        return array(
             'frequency' => $this->frequency,
             'from_date' => $this->fromDate,
             'recurring' => $this->recurring,
             'title' => $this->title,
             'to_date' => $this->toDate
-        ];
+        );
     }
 
     /**

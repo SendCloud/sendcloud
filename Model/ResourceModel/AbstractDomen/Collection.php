@@ -1,6 +1,6 @@
 <?php
 
-namespace SendCloud\SendCloud\Model\ResourceModel\SendclooudDeliveryZone;
+namespace SendCloud\SendCloud\Model\ResourceModel\AbstractDomen;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use SendCloud\SendCloud\Model\AbstractDomen;

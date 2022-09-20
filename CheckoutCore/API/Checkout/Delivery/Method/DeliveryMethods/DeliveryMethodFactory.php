@@ -16,7 +16,7 @@ class DeliveryMethodFactory
      */
     public static function create($deliveryType)
     {
-        switch ($deliveryType) {
+        switch ($deliveryType){
             case 'same_day_delivery':
                 $instance = new SameDayDelivery();
                 break;
@@ -24,7 +24,7 @@ class DeliveryMethodFactory
                 $instance = new StandardDelivery();
                 break;
             case 'nominated_day_delivery':
-                $instance = new NominatedDayDelivery();
+               $instance = new NominatedDayDelivery();
                 break;
             case 'service_point_delivery':
                 $instance = new ServicePointDelivery();
@@ -35,4 +35,5 @@ class DeliveryMethodFactory
 
         return $instance;
     }
+
 }

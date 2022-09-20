@@ -125,12 +125,10 @@ class StandardDelivery extends DeliveryMethod
         $this->setCarrier(Carrier::fromArray($rawData['carrier']));
         $this->setShippingProduct(ShippingProduct::fromArray($rawData['shipping_product']));
         /** @noinspection PhpParamsInspection */
-        $this->setOrderPlacementDays(OrderPlacementDay::fromArrayBatch(static::getValue(
-            $rawData,
+        $this->setOrderPlacementDays(OrderPlacementDay::fromArrayBatch(static::getValue($rawData,
             'order_placement_days',
-            []
-        )));
+            array())));
         /** @noinspection PhpParamsInspection */
-        $this->setHolidays(Holiday::fromArrayBatch(static::getValue($rawData, 'holidays', [])));
+        $this->setHolidays(Holiday::fromArrayBatch(static::getValue($rawData, 'holidays', array())));
     }
 }

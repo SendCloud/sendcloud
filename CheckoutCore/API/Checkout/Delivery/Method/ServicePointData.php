@@ -55,10 +55,10 @@ class ServicePointData extends DataTransferObject
      */
     public function toArray()
     {
-        return [
+        return array(
             'api_key' => $this->apiKey,
             'country_iso_2' => $this->country
-        ];
+        );
     }
 
     /**

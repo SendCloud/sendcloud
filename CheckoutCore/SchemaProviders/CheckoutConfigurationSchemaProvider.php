@@ -8,65 +8,65 @@ class CheckoutConfigurationSchemaProvider implements SchemaProvider
 {
     public static function getSchema()
     {
-        return [
-            [
+        return array(
+            array(
                 'field' => 'checkout_configuration',
                 'type' => 'complex',
-                'child' => [
-                    [
+                'child' => array(
+                    array(
                         'field' => 'id',
                         'type' => 'string'
-                    ],
-                    [
+                    ),
+                    array(
                         'field' => 'integration_id',
                         'type' => 'int'
-                    ],
-                    [
+                    ),
+                    array(
                         'field' => 'version',
                         'type' => 'int'
-                    ],
-                    [
+                    ),
+                    array(
                         'field' => 'updated_at',
                         'type' => 'string'
-                    ],
-                    [
+                    ),
+                    array(
                         'field' => 'currency',
                         'type' => 'currency'
-                    ],
-                    [
+                    ),
+                    array(
                         'field' => 'minimal_plugin_version',
                         'type' => 'string'
-                    ],
-                    [
+                    ),
+                    array(
                         'field' => 'delivery_zones',
                         'type' => 'collection',
                         'empty' => false,
-                        'child' => [
-                            [
+                        'child' => array(
+                            array(
                                 'field' => 'id',
                                 'type' => 'string'
-                            ],
-                            [
+                            ),
+                            array(
                                 'field' => 'location',
                                 'type' => 'complex',
-                                'child' => [
-                                    [
+                                'child' => array(
+                                    array(
                                         'field' => 'country',
                                         'type' => 'complex',
-                                        'child' => [
-                                            [
+                                        'child' => array(
+                                            array(
                                                 'field' => 'iso_2',
                                                 'type' => 'string'
-                                            ],
-                                            [
+                                            ),
+                                            array(
                                                 'field' => 'name',
                                                 'type' => 'string'
-                                            ],
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            [
+                                            ),
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
                                 'field' => 'delivery_methods',
                                 'type' => 'collection',
                                 'empty' => false,
@@ -77,11 +77,11 @@ class CheckoutConfigurationSchemaProvider implements SchemaProvider
 
                                     return BaseDeliverySchemaProvider::getSchema();
                                 }
-                            ],
-                        ]
-                    ],
-                ]
-            ]
-        ];
+                            ),
+                        )
+                    ),
+                )
+            )
+        );
     }
 }

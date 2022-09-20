@@ -54,7 +54,8 @@ class ShippingProduct implements Comparable, DTOInstantiable
         $leadTimeHoursOverride,
         array $selectedFunctionalities,
         array $deliveryDays
-    ) {
+    )
+    {
         $this->code = $code;
         $this->name = $name;
         $this->selectedFunctionalities = $selectedFunctionalities;
@@ -184,7 +185,7 @@ class ShippingProduct implements Comparable, DTOInstantiable
      */
     public static function fromDTO($object)
     {
-        $deliveryDays = [];
+        $deliveryDays = array();
         foreach ($object->getCarrierDeliveryDays() as $index => $day) {
             $deliveryDays[$index] = $day !== null ? DeliveryDay::fromDTO($day) : null;
         }

@@ -119,13 +119,13 @@ class DeliveryDay extends DataTransferObject
      */
     public function toArray()
     {
-        return [
+        return array(
             'enabled' => $this->isEnabled(),
             'start_time_hours' => $this->getStartingHour(),
             'start_time_minutes' => $this->getStartingMinute(),
             'end_time_hours' => $this->getEndingHour(),
             'end_time_minutes' => $this->getEndingMinute(),
-        ];
+        );
     }
 
     /**
