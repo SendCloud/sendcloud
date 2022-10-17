@@ -155,6 +155,6 @@ class Holiday implements Comparable, DTOInstantiable
      */
     public static function fromDTO($object)
     {
-        return new self ($object->getFrequency(), $object->getFromDate(), $object->isRecurring(), $object->getTitle(), $object->getToDate());
+        return new self($object->getFrequency(), $object->getFromDate(), $object->isRecurring(), $object->getTitle(), $object->getToDate());
     }
 }

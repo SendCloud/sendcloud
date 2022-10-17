@@ -30,7 +30,7 @@ class AvailabilityPolicyFactory
         if ($deliveryMethod->getShippingRateData()->isEnabled()) {
             $weightPolicy = new WeightAvailabilityPolicy($deliveryMethod, $order);
 
-            return new CompositeAvailabilityPolicy($deliveryMethod, $order, array($concretePolicy, $weightPolicy));
+            return new CompositeAvailabilityPolicy($deliveryMethod, $order, [$concretePolicy, $weightPolicy]);
         }
 
         return $concretePolicy;

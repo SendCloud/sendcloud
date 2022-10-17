@@ -32,10 +32,10 @@ class Checkout extends DataTransferObject
      * @var string
      */
     protected $currency;
-	/**
-	 * @var string
-	 */
-	protected $minimalPluginVersion;
+    /**
+     * @var string
+     */
+    protected $minimalPluginVersion;
     /**
      * @var DeliveryZone[]
      */
@@ -137,19 +137,21 @@ class Checkout extends DataTransferObject
         $this->deliveryZones = $deliveryZones;
     }
 
-	/**
-	 * @return string
-	 */
-	public function getMinimalPluginVersion() {
-		return $this->minimalPluginVersion;
-	}
+    /**
+     * @return string
+     */
+    public function getMinimalPluginVersion()
+    {
+        return $this->minimalPluginVersion;
+    }
 
-	/**
-	 * @param  string  $minimalPluginVersion
-	 */
-	public function setMinimalPluginVersion( $minimalPluginVersion ) {
-		$this->minimalPluginVersion = $minimalPluginVersion;
-	}
+    /**
+     * @param  string  $minimalPluginVersion
+     */
+    public function setMinimalPluginVersion($minimalPluginVersion)
+    {
+        $this->minimalPluginVersion = $minimalPluginVersion;
+    }
 
     /**
      * Provides array representation of a dto.
@@ -158,7 +160,7 @@ class Checkout extends DataTransferObject
      */
     public function toArray()
     {
-        return array(
+        return [
             'id' => $this->getId(),
             'integration_id' => $this->getIntegrationId(),
             'version' => $this->getVersion(),
@@ -166,7 +168,7 @@ class Checkout extends DataTransferObject
             'currency' => $this->getCurrency(),
             'minimal_plugin_version' => $this->getMinimalPluginVersion(),
             'delivery_zones' => static::toArrayBatch($this->getDeliveryZones()),
-        );
+        ];
     }
 
     /**
@@ -197,9 +199,9 @@ class Checkout extends DataTransferObject
         $entity->setVersion($rawData['version']);
         $entity->setUpdatedAt($rawData['updated_at']);
         $entity->setCurrency(static::getValue($rawData, 'currency'));
-	    $entity->setMinimalPluginVersion($rawData['minimal_plugin_version']);
+        $entity->setMinimalPluginVersion($rawData['minimal_plugin_version']);
         /** @noinspection PhpParamsInspection */
-        $entity->setDeliveryZones(DeliveryZone::fromArrayBatch(self::getValue($rawData, 'delivery_zones', array())));
+        $entity->setDeliveryZones(DeliveryZone::fromArrayBatch(self::getValue($rawData, 'delivery_zones', [])));
 
         return $entity;
     }

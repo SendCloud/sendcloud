@@ -21,7 +21,7 @@ class ShippingRateData extends DataTransferObject
     /**
      * @var ShippingRate[]
      */
-    protected $shippingRates = array();
+    protected $shippingRates = [];
 
     /**
      * @return bool
@@ -92,12 +92,12 @@ class ShippingRateData extends DataTransferObject
      */
     public function toArray()
     {
-        return array(
+        return [
             'enabled' => $this->isEnabled(),
             'currency' => $this->getCurrency(),
             'free_shipping' => $this->freeShipping->toArray(),
             'shipping_rates' => ShippingRate::toArrayBatch($this->shippingRates),
-        );
+        ];
     }
 
     /**
@@ -121,9 +121,9 @@ class ShippingRateData extends DataTransferObject
         $entity = new static();
         $entity->setEnabled(static::getValue($rawData, 'enabled', false));
         $entity->setCurrency(static::getValue($rawData, 'currency', 'EUR'));
-        $entity->setFreeShipping(FreeShipping::fromArray(static::getValue($rawData, 'free_shipping', array())));
+        $entity->setFreeShipping(FreeShipping::fromArray(static::getValue($rawData, 'free_shipping', [])));
         /** @noinspection PhpParamsInspection */
-        $entity->setShippingRates(ShippingRate::fromArrayBatch(static::getValue($rawData, 'shipping_rates', array())));
+        $entity->setShippingRates(ShippingRate::fromArrayBatch(static::getValue($rawData, 'shipping_rates', [])));
 
         return $entity;
     }

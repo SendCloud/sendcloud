@@ -74,11 +74,11 @@ class OrderPlacementDay extends DataTransferObject
      */
     public function toArray()
     {
-        return array(
+        return [
             'enabled' => $this->isEnabled(),
             'cut_off_time_hours' => $this->getCutOffTimeHours(),
             'cut_off_time_minutes' => $this->getCutOffTimeMinutes(),
-        );
+        ];
     }
 
     /**

@@ -11,9 +11,9 @@ define([
         'https://cdn.jsdelivr.net/npm/@sendcloud/checkout-plugin-ui@^2.0.0/dist/checkout-plugin-ui-loader.js'
     ], function ($, ko, Component, quote, customer, setShippingInformationAction, registry) {
         'use strict';
-        
+
         const widgetShowingDeliveryMethodTypes = ['nominated_day_delivery', 'service_point_delivery'];
-        
+
         let renderedWidgetDestructor = null;
         let selectedDeliveryMethodId = null;
         let mountElement = null;
@@ -21,14 +21,14 @@ define([
         let widgetStates = {};
         function getWidgetState() {
             let state = quote.getState();
-    
+
             if (widgetStates[quote.getSendcloudDeliveryMethodId()]) {
                 state = widgetStates[quote.getSendcloudDeliveryMethodId()]
             }
-    
+
             return state;
         }
-        
+
         function setWidgetState(state) {
             widgetStates[selectedDeliveryMethodId] = state;
             quote.setState({state: state});
@@ -46,14 +46,26 @@ define([
                         return true;
                     }
 
+                    addEventListenerToPostCodeField();
+
                     renderWidgetHandler();
-                    
+
                     return true;
                 }, this);
 
                 return this;
             }
         });
+
+    function addEventListenerToPostCodeField() {
+        let postalCodeInputField = document.querySelector('input[name="postcode"]');
+
+        if (postalCodeInputField) {
+            postalCodeInputField.addEventListener('change', (event) => {
+                doRenderWidget();
+            });
+        }
+    }
 
         function renderWidgetHandler() {
             if (isDeliveryMethodChanged()) {
@@ -104,12 +116,12 @@ define([
 
         function onSelectionChange(event) {
             setWidgetState(event.detail.state);
-    
+
             quote.setDeliveryMethodData(event.detail.data);
-    
+
             updateBackendData();
         }
-        
+
         function updateBackendData() {
             let shippingStepWidget = registry.get('checkout.steps.shipping-step.shippingAddress');
 

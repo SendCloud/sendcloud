@@ -53,10 +53,10 @@ class FreeShipping extends DataTransferObject
      */
     public function toArray()
     {
-        return array(
+        return [
             'enabled' => $this->isEnabled(),
             'from_amount' => $this->getFromAmount(),
-        );
+        ];
     }
 
     /**

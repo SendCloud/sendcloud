@@ -141,14 +141,14 @@ class ShippingProduct extends DataTransferObject
      */
     public function toArray()
     {
-        return array(
+        return [
             'code' => $this->getCode(),
             'name' => $this->getName(),
             'lead_time_hours' => $this->getLeadTimeHours(),
             'lead_time_hours_override' => $this->getLeadTimeHoursOverride(),
             'selected_functionalities' => $this->getSelectedFunctionalities(),
             'carrier_delivery_days' => DataTransferObject::toArrayBatch($this->getCarrierDeliveryDays()),
-        );
+        ];
     }
 
     /**
@@ -179,7 +179,7 @@ class ShippingProduct extends DataTransferObject
         $entity->setLeadTimeHours($rawData['lead_time_hours']);
         $entity->setLeadTimeHoursOverride($rawData['lead_time_hours_override']);
         $entity->setSelectedFunctionalities($rawData['selected_functionalities']);
-        $entity->setCarrierDeliveryDays(DeliveryDay::fromArrayBatch(static::getValue($rawData, 'carrier_delivery_days', array())));
+        $entity->setCarrierDeliveryDays(DeliveryDay::fromArrayBatch(static::getValue($rawData, 'carrier_delivery_days', [])));
 
         return $entity;
     }

@@ -64,10 +64,10 @@ class Request extends DataTransferObject
      */
     public function toArray()
     {
-        return array(
+        return [
             'headers' => $this->getHeaders(),
             'body' => $this->getBody(),
-        );
+        ];
     }
 
     /**

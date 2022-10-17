@@ -18,7 +18,7 @@ abstract class DataTransferObject
      */
     public function toArray()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -29,7 +29,7 @@ abstract class DataTransferObject
      */
     public static function toArrayBatch(array $dtos)
     {
-        $result = array();
+        $result = [];
         foreach ($dtos as $index => $dto) {
             $result[$index] = $dto !== null ? $dto->toArray() : null;
         }
@@ -57,7 +57,7 @@ abstract class DataTransferObject
      */
     public static function fromArrayBatch(array $batch)
     {
-        $result = array();
+        $result = [];
         foreach ($batch as $index => $item) {
             $result[$index] = $item !== null ? static::fromArray($item) : null;
         }

@@ -15,7 +15,7 @@ class SameDayAvailabilityPolicy extends AvailabilityPolicy
      */
     public function isAvailable()
     {
-	    $time = time();
+        $time = time();
         $deliveryDayName = date("l", $time);
         $carrierDeliveryDays = $this->deliveryMethod->getShippingProduct()->getDeliveryDays();
         $carrierDeliveryDay = $carrierDeliveryDays[strtolower($deliveryDayName)];
@@ -37,8 +37,11 @@ class SameDayAvailabilityPolicy extends AvailabilityPolicy
         $deliveryDate->setTimezone($timezone);
 
         $cutOffDate = clone $deliveryDate;
-        date_time_set($cutOffDate, $parcelHandoverDay->getCutOffHour(),
-            $parcelHandoverDay->getCutOffMinute());
+        date_time_set(
+            $cutOffDate,
+            $parcelHandoverDay->getCutOffHour(),
+            $parcelHandoverDay->getCutOffMinute()
+        );
 
         if ($cutOffDate < $deliveryDate) {
             return false;

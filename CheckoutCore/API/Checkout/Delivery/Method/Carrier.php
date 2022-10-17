@@ -79,11 +79,11 @@ class Carrier extends DataTransferObject
      */
     public function toArray()
     {
-        return array(
+        return [
             'name' => $this->getName(),
             'code' => $this->getCode(),
             'logo_url' => $this->getLogoUrl(),
-        );
+        ];
     }
 
     /**

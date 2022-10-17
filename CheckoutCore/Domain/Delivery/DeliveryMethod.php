@@ -134,8 +134,7 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
         array $carriers,
         $servicePointData,
         $rawConfig
-    )
-    {
+    ) {
         $this->id = $id;
         $this->systemId = $systemId;
         $this->deliveryZoneId = $deliveryZoneId;
@@ -442,7 +441,7 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
     public static function fromDTO($object)
     {
         if ($object instanceof NominatedDayDelivery || $object instanceof SameDayDelivery || $object instanceof StandardDelivery) {
-            $holidays = array();
+            $holidays = [];
             foreach ($object->getHolidays() as $index => $holiday) {
                 $holidays[$index] = $holiday !== null ? Holiday::fromDTO($holiday) : null;
             }
@@ -450,7 +449,7 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
             $shippingProduct = ShippingProduct::fromDTO($object->getShippingProduct());
             $carrier = Carrier::fromDTO($object->getCarrier());
 
-            $processingDays = array();
+            $processingDays = [];
             if ($object instanceof NominatedDayDelivery || $object instanceof SameDayDelivery) {
                 foreach ($object->getHandoverDays() as $index => $handoverDay) {
                     $processingDays[$index] = $handoverDay !== null ? HandoverDay::fromDTO($handoverDay) : null;
@@ -461,7 +460,7 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
                 }
             }
 
-        } else if ($object instanceof ServicePointDelivery) {
+        } elseif ($object instanceof ServicePointDelivery) {
             $carriers = [];
             foreach ($object->getCarriers() as $index => $carrier) {
                 $carriers[$index] = $carrier !== null ? Carrier::fromDTO($carrier) : null;
@@ -482,10 +481,10 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
             $object->isShowCarrierInformationInCheckout(),
             isset($shippingProduct) ? $shippingProduct : null,
             ShippingRateData::fromDTO($object->getShippingRateData()),
-            isset($processingDays) ? $processingDays : array(),
+            isset($processingDays) ? $processingDays : [],
             $object->getTimeZoneName(),
-            isset($holidays) ? $holidays : array(),
-            isset($carriers) ? $carriers : array(),
+            isset($holidays) ? $holidays : [],
+            isset($carriers) ? $carriers : [],
             isset($servicePointData) ? $servicePointData : null,
             json_encode($object->getRawData())
         );

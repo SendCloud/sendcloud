@@ -29,6 +29,9 @@ var config = {
             },
             'Magento_Checkout/js/action/select-shipping-method': {
                 'SendCloud_SendCloud/js/action/select-shipping-method-mixin': true
+            },
+            'Bss_OneStepCheckout/js/model/shipping-save-processor/payload-extender': {
+                'SendCloud_SendCloud/js/model/shipping-save-processor/payload-extender-mixin': true
             }
         }
     }

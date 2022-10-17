@@ -5,7 +5,6 @@ namespace SendCloud\SendCloud\CheckoutCore\Domain\Delivery;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Comparable;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\DTOInstantiable;
 
-
 class OrderPlacementDay implements Comparable, DTOInstantiable
 {
     /**

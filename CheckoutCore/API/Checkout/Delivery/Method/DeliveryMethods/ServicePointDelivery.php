@@ -75,7 +75,7 @@ class ServicePointDelivery extends DeliveryMethod
     {
         parent::setEntityAttributes($rawData);
         /** @noinspection PhpParamsInspection */
-        $this->setCarriers(Carrier::fromArrayBatch(static::getValue($rawData, 'carriers', array())));
+        $this->setCarriers(Carrier::fromArrayBatch(static::getValue($rawData, 'carriers', [])));
         $this->setServicePointData(ServicePointData::fromArray($rawData['service_point_data']));
     }
 }

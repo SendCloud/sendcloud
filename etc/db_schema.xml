@@ -119,7 +119,7 @@
                 comment="Primary key"/>
         <column xsi:type="int" name="store_view_id" unsigned="false" nullable="false" identity="false"
                 comment="Store view ID"/>
-        <column xsi:type="varchar" name="external_id" nullable="false" length="300"
+        <column xsi:type="varchar" name="external_id" nullable="false" length="255"
                 comment="External id"/>
         <column xsi:type="varchar" name="delivery_zone_id"  nullable="false" length="64"
                 comment="Delivery zone id"/>
@@ -127,9 +127,9 @@
                 comment="Shipping method data"/>
         <column xsi:type="varchar" length="100" name="country" nullable="false"
                 comment="Shipping method country"/>
-        <column xsi:type="varchar" length="300" name="internal_title" nullable="false"
+        <column xsi:type="varchar" length="255" name="internal_title" nullable="false"
                 comment="Shipping method internal title"/>
-        <column xsi:type="varchar" length="300" name="external_title" nullable="false"
+        <column xsi:type="varchar" length="255" name="external_title" nullable="false"
                 comment="Shipping method external title"/>
         <column xsi:type="varchar" length="300" name="shipping_product" nullable="false"
                 comment="Shipping method shipping product"/>

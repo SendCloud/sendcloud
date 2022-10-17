@@ -46,47 +46,47 @@ class UpdateRequestValidator implements RequestValidator
     {
         $body = $request->getBody();
         if (empty($body)) {
-            throw new ValidationException(array(
-                array(
-                    'path' => array('body'), 'message' => 'Request payload is empty.'
-                )
-            ));
+            throw new ValidationException([
+                [
+                    'path' => ['body'], 'message' => 'Request payload is empty.'
+                ]
+            ]);
         }
 
         if (!array_key_exists('checkout_configuration', $body)) {
-            throw new ValidationException(array(
-                array(
-                    'path' => array('checkout_configuration'),
+            throw new ValidationException([
+                [
+                    'path' => ['checkout_configuration'],
                     'message' => "Field is required but missing."
-                )
-            ));
+                ]
+            ]);
         }
 
         if (!array_key_exists('minimal_plugin_version', $body['checkout_configuration'])) {
-            throw new ValidationException(array(
-                array(
-                    'path' => array('checkout_configuration', 'minimal_plugin_version'),
+            throw new ValidationException([
+                [
+                    'path' => ['checkout_configuration', 'minimal_plugin_version'],
                     'message' => "Field is required but missing."
-                )
-            ));
+                ]
+            ]);
         }
 
         if (!$this->checkIfVersionFormatIsValid($body['checkout_configuration']['minimal_plugin_version'])) {
-            throw new ValidationException(array(
-                array(
-                    'path' => array('checkout_configuration', 'minimal_plugin_version'),
+            throw new ValidationException([
+                [
+                    'path' => ['checkout_configuration', 'minimal_plugin_version'],
                     'message' => "Format is not valid."
-                )
-            ));
+                ]
+            ]);
         }
 
         if (version_compare($body['checkout_configuration']['minimal_plugin_version'], $this->pluginVersion, '>')) {
-            throw new ValidationException(array(
-                array(
-                    'path' => array('checkout_configuration', 'minimal_plugin_version'),
+            throw new ValidationException([
+                [
+                    'path' => ['checkout_configuration', 'minimal_plugin_version'],
                     'message' => "Plugin version mismatch detected. Requested to publish a checkout configuration for plugin version {$body['checkout_configuration']['minimal_plugin_version']}, but the plugin version in use is {$this->pluginVersion}."
-                )
-            ));
+                ]
+            ]);
         }
 
         Validator::validate(CheckoutConfigurationSchemaProvider::getSchema(), $request->getBody(), $this->currencyService->getDefaultCurrencyCode());
