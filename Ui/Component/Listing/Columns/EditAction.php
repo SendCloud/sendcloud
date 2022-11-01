@@ -49,7 +49,7 @@ class EditAction extends Column
                 $type = array_search($item['delivery_method'], DeliveryMethodNames::NAMES);
 
                 $item[$name]['edit'] = [
-                    'href' => "https://panel.sendcloud.sc/v2/checkout/configurations/$integrationId/delivery-zones/{$item['zone_id']}/delivery-methods/{$item['method_id']}?type=$type",
+                    'href' => "https://app.sendcloud.com/v2/checkout/configurations/$integrationId/delivery-zones/{$item['zone_id']}/delivery-methods/{$item['method_id']}?type=$type",
                     'label' => __('Edit in Sendcloud'),
                     'target' => '_blank',
                 ];

@@ -150,7 +150,7 @@ class Data extends \Magento\Config\Block\System\Config\Form\Field
         $deliveryMethod = $this->getMethodData();
         $integrationId = $this->getIntegrationId();
 
-        return "https://panel.sendcloud.sc/v2/checkout/configurations/$integrationId/delivery-zones/{$deliveryMethod->getDeliveryZoneId()}/delivery-methods/{$deliveryMethod->getId()}?type={$deliveryMethod->getType()}";
+        return "https://app.sendcloud.com/v2/checkout/configurations/$integrationId/delivery-zones/{$deliveryMethod->getDeliveryZoneId()}/delivery-methods/{$deliveryMethod->getId()}?type={$deliveryMethod->getType()}";
     }
 
     private function getMethodData()
