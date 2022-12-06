@@ -19,11 +19,11 @@ class ShippingRate extends DataTransferObject
      */
     protected $isDefault;
     /**
-     * @var int
+     * @var int|null
      */
     protected $maxWeight;
     /**
-     * @var int
+     * @var int|null
      */
     protected $minWeight;
 
@@ -76,7 +76,7 @@ class ShippingRate extends DataTransferObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getMaxWeight()
     {
@@ -84,7 +84,7 @@ class ShippingRate extends DataTransferObject
     }
 
     /**
-     * @param int $maxWeight
+     * @param int|null $maxWeight
      */
     public function setMaxWeight($maxWeight)
     {
@@ -92,7 +92,7 @@ class ShippingRate extends DataTransferObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getMinWeight()
     {
@@ -100,7 +100,7 @@ class ShippingRate extends DataTransferObject
     }
 
     /**
-     * @param int $minWeight
+     * @param int|null $minWeight
      */
     public function setMinWeight($minWeight)
     {
@@ -143,8 +143,8 @@ class ShippingRate extends DataTransferObject
         $entity->setRate(static::getValue($rawData, 'rate', '0'));
         $entity->setEnabled(static::getValue($rawData, 'enabled', false));
         $entity->setIsDefault(static::getValue($rawData, 'is_default', false));
-        $entity->setMaxWeight(static::getValue($rawData, 'max_weight', 0));
-        $entity->setMinWeight(static::getValue($rawData, 'min_weight', 0));
+        $entity->setMaxWeight(static::getValue($rawData, 'max_weight', null));
+        $entity->setMinWeight(static::getValue($rawData, 'min_weight', null));
 
         return $entity;
     }

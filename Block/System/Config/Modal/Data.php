@@ -75,7 +75,7 @@ class Data extends \Magento\Config\Block\System\Config\Form\Field
 
         $defaultRate = __("Not set");
 
-        if ($this->isServicePoint()) {
+        if ($this->isServicePoint() && $this->isServicePointLegacyRates()) {
             foreach ($deliveryMethod->getShippingRateData()->getShippingRates() as $shippingRate) {
                 if ($shippingRate->isEnabled()) {
                     $defaultRate = $shippingRate->getRate();
@@ -107,23 +107,55 @@ class Data extends \Magento\Config\Block\System\Config\Form\Field
         }
 
         $shippingRates = $deliveryMethod->getShippingRateData();
-        if ($this->isServicePoint()) {
-            foreach ($deliveryMethod->getCarriers() as $carrier) {
-                $rates[] = $carrier->getName();
-            }
-        } else {
-            foreach ($shippingRates->getShippingRates() as $shippingRate) {
-                if ($shippingRate->isEnabled()) {
-                    $rate['rate'] = "{$shippingRate->getRate()} {$deliveryMethod->getShippingRateData()->getCurrency()}";
-                    $minWeight = round($shippingRate->getMinWeight() / 1000);
-                    $maxWeight = round($shippingRate->getMaxWeight() / 1000);
-                    $rate['weight'] = "$minWeight - $maxWeight Kg";
-                    $rates[] = $rate;
-                }
+        foreach ($shippingRates->getShippingRates() as $shippingRate) {
+            if ($shippingRate->isEnabled()) {
+                $rate['rate'] = "{$shippingRate->getRate()} {$deliveryMethod->getShippingRateData()->getCurrency()}";
+                $minWeight = round($shippingRate->getMinWeight() / 1000);
+                $maxWeight = round($shippingRate->getMaxWeight() / 1000);
+                $rate['weight'] = "$minWeight - $maxWeight Kg";
+                $rates[] = $rate;
             }
         }
 
         return $rates;
+    }
+
+    public function getCarriers()
+    {
+        /**
+         * @var DeliveryMethod $deliveryMethod
+         */
+        $deliveryMethod = $this->getMethodData();
+        $carriers = [];
+        if (empty($deliveryMethod)) {
+            return $carriers;
+        }
+
+        foreach ($deliveryMethod->getCarriers() as $carrier) {
+            $carriers[] = $carrier->getName();
+        }
+
+        return $carriers;
+    }
+
+    public function isServicePointLegacyRates()
+    {
+        /**
+         * @var DeliveryMethod $deliveryMethod
+         */
+        $deliveryMethod = $this->getMethodData();
+        if (empty($deliveryMethod)) {
+            return false;
+        }
+
+        $shippingRates = $deliveryMethod->getShippingRateData();
+        foreach ($shippingRates->getShippingRates() as $shippingRate) {
+            if ($shippingRate->isEnabled() && ($shippingRate->getMinWeight() === null || $shippingRate->getMaxWeight() === null)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function isServicePoint()
@@ -155,7 +187,6 @@ class Data extends \Magento\Config\Block\System\Config\Form\Field
 
     private function getMethodData()
     {
-
         $entityId = $this->getEntityId();
         if (empty($this->data)) {
             $this->data = $this->sendcloudDeliveryMethodModel->select([$entityId]);

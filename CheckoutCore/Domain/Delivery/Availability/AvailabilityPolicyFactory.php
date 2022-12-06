@@ -21,10 +21,6 @@ class AvailabilityPolicyFactory
      */
     public static function create(DeliveryMethod $deliveryMethod, Order $order)
     {
-        if ($deliveryMethod->getType() === 'service_point_delivery') {
-            return new NullAvailabilityPolicy($deliveryMethod, $order);
-        }
-
         $concretePolicy = static::getConcretePolicy($deliveryMethod, $order);
 
         if ($deliveryMethod->getShippingRateData()->isEnabled()) {

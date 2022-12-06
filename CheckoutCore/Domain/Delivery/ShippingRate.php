@@ -21,11 +21,11 @@ class ShippingRate implements Comparable, DTOInstantiable
      */
     protected $isDefault;
     /**
-     * @var int
+     * @var int|null
      */
     protected $maxWeight;
     /**
-     * @var int
+     * @var int|null
      */
     protected $minWeight;
 
@@ -94,7 +94,7 @@ class ShippingRate implements Comparable, DTOInstantiable
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getMaxWeight()
     {
@@ -102,7 +102,7 @@ class ShippingRate implements Comparable, DTOInstantiable
     }
 
     /**
-     * @param int $maxWeight
+     * @param int|null $maxWeight
      */
     public function setMaxWeight($maxWeight)
     {
@@ -110,7 +110,7 @@ class ShippingRate implements Comparable, DTOInstantiable
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getMinWeight()
     {
@@ -118,7 +118,7 @@ class ShippingRate implements Comparable, DTOInstantiable
     }
 
     /**
-     * @param int $minWeight
+     * @param int|null $minWeight
      */
     public function setMinWeight($minWeight)
     {

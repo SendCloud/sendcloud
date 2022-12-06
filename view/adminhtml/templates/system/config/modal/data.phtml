@@ -9,33 +9,39 @@
     </div>
 </div>
 <?php if ($block->getRates()): ?>
-    <table class="data-grid data-grid-draggable">
-        <thead>
-        <tr>
-            <?php if ($block->isServicePoint()): ?>
+    <?php if ($block->isServicePoint()): ?>
+        <table class="data-grid data-grid-draggable">
+            <thead>
+            <tr>
                 <th class="data-grid-th">
                     <span class="data-grid-cell-content">Carriers</span>
                 </th>
-            <?php else: ?>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($block->getCarriers() as $carrier): ?>
+                <tr>
+                    <td>
+                        <div class="data-grid-cell-content"><?= $carrier; ?></div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+    <?php if (!$block->isServicePoint() || !$block->isServicePointLegacyRates()): ?>
+        <table class="data-grid data-grid-draggable">
+            <thead>
+            <tr>
                 <th class="data-grid-th">
                     <span class="data-grid-cell-content">Weight class</span>
                 </th>
                 <th class="data-grid-th">
                     <span class="data-grid-cell-content">Shipping rate</span>
                 </th>
-            <?php endif; ?>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if ($block->isServicePoint()): ?>
-            <?php foreach ($block->getRates() as $rate): ?>
-                <tr>
-                    <td>
-                        <div class="data-grid-cell-content"><?= $rate; ?></div>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
+            </tr>
+            </thead>
+            <tbody>
             <?php foreach ($block->getRates() as $rate): ?>
                 <tr>
                     <td>
@@ -46,10 +52,11 @@
                     </td>
                 </tr>
             <?php endforeach; ?>
-        <?php endif; ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    <?php endif; ?>
 <?php endif; ?>
 <div class="pp-buttons-container">
-    <a href=<?= $block->getEditLink(); ?> target="_blank"><input id="edit_btn" type="button" value="Edit rates in Sendcloud"></a>
+    <a href=<?= $block->getEditLink(); ?> target="_blank"><input id="edit_btn" type="button"
+                                                                 value="Edit rates in Sendcloud"></a>
 </div>

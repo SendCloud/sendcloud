@@ -98,6 +98,21 @@ class ServicePointDeliverySchemaProvider implements SchemaProvider
                                 'field' => 'enabled',
                                 'type' => 'bool',
                             ],
+                            [
+                                'field' => 'is_default',
+                                'type' => 'bool',
+                                'required' => false,
+                            ],
+                            [
+                                'field' => 'max_weight',
+                                'type' => 'int',
+                                'required' => false,
+                            ],
+                            [
+                                'field' => 'min_weight',
+                                'type' => 'int',
+                                'required' => false,
+                            ]
                         ],
                     ],
                 ],

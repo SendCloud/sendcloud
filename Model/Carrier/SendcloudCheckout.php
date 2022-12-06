@@ -225,7 +225,7 @@ class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
                     continue;
                 }
                 if (($packageWeight >= $shippingRate->getMinWeight() && $packageWeight < $shippingRate->getMaxWeight()) ||
-                    ($shippingRate->getMinWeight() === 0 && $shippingRate->getMaxWeight() === 0)
+                    ($shippingRate->getMinWeight() === null && $shippingRate->getMaxWeight() === null)
                 ) {
                     return $shippingRate->getRate();
                 }
