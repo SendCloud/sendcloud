@@ -64,11 +64,28 @@ class CheckoutBeforeSaveShippingInformation
 
         if (!empty($extensionAttributes) && $extensionAttributes->getSendcloudCheckoutData()) {
             $quote = $this->quoteRepository->getActive($cartId);
-            $checkoutData = $extensionAttributes->getSendcloudCheckoutData();
+            $checkoutData = $this->removeAccessTokenFromCheckoutData($extensionAttributes->getSendcloudCheckoutData());
             $quote->setSendcloudCheckoutData($checkoutData);
             $this->quoteRepository->save($quote);
         }
 
         return $paymentDetails;
+    }
+
+    /**
+     * Unset access_token and api_key in order to skip saving it into the database
+     *
+     * @param string $jsonData
+     * @return string
+     */
+    private function removeAccessTokenFromCheckoutData(string $jsonData): string
+    {
+        $data = json_decode($jsonData, true);
+        unset($data['access_token']);
+        if (array_key_exists('service_point_data', $data)) {
+            unset($data['service_point_data']['api_key']);
+        }
+
+        return json_encode($data);
     }
 }

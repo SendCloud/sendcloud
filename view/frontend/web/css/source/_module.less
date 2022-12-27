@@ -1,59 +1,96 @@
 & when (@media-common = true) {
-    #sendcloud-service-point {
-        position: relative;
-        margin-bottom: 50px;
-        min-height: 40px;
+  #sendcloud-service-point {
+    position: relative;
+    margin-bottom: 50px;
+    min-height: 40px;
 
-        .button-service-point {
-            cursor: pointer;
-            color: #1979c3;
-            background-color: #fff;
-            padding: 7px 20px 8px 20px;
-            display: table;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;
-            border: 2px solid #1979c3;
-            margin: 30px 0 30px 30px;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-        }
-        .col {
-            width: 23%;
-            display: inline-block;
-            vertical-align: top;
-            &:first-child {
-                padding-left: 30px;
-                width: 55%;
-            }
-        }
+    .button-service-point {
+      cursor: pointer;
+      color: #1979c3;
+      background-color: #fff;
+      padding: 7px 20px 8px 20px;
+      display: table;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      border: 2px solid #1979c3;
+      margin: 30px 0 30px 30px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
 
-        ul {
-            padding: 0;
-            list-style: none;
-            li {
-                margin: 0;
-                span {
-                    float: right;
-                }
-            }
+    .col {
+      width: 23%;
+      display: inline-block;
+      vertical-align: top;
+
+      &:first-child {
+        padding-left: 30px;
+        width: 55%;
+      }
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+
+      li {
+        margin: 0;
+
+        span {
+          float: right;
         }
+      }
     }
-    #onepage-checkout-shipping-method-additional-load {
-        margin-top: 20px;
-    }
-    #servicePointName {
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    #co-shipping-method-form .table-checkout-shipping-method {
-        width: 100%;
-    }
-    .service-point-information {
-        margin-top: 10px;
-    }
-    #sendcloud-chekout{
-        margin-bottom: 20px;
-    }
+  }
+
+  #onepage-checkout-shipping-method-additional-load {
+    margin-top: 20px;
+  }
+
+  #servicePointName {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  #co-shipping-method-form .table-checkout-shipping-method {
+    width: 100%;
+  }
+
+  .service-point-information {
+    margin-top: 10px;
+  }
+
+  #sendcloud-chekout {
+    margin-bottom: 20px;
+  }
+
+  .table-checkout-shipping-method .col-method span:first-child {
+    font-weight: 700;
+  }
+
+  .table-checkout-shipping-method .col-carrier {
+    font-weight: 700;
+  }
+
+  .sc-position-relative {
+    position: relative;
+  }
+
+  .sc-checkout-price {
+    width: 20%;
+  }
+
+  .sc-position-relative input {
+    top: 45%;
+    position: absolute;
+    transform: translateY(-45%);
+  }
+
+  .sc-position-relative span:first-child {
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+  }
 }

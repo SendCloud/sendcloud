@@ -199,6 +199,7 @@ class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
         $method->setPrice($shippingCost);
         $method->setCost($shippingCost);
 
+        $method->setMethodDescription($deliveryMethod->getDescription());
         $method->setData('methodConfiguration', $deliveryMethod->getRawConfig());
 
         return $method;

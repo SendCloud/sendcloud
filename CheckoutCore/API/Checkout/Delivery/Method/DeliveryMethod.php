@@ -29,6 +29,10 @@ abstract class DeliveryMethod extends DataTransferObject
      */
     protected $internalTitle;
     /**
+     * @var string
+     */
+    protected $description;
+    /**
      * @var int
      */
     protected $senderAddressId;
@@ -111,6 +115,22 @@ abstract class DeliveryMethod extends DataTransferObject
     public function setInternalTitle($internalTitle)
     {
         $this->internalTitle = $internalTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**
@@ -205,6 +225,7 @@ abstract class DeliveryMethod extends DataTransferObject
             'delivery_method_type' => $this->getType(),
             'external_title' => $this->getExternalTitle(),
             'internal_title' => $this->getInternalTitle(),
+            'description' => $this->getDescription(),
             'sender_address_id' => $this->getSenderAddressId(),
             'show_carrier_information_in_checkout' => $this->isShowCarrierInformationInCheckout(),
             'shipping_rate_data' => $this->getShippingRateData()->isEnabled() ? $this->getShippingRateData()->toArray() : [],
@@ -223,6 +244,7 @@ abstract class DeliveryMethod extends DataTransferObject
         $this->setType($rawData['delivery_method_type']);
         $this->setExternalTitle($rawData['external_title']);
         $this->setInternalTitle($rawData['internal_title']);
+        $this->setDescription(static::getValue($rawData, 'description', ''));
         $this->setSenderAddressId($rawData['sender_address_id']);
         $this->setShowCarrierInformationInCheckout($rawData['show_carrier_information_in_checkout']);
         $this->setTimeZoneName($rawData['time_zone_name']);

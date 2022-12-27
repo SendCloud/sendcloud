@@ -33,7 +33,8 @@ class ExtensionAttributes
             $result->getExtensionAttributes()
             :
             $this->extensionFactory->create();
-        
+
+        $extensionAttribute->setMethodDescription($rateModel->getMethodDescription() ?? '');
         $extensionAttribute->setMethodConfiguration($rateModel->getMethodConfiguration());
         
         $result->setExtensionAttributes($extensionAttribute);

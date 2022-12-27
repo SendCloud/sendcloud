@@ -26,6 +26,11 @@ class BaseDeliverySchemaProvider implements SchemaProvider
                 'type' => 'string'
             ],
             [
+                'field' => 'description',
+                'type' => 'string',
+                'nullable' => true,
+            ],
+            [
                 'field' => 'sender_address_id',
                 'type' => 'int'
             ],

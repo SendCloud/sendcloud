@@ -42,6 +42,7 @@
     </extension_attributes>
     <extension_attributes for="Magento\Quote\Api\Data\ShippingMethodInterface">
         <attribute code="methodConfiguration" type="string"/>
+        <attribute code="method_description" type="string"/>
     </extension_attributes>
 
 </config>
