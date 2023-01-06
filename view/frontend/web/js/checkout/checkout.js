@@ -46,6 +46,10 @@ define([
                         return true;
                     }
 
+                    if (mountElement) {
+                        mountElement.setAttribute('data-sc-delivery-method-type', quote.getSendcloudDeliveryMethodType());
+                    }
+
                     addEventListenerToPostCodeField();
 
                     renderWidgetHandler();

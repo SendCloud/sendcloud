@@ -23,13 +23,7 @@ class ServicePointDeliverySchemaProvider implements SchemaProvider
             ],
             [
                 'field' => 'internal_title',
-                'type' => 'string',
-                'nullable' => true,
-            ],
-            [
-                'field' => 'description',
-                'type' => 'string',
-                'nullable' => true,
+                'type' => 'string'
             ],
             [
                 'field' => 'sender_address_id',

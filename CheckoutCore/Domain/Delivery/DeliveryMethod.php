@@ -51,10 +51,6 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
      */
     protected $internalTitle;
     /**
-     * @var string
-     */
-    protected $description;
-    /**
      * @var Carrier|null
      */
     protected $carrier;
@@ -108,7 +104,6 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
      * @param string $type
      * @param string $externalTitle
      * @param string $internalTitle
-     * @param $description
      * @param Carrier|null $carrier
      * @param int $senderAddressId
      * @param bool $showCarrierInfoOnCheckout
@@ -128,7 +123,6 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
         $type,
         $externalTitle,
         $internalTitle,
-        $description,
         $carrier,
         $senderAddressId,
         $showCarrierInfoOnCheckout,
@@ -147,7 +141,6 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
         $this->type = $type;
         $this->externalTitle = $externalTitle;
         $this->internalTitle = $internalTitle;
-        $this->description = $description;
         $this->carrier = $carrier;
         $this->showCarrierInfoOnCheckout = $showCarrierInfoOnCheckout;
         $this->shippingProduct = $shippingProduct;
@@ -255,22 +248,6 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
     public function setInternalTitle($internalTitle)
     {
         $this->internalTitle = $internalTitle;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
     }
 
     /**
@@ -499,7 +476,6 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
             $object->getType(),
             $object->getExternalTitle(),
             $object->getInternalTitle(),
-            $object->getDescription(),
             isset($carrier) ? $carrier : null,
             $object->getSenderAddressId(),
             $object->isShowCarrierInformationInCheckout(),
@@ -526,7 +502,6 @@ class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
             || $this->getType() !== $target->getType()
             || $this->getExternalTitle() !== $target->getExternalTitle()
             || $this->getInternalTitle() !== $target->getInternalTitle()
-            || $this->getDescription() !== $target->getDescription()
             || $this->getSenderAddressId() !== $target->getSenderAddressId()
             || $this->isShowCarrierInfoOnCheckout() !== $target->isShowCarrierInfoOnCheckout()
             || $this->getTimeZoneName() !== $target->getTimeZoneName()
