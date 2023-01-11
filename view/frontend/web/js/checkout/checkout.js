@@ -109,6 +109,7 @@ define([
                 renderDate: new Date(),
                 locale: window.storeLocale.replace('_', '-'),
                 state: getWidgetState(),
+                localeMessages: window.translations
             }).then(function (destructorCallback) {
                 renderedWidgetDestructor = destructorCallback;
             });
