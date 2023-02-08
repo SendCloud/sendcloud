@@ -62,7 +62,7 @@ class CheckoutBeforeSaveShippingInformation
     ) {
         $extensionAttributes = $addressInformation->getExtensionAttributes();
 
-        if (!empty($extensionAttributes) && $extensionAttributes->getSendcloudCheckoutData()) {
+        if (!empty($extensionAttributes) && $extensionAttributes->getSendcloudCheckoutData() && $extensionAttributes->getSendcloudCheckoutData() != "NULL") {
             $quote = $this->quoteRepository->getActive($cartId);
             $checkoutData = $this->removeAccessTokenFromCheckoutData($extensionAttributes->getSendcloudCheckoutData());
             $quote->setSendcloudCheckoutData($checkoutData);
