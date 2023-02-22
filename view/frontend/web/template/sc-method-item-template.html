@@ -1,18 +1,20 @@
 <!-- Initialize collapsible binding -->
-<tr class="row">
+<tr class="row"
+    click="element.selectShippingMethod">
     <td class="col col-method sc-position-relative">
         <input type="radio"
                class="radio"
-               click="element.selectShippingMethod"
                ifnot="method.error_message"
                ko-checked="element.isSelected"
                ko-value="method.carrier_code + '_' + method.method_code"
                attr="'aria-labelledby': 'label_method_' + method.method_code + '_' + method.carrier_code + ' ' + 'label_carrier_' + method.method_code + '_' + method.carrier_code,
                         'checked': element.rates().length == 1 || element.isSelected">
     </td>
+    <!-- ko ifnot: (method.error_message) -->
     <td class="col col-price sc-position-relative sc-checkout-price">
         <each args="element.getRegion('price')" render=""></each>
     </td>
+    <!-- /ko -->
     <td class="col col-method"
         attr="'id': 'label_method_' + method.method_code + '_' + method.carrier_code">
         <span class="sc-delivery-method-title" text="method.method_title"></span><br>
@@ -21,17 +23,10 @@
     <td class="col col-carrier"
         attr="'id': 'label_carrier_' + method.method_code + '_' + method.carrier_code"
         text="method.carrier_title"></td>
-    <!-- Column with collapsible trigger  -->
-    <td class="col">
-        <a toggleCollapsible="'$collapsible_' + method.method_code">
-            <span data-bind="i18n: 'Info'"></span>
-        </a>
-    </td>
 </tr>
-
 <tr class="row row-error"
     if="method.error_message">
-    <td class="col col-error" colspan="5">
+    <td class="col col-error" colspan="4">
         <div role="alert" class="message error">
             <div text="method.error_message"></div>
         </div>
