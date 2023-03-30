@@ -50,8 +50,7 @@
                 </item>
             </argument>
             <htmlContent name="html_content">
-                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\GeneralMessage
-                </argument>
+                <block class="SendCloud\SendCloud\Block\System\Config\Form\GeneralMessage" name="sendcloud.general.message" />
             </htmlContent>
         </container>
         <container name="plugin_version_container">
@@ -61,8 +60,7 @@
                 </item>
             </argument>
             <htmlContent name="html_content">
-                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\PluginVersion
-                </argument>
+                <block class="SendCloud\SendCloud\Block\System\Config\Form\PluginVersion" name="sendcloud.plugin.version" />
             </htmlContent>
         </container>
         <field name="is_active" formElement="select">
@@ -126,8 +124,7 @@
                 </item>
             </argument>
             <htmlContent name="html_content" component="SendCloud_SendCloud/js/form/elements/container">
-                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\Button
-                </argument>
+                <block class="SendCloud\SendCloud\Block\System\Config\Form\Button" name="sendcloud.form.button" />
             </htmlContent>
         </container>
     </fieldset>
@@ -192,13 +189,11 @@
                 </item>
             </argument>
             <htmlContent name="html_content">
-                <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\DynamicMessage
-                </argument>
+                <block class="SendCloud\SendCloud\Block\System\Config\Form\DynamicMessage" name="sendcloud.dynamic.message" />
             </htmlContent>
         </container>
     </fieldset>
     <htmlContent name="html_content">
-        <argument name="block" xsi:type="object">SendCloud\SendCloud\Block\System\Config\Form\Branding
-        </argument>
+        <block class="SendCloud\SendCloud\Block\System\Config\Form\Branding" name="sendcloud.branding" />
     </htmlContent>
 </form>

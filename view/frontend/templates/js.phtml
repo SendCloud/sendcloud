@@ -14,4 +14,5 @@
 </script>
 <script>
     var storeLocale = "<?= /* @escapeNotVerified */ $block->getLocale()?>";
+    var translations = <?= /* @escapeNotVerified */ json_encode($block->getTranslations())?>;
 </script>

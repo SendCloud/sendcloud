@@ -44,7 +44,7 @@
             <!--/ko-->
         </div>
         <div class="shipping-information-content" data-bind="visible: quote.shippingMethod() && quote.shippingMethod().carrier_code == 'sendcloud_checkout'">
-            <span>SendCloud - </span><span class="value" data-bind="text: getShippingMethodTitle()"></span>
+            <span class="value" data-bind="text: getShippingMethodTitle()"></span>
 
             <!-- ko if: (extensionData().delivery_method_data.formatted_delivery_date && (selectedMethod() == 'sendcloud_checkout_nominated_day_delivery' || selectedMethod() == 'sendcloud_checkout_same_day_delivery')) -->
             <div class="service-point-information">

@@ -7,7 +7,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\Data\CartExtensionFactory;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\Data\CartSearchResultsInterface;
-use Magento\Quote\Model\QuoteRepository;
+use Magento\Quote\Api\CartRepositoryInterface;
 use SendCloud\SendCloud\Helper\WeightConverter;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
@@ -42,11 +42,11 @@ class CartRepository
     }
 
     /**
-     * @param QuoteRepository $subject
+     * @param CartRepositoryInterface $subject
      * @param CartInterface $cart
      * @return CartInterface
      */
-    public function afterGet(QuoteRepository $subject, CartInterface $cart)
+    public function afterGet(CartRepositoryInterface $subject, CartInterface $cart)
     {
         $this->loadSendCloudExtensionAttributes($cart);
 
@@ -54,11 +54,11 @@ class CartRepository
     }
 
     /**
-     * @param QuoteRepository $subject
+     * @param CartRepositoryInterface $subject
      * @param CartSearchResultsInterface $cartCollection
      * @return CartSearchResultsInterface
      */
-    public function afterGetList(QuoteRepository $subject, CartSearchResultsInterface $cartCollection)
+    public function afterGetList(CartRepositoryInterface $subject, CartSearchResultsInterface $cartCollection)
     {
         foreach ($cartCollection->getItems() as $cart) {
             $this->loadSendCloudExtensionAttributes($cart);
