@@ -20,7 +20,7 @@
     <td class="col col-carrier sc-vertical-align-middle"
         attr="'id': 'label_carrier_' + method.method_code + '_' + method.carrier_code"
         text="method.carrier_title"></td>
-    <td class="col col-price sc-position-relative sc-vertical-align-middle">
+    <td class="col col-price sc-position-relative sc-vertical-align-middle" data-bind="css: { 'sc-free-delivery': method.amount === 0.00 }">
         <each args="element.getRegion('price')" render=""></each>
     </td>
 </tr>
