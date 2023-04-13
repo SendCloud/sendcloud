@@ -6,6 +6,7 @@ use Magento\Checkout\Api\Data\ShippingInformationInterface;
 use Magento\Checkout\Model\PaymentDetails;
 use Magento\Checkout\Model\ShippingInformationManagement;
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\Data\ShippingMethodInterface;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Helper\Checkout;
@@ -53,6 +54,7 @@ class CheckoutBeforeSaveShippingInformation
      * @param $cartId
      * @param ShippingInformationInterface $addressInformation
      * @return PaymentDetails
+     * @throws NoSuchEntityException
      */
     public function afterSaveAddressInformation(
         ShippingInformationManagement $subject,
@@ -61,13 +63,19 @@ class CheckoutBeforeSaveShippingInformation
         ShippingInformationInterface $addressInformation
     ) {
         $extensionAttributes = $addressInformation->getExtensionAttributes();
-
-        if (!empty($extensionAttributes) && $extensionAttributes->getSendcloudCheckoutData() && $extensionAttributes->getSendcloudCheckoutData() !== "NULL") {
-            $quote = $this->quoteRepository->getActive($cartId);
-            $checkoutData = $this->removeAccessTokenFromCheckoutData($extensionAttributes->getSendcloudCheckoutData());
-            $quote->setSendcloudCheckoutData($checkoutData);
-            $this->quoteRepository->save($quote);
+        if ($extensionAttributes === null) {
+            return $paymentDetails;
         }
+
+        $sendCloudCheckoutData = $extensionAttributes->getSendcloudCheckoutData();
+        if (!$this->isCheckoutDataValid($sendCloudCheckoutData)) {
+            return $paymentDetails;
+        }
+
+        $quote = $this->quoteRepository->getActive($cartId);
+        $sendCloudCheckoutData = $this->removeAccessTokenFromCheckoutData($extensionAttributes->getSendcloudCheckoutData());
+        $quote->setSendcloudCheckoutData($sendCloudCheckoutData);
+        $this->quoteRepository->save($quote);
 
         return $paymentDetails;
     }
@@ -87,5 +95,17 @@ class CheckoutBeforeSaveShippingInformation
         }
 
         return json_encode($data);
+    }
+
+    /**
+     * Checks whether checkout data is in valid json format.
+     *
+     * @param $jsonData
+     *
+     * @return bool
+     */
+    private function isCheckoutDataValid($jsonData): bool
+    {
+        return !($jsonData === null || $jsonData === "NULL" || json_decode($jsonData, true) === null);
     }
 }
