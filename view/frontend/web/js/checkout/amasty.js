@@ -10,7 +10,7 @@ define([
          * @returns {*}
          */
         extendData: function (payload) {
-            if (quote.shippingMethod() && quote.shippingMethod()['carrier_code'] === 'sendcloud_checkout') {
+            if (quote.shippingMethod() && quote.shippingMethod()['carrier_code'] === 'sendcloudcheckout') {
                 let extensionAttributes = quote.getExtensionAttributes();
 
                 if (extensionAttributes && quote.getCheckoutExtensionAttributes()) {

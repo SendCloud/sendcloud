@@ -50,7 +50,7 @@ class MultiShipping extends Shipping
              * @var Rate $rate
              */
             foreach ($rates as $rate) {
-                if (strpos($rate->getCode(), 'sendcloud_checkout') === 0) {
+                if (strpos($rate->getCode(), 'sendcloudcheckout') === 0) {
                     $codes[$rate->getCode()] = $rate->getMethod();
                 }
             }

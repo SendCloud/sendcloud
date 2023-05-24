@@ -55,7 +55,7 @@ class Uninstall implements UninstallInterface
     private function cleanConfigData()
     {
         $this->deleteByFilter('carriers/sendcloud');
-        $this->deleteByFilter('carriers/sendcloud_checkout');
+        $this->deleteByFilter('carriers/sendcloudcheckout');
         $this->deleteByFilter('sendcloud');
     }
 

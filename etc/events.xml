@@ -12,14 +12,14 @@
 
     <event name="email_order_set_template_vars_before">
            <observer name="add_sendcloud_variable_to_order" instance="SendCloud\SendCloud\Observer\AddSendCloudVariable"/>
-        <observer name="add_sendcloud_checkout_service_point_variable_to_order" instance="SendCloud\SendCloud\Observer\AddSendCloudCheckoutServicePointVariable"/>
-        <observer name="add_sendcloud_checkout_expected_date_variable_to_order" instance="SendCloud\SendCloud\Observer\AddSendCloudExpectedDateVariable"/>
+        <observer name="add_sendcloudcheckout_service_point_variable_to_order" instance="SendCloud\SendCloud\Observer\AddSendCloudCheckoutServicePointVariable"/>
+        <observer name="add_sendcloudcheckout_expected_date_variable_to_order" instance="SendCloud\SendCloud\Observer\AddSendCloudExpectedDateVariable"/>
     </event>
 
     <event name="email_shipment_set_template_vars_before">
         <observer name="add_sendcloud_variable_to_shipment" instance="SendCloud\SendCloud\Observer\AddSendCloudVariable"/>
-        <observer name="add_sendcloud_checkout_service_point_variable_to_shipment" instance="SendCloud\SendCloud\Observer\AddSendCloudCheckoutServicePointVariable"/>
-        <observer name="add_sendcloud_checkout_expected_date_variable_to_shipment" instance="SendCloud\SendCloud\Observer\AddSendCloudExpectedDateVariable"/>
+        <observer name="add_sendcloudcheckout_service_point_variable_to_shipment" instance="SendCloud\SendCloud\Observer\AddSendCloudCheckoutServicePointVariable"/>
+        <observer name="add_sendcloudcheckout_expected_date_variable_to_shipment" instance="SendCloud\SendCloud\Observer\AddSendCloudExpectedDateVariable"/>
 
     </event>
 

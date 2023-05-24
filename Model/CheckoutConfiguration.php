@@ -84,13 +84,13 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
         try {
             $configurator->update($request);
             $this->writer->save(
-                'carriers/sendcloud_checkout/active',
+                'carriers/sendcloudcheckout/active',
                 1,
                 ScopeInterface::SCOPE_STORES,
                 $store_view_id
             );
             $this->writer->save(
-                'carriers/sendcloud_checkout/integration_id',
+                'carriers/sendcloudcheckout/integration_id',
                 $checkout_configuration['integration_id'],
                 ScopeInterface::SCOPE_STORES,
                 $store_view_id
@@ -130,13 +130,13 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
             $configurator->deleteAll(new Request([], []));
 
             $this->writer->save(
-                'carriers/sendcloud_checkout/active',
+                'carriers/sendcloudcheckout/active',
                 0,
                 ScopeInterface::SCOPE_STORES,
                 $store_view_id
             );
             $this->writer->save(
-                'carriers/sendcloud_checkout/integration_id',
+                'carriers/sendcloudcheckout/integration_id',
                 '',
                 ScopeInterface::SCOPE_STORES,
                 $store_view_id

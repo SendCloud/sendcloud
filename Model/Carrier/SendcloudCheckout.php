@@ -32,7 +32,7 @@ class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
     /**
      * @var string
      */
-    protected $_code = 'sendcloud_checkout';
+    protected $_code = 'sendcloudcheckout';
 
     /**
      * @var bool

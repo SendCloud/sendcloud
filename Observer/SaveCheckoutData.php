@@ -30,7 +30,7 @@ class SaveCheckoutData implements ObserverInterface
     {
         $order = $observer->getOrder();
         $quote = $this->quoteRepository->get($order->getQuoteId());
-        if ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloud_checkout') !== false && !$order->getSendcloudData()) {
+        if ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloudcheckout') !== false && !$order->getSendcloudData()) {
             $order->setSendcloudData($quote->getSendcloudCheckoutData());
         }
 

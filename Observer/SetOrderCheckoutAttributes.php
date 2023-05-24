@@ -38,7 +38,7 @@ class SetOrderCheckoutAttributes implements ObserverInterface
             return $this;
         }
 
-        if ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloud_checkout') !== false && !$order->getSendcloudData()) {
+        if ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloudcheckout') !== false && !$order->getSendcloudData()) {
             $order->setSendcloudData($quote->getSendcloudCheckoutData());
         }
 

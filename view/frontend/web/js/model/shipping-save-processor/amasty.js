@@ -57,7 +57,7 @@ define([
             switch (quote.shippingMethod().carrier_code) {
                 case 'sendcloud' :
                     payload = servicePoint.extendData(payload);
-                case 'sendcloud_checkout' :
+                case 'sendcloudcheckout' :
                     payload = checkout.extendData(payload);
             }
 

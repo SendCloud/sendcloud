@@ -27,7 +27,7 @@
                 <span data-bind="i18n: 'edit'"></span>
             </button>
         </div>
-        <div class="shipping-information-content" data-bind="visible: quote.shippingMethod() && quote.shippingMethod().carrier_code !== 'sendcloud_checkout'">
+        <div class="shipping-information-content" data-bind="visible: quote.shippingMethod() && quote.shippingMethod().carrier_code !== 'sendcloudcheckout'">
             <span class="value" data-bind="text: getShippingMethodTitle()"></span>
 
             <!-- ko if: (quote.getExtensionAttributes()) -->
@@ -43,16 +43,16 @@
             </div>
             <!--/ko-->
         </div>
-        <div class="shipping-information-content" data-bind="visible: quote.shippingMethod() && quote.shippingMethod().carrier_code == 'sendcloud_checkout'">
+        <div class="shipping-information-content" data-bind="visible: quote.shippingMethod() && quote.shippingMethod().carrier_code == 'sendcloudcheckout'">
             <span class="value" data-bind="text: getShippingMethodTitle()"></span>
 
-            <!-- ko if: (extensionData().delivery_method_data.formatted_delivery_date && (selectedMethod() == 'sendcloud_checkout_nominated_day_delivery' || selectedMethod() == 'sendcloud_checkout_same_day_delivery')) -->
+            <!-- ko if: (extensionData().delivery_method_data.formatted_delivery_date && (selectedMethod() == 'sendcloudcheckout_nominated_day_delivery' || selectedMethod() == 'sendcloudcheckout_same_day_delivery')) -->
             <div class="service-point-information">
                 <strong>Expected delivery date</strong><br>
                 <span data-bind="text: extensionData().delivery_method_data.formatted_delivery_date"></span>
             </div>
             <!--/ko-->
-            <!-- ko if: (selectedMethod() == 'sendcloud_checkout_service_point_delivery' && extensionData().delivery_method_data.service_point) -->
+            <!-- ko if: (selectedMethod() == 'sendcloudcheckout_service_point_delivery' && extensionData().delivery_method_data.service_point) -->
             <div class="service-point-information">
                 <strong data-bind="text: extensionData().delivery_method_data.service_point.name"></strong><br>
                 <span>

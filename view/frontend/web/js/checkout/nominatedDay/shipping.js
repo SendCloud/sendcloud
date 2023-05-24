@@ -14,7 +14,7 @@ define([
          */
         successHandler: function (selectMethod) {
 
-            if (selectMethod && selectMethod.carrier_code === 'sendcloud_checkout' && quote.hasDeliveryMethodData()) {
+            if (selectMethod && selectMethod.carrier_code === 'sendcloudcheckout' && quote.hasDeliveryMethodData()) {
                 return;
             }
 

@@ -83,10 +83,10 @@ class Status extends Column
     protected function getIntegrationId()
     {
         if ($this->context->getRequestParam('id') === null) {
-            $integrationId = $this->scopeConfig->getValue('carriers/sendcloud_checkout/integration_id');
+            $integrationId = $this->scopeConfig->getValue('carriers/sendcloudcheckout/integration_id');
         } else {
             $integrationId = $this->scopeConfig->getValue(
-                'carriers/sendcloud_checkout/integration_id',
+                'carriers/sendcloudcheckout/integration_id',
                 ScopeInterface::SCOPE_STORE,
                 (int)$this->context->getRequestParam('id')
             );

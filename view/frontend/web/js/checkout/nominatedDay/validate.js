@@ -13,7 +13,7 @@ define([
         validateShippingInformation: function (origResult) {
             let selectedMethod = quote.shippingMethod();
 
-            if (selectedMethod && selectedMethod.carrier_code === 'sendcloud_checkout' && quote.hasDeliveryMethodData()) {
+            if (selectedMethod && selectedMethod.carrier_code === 'sendcloudcheckout' && quote.hasDeliveryMethodData()) {
                 return origResult;
             }
 

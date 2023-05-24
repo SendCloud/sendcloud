@@ -78,7 +78,7 @@
                     <label>Sort Order</label>
                 </field>
             </group>
-            <group id="sendcloud_checkout" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="sendcloudcheckout" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Sendcloud Checkout</label>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enabled</label>

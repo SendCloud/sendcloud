@@ -68,7 +68,7 @@ class CurrencyConfigurationChange
             ) {
                 foreach ($website->getStoreIds() as $storeId) {
                     $this->writer->save(
-                        'carriers/sendcloud_checkout/active',
+                        'carriers/sendcloudcheckout/active',
                         0,
                         ScopeInterface::SCOPE_STORE,
                         $storeId

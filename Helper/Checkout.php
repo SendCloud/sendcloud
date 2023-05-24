@@ -59,7 +59,7 @@ class Checkout extends AbstractHelper
      */
     public function checkIfChekoutIsActive(?string $store = null)
     {
-        return $this->getConfigValue('carriers/sendcloud_checkout/active', $store);
+        return $this->getConfigValue('carriers/sendcloudcheckout/active', $store);
     }
 
     /**

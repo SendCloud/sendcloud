@@ -42,7 +42,7 @@
                                                                     <item name="sendcloud-rates-validation" xsi:type="array">
                                                                         <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/shipping-rates-validation/sendcloud</item>
                                                                     </item>
-                                                                    <item name="sendcloud_checkout-rates-validation" xsi:type="array">
+                                                                    <item name="sendcloudcheckout-rates-validation" xsi:type="array">
                                                                         <item name="component" xsi:type="string">SendCloud_SendCloud/js/view/shipping-rates-validation/sendcloud-checkout</item>
                                                                     </item>
                                                                 </item>

@@ -19,7 +19,7 @@ define([
                 function (data) {
                     if (data) {
                         for (const property in data) {
-                            configuration['sendcloud_checkout_' + property] = JSON.parse(data[property]);
+                            configuration['sendcloudcheckout_' + property] = JSON.parse(data[property]);
                         }
                     }
                 });
@@ -35,7 +35,7 @@ define([
                 });
             });
             document.querySelectorAll('.item-content').forEach(item => {
-                let shippingMethods = item.querySelectorAll('[class="radio"][value^="sendcloud_checkout"]');
+                let shippingMethods = item.querySelectorAll('[class="radio"][value^="sendcloudcheckout"]');
 
                 if (shippingMethods.length > 0) {
                     let input = document.createElement("input");

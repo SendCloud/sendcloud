@@ -14,7 +14,7 @@ define([
             switch (quote.shippingMethod().carrier_code) {
                 case 'sendcloud' :
                     return servicePoint.extendData(payload);
-                case 'sendcloud_checkout' :
+                case 'sendcloudcheckout' :
                     return checkoutMageplaza.extendData(payload);
             }
         });

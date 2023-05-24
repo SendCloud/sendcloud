@@ -39,7 +39,7 @@ class SetMultishippingAttributes implements ObserverInterface
         }
 
         foreach ($shippingMethods as $key => $value) {
-            if (strpos($value, 'sendcloud_checkout') !== false) {
+            if (strpos($value, 'sendcloudcheckout') !== false) {
                 if (!$shippingMethodsData[$key]) {
                     throw new LocalizedException(__('Sendcloud checkout data missing'));
                 }

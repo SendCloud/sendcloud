@@ -13,8 +13,8 @@ define([
 ) {
     'use strict';
 
-    defaultShippingRatesValidator.registerValidator('sendcloud_checkout', sendcloudShippingRatesValidator);
-    defaultShippingRatesValidationRules.registerRules('sendcloud_checkout', sendcloudShippingRatesValidationRules);
+    defaultShippingRatesValidator.registerValidator('sendcloudcheckout', sendcloudShippingRatesValidator);
+    defaultShippingRatesValidationRules.registerRules('sendcloudcheckout', sendcloudShippingRatesValidationRules);
 
     return Component;
 });
