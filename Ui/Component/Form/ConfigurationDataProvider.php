@@ -70,21 +70,9 @@ class ConfigurationDataProvider extends DataProvider
     public function getMeta()
     {
         $meta = parent::getMeta();
-        $meta['dynamic_checkout']['children']['dynamic_checkout_grid']['arguments']['data']['config']['render_url'] = $this->_urlBuilder
-            ->getUrl('mui/index/render/id/' . $this->request->getParam('store'));
 
-        if (empty($this->request->getParam('store'))) {
-            $meta['dynamic_checkout']['arguments']['data']['config']['visible'] = 0;
-            $meta['dynamic_message']['arguments']['data']['config']['visible'] = 1;
-            if ($this->helper->checkIfModuleIsActive($this->request->getParam('store'))) {
-                $meta['general']['custom_tab_container']['html_content']['visible'] = 1;
-            }
-        } else {
-            $meta['dynamic_checkout']['arguments']['data']['config']['visible'] = 1;
-            $meta['dynamic_message']['arguments']['data']['config']['visible'] = 0;
-            if ($this->helper->checkIfModuleIsActive($this->request->getParam('store'))) {
-                $meta['general']['custom_tab_container']['html_content']['visible'] = 1;
-            }
+        if ($this->helper->checkIfModuleIsActive($this->request->getParam('store'))) {
+            $meta['general']['custom_tab_container']['html_content']['visible'] = 1;
         }
 
         return $meta;

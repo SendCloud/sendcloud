@@ -43,14 +43,14 @@
                 <item name="sortOrder" xsi:type="number">20</item>
             </item>
         </argument>
-        <container name="general_global_message">
+        <container name="dynamic_checkout_deprecated_message">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="sortOrder" xsi:type="string">1</item>
                 </item>
             </argument>
             <htmlContent name="html_content">
-                <block class="SendCloud\SendCloud\Block\System\Config\Form\GeneralMessage" name="sendcloud.general.message" />
+                <block class="SendCloud\SendCloud\Block\System\Config\Form\DynamicCheckoutDeprecatedMessage" name="sendcloud.deprecated.message" />
             </htmlContent>
         </container>
         <container name="plugin_version_container">
@@ -125,71 +125,6 @@
             </argument>
             <htmlContent name="html_content" component="SendCloud_SendCloud/js/form/elements/container">
                 <block class="SendCloud\SendCloud\Block\System\Config\Form\Button" name="sendcloud.form.button" />
-            </htmlContent>
-        </container>
-    </fieldset>
-    <fieldset name="dynamic_checkout">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string" translate="true">Dynamic Checkout</item>
-                <item name="sortOrder" xsi:type="number">21</item>
-            </item>
-        </argument>
-        <insertListing name="dynamic_checkout_grid">
-
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="dataLinks" xsi:type="array">
-                        <item name="imports" xsi:type="boolean">false</item>
-                        <item name="exports" xsi:type="boolean">true</item>
-                    </item>
-                    <item name="autoRender" xsi:type="boolean">true</item>
-                    <item name="ns" xsi:type="string">dynamic_checkout_grid</item>
-                    <item name="render_url" xsi:type="url" path="mui/index/render"/>
-                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
-                    <item name="filter_url_params" xsi:type="array">
-                        <item name="id" xsi:type="string">*</item>
-                    </item>
-                    <item name="storageConfig" xsi:type="array">
-                        <item name="indexField" xsi:type="string">id</item>
-                    </item>
-                </item>
-            </argument>
-        </insertListing>
-        <modal name="rates_modal">
-            <settings>
-                <options>
-                    <option name="title" xsi:type="string" translate="true">Shipping rates</option>
-                    <option name="type" xsi:type="string">popup</option>
-                </options>
-            </settings>
-            <insertForm name="shipping_rates_listing" component="SendCloud_SendCloud/js/form/components/insert-form">
-                <settings>
-                    <renderUrl path="mui/index/render">
-                        <param name="handle">shipping_rates</param>
-                    </renderUrl>
-                    <autoRender>true</autoRender>
-                    <toolbarContainer>${ $.parentName }</toolbarContainer>
-                    <ns>shipping_rates</ns>
-                </settings>
-            </insertForm>
-        </modal>
-    </fieldset>
-    <fieldset name="dynamic_message">
-        <argument name="data" xsi:type="array">
-            <item name="config" xsi:type="array">
-                <item name="label" xsi:type="string" translate="true">Dynamic Checkout</item>
-                <item name="sortOrder" xsi:type="number">21</item>
-            </item>
-        </argument>
-        <container name="general_global_message">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="sortOrder" xsi:type="string">1</item>
-                </item>
-            </argument>
-            <htmlContent name="html_content">
-                <block class="SendCloud\SendCloud\Block\System\Config\Form\DynamicMessage" name="sendcloud.dynamic.message" />
             </htmlContent>
         </container>
     </fieldset>
