@@ -5,7 +5,6 @@ namespace SendCloud\SendCloud\Controller\Adminhtml\AutoConnect;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use Magento\Authorization\Model\RoleFactory;
 use Magento\Authorization\Model\RulesFactory;
-use Magento\Setup\Exception;
 use Magento\User\Model\UserFactory;
 use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
 use Magento\Authorization\Model\UserContextInterface;
@@ -74,7 +73,7 @@ class AutoGenerateApiUser
      * @param $password
      * @param int|null $store
      * @return array|false
-     * @throws Exception
+     * @throws \Exception
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getApiUser($password, $store)
@@ -95,7 +94,7 @@ class AutoGenerateApiUser
             $apiUser->save();
         } catch (\Exception $ex) {
             $this->logger->debug($ex->getMessage());
-            throw new Exception($ex->getMessage());
+            throw new \Exception($ex->getMessage());
         }
 
         $apiUserArray = [
@@ -114,7 +113,7 @@ class AutoGenerateApiUser
      * @param $password
      * @param int|null $store
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function createApiUser($password, $store)
     {
@@ -142,7 +141,7 @@ class AutoGenerateApiUser
             $apiUser->save();
         } catch (\Exception $ex) {
             $this->logger->debug($ex->getMessage());
-            throw new Exception($ex->getMessage());
+            throw new \Exception($ex->getMessage());
         }
 
         $apiUserArray = [
@@ -161,7 +160,7 @@ class AutoGenerateApiUser
      * Create Api Role
      *
      * @return \Magento\Authorization\Model\Role
-     * @throws Exception
+     * @throws \Exception
      */
     private function generateApiRole()
     {
@@ -186,7 +185,7 @@ class AutoGenerateApiUser
             $role->save();
         } catch (\Exception $ex) {
             $this->logger->debug($ex->getMessage());
-            throw new Exception($ex->getMessage());
+            throw new \Exception($ex->getMessage());
         }
 
         $this->rulesFactory->create()

@@ -70,7 +70,7 @@ class Connector extends Action
 
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
-     * @throws \Magento\Setup\Exception
+     * @throws \Exception
      */
     public function execute()
     {

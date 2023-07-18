@@ -7,6 +7,7 @@ use Magento\Sales\Api\Data\OrderExtensionFactory;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Model\OrderRepository as MagentoOrderRepository;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class OrderRepository
@@ -16,13 +17,20 @@ class OrderRepository
     /** @var OrderExtensionFactory */
     private $orderExtensionFactory;
 
+    /** @var SendCloudLogger */
+    private $logger;
+
     /**
      * OrderRepository constructor.
      * @param OrderExtensionFactory $orderExtensionFactory
+     * @param SendCloudLogger $logger
      */
-    public function __construct(OrderExtensionFactory $orderExtensionFactory)
-    {
+    public function __construct(
+        OrderExtensionFactory $orderExtensionFactory,
+        SendCloudLogger $logger
+    ) {
         $this->orderExtensionFactory = $orderExtensionFactory;
+        $this->logger = $logger;
     }
 
     /**
