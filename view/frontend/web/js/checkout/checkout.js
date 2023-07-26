@@ -19,15 +19,6 @@ define([
         let mountElement = null;
 
         let widgetStates = {};
-        function getWidgetState() {
-            let state = quote.getState();
-
-            if (widgetStates[quote.getSendcloudDeliveryMethodId()]) {
-                state = widgetStates[quote.getSendcloudDeliveryMethodId()]
-            }
-
-            return state;
-        }
 
         function setWidgetState(state) {
             widgetStates[selectedDeliveryMethodId] = state;
@@ -78,7 +69,13 @@ define([
         }
 
         function isDeliveryMethodChanged() {
-            return quote.getSendcloudDeliveryMethodId() !== selectedDeliveryMethodId;
+            let isDeliveryMethodChanged = quote.getSendcloudDeliveryMethodId() !== selectedDeliveryMethodId;
+            if (isDeliveryMethodChanged) {
+                quote.setDeliveryMethodData({delivery_method_data: null});
+                setShippingInformationAction();
+            }
+
+            return isDeliveryMethodChanged;
         }
 
         function doRenderWidget() {
@@ -112,7 +109,6 @@ define([
                 shippingData: getServicePointData(),
                 renderDate: new Date(),
                 locale: window.storeLocale.replace('_', '-'),
-                state: getWidgetState(),
                 localeMessages: window.translations
             }).then(function (destructorCallback) {
                 renderedWidgetDestructor = destructorCallback;
