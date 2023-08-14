@@ -103,6 +103,8 @@ class UpdateServicePoint implements DataPatchInterface
         $this->moduleDataSetup->getConnection()->endSetup();
 
         $connection->endSetup();
+
+        return $this;
     }
 
     /**

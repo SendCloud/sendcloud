@@ -15,6 +15,10 @@ use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryZone as SendcloudRe
  */
 class Collection extends AbstractCollection implements SearchResultInterface
 {
+    /**
+     * @var AggregationInterface
+     */
+    private $aggregations;
 
     /**
      * Define resource model

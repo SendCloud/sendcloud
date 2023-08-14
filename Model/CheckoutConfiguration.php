@@ -103,7 +103,7 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
                 \Magento\Framework\Webapi\Exception::HTTP_BAD_REQUEST,
                 $this->formatErrorData($e->getValidationErrors())
             );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error(('Failed to update checkout configuration: ' . $e->getMessage()));
             throw new \Magento\Framework\Webapi\Exception(
                 __('Invalid checkout payload.'),
@@ -142,7 +142,7 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
                 $store_view_id
             );
             $this->scopeConfig->reinit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to delete checkout configuration: ' . $e->getMessage());
             throw new \Magento\Framework\Webapi\Exception(
                 __('Failed to delete checkout configuration.'),
@@ -171,7 +171,7 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
                 $store_view_id
             );
             $this->scopeConfig->reinit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->logger->error('Failed to delete integration: ' . $e->getMessage());
             throw new \Magento\Framework\Webapi\Exception(
                 __('Failed to delete integration.'),

@@ -43,13 +43,13 @@ class Save extends \Magento\Framework\App\Action\Action
             $this->writer->save('sendcloud/general/enable', $data['is_active']);
             $this->scopeConfig->reinit();
 
-            $this->_redirect('sendcloud/configuration/index/store/');
-
-        } else {
-            $this->writer->save('sendcloud/general/enable', $data['is_active'], ScopeInterface::SCOPE_STORES, (int)$data['store_id']);
-            $this->scopeConfig->reinit();
-
-            $this->_redirect("sendcloud/configuration/index/store/$storeId");
+            return $this->_redirect('sendcloud/configuration/index/store/');
         }
+
+        $this->writer->save('sendcloud/general/enable', $data['is_active'], ScopeInterface::SCOPE_STORES, (int)$data['store_id']);
+        $this->scopeConfig->reinit();
+
+        return $this->_redirect("sendcloud/configuration/index/store/$storeId");
+
     }
 }
