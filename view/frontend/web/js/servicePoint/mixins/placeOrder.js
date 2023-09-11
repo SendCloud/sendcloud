@@ -9,7 +9,8 @@ define([
          * @returns {boolean}
          */
         validateServicePoint: function () {
-            if (quote.shippingMethod().method_code === 'sendcloud' && !quote.getExtensionAttributes()) {
+            if (quote.shippingMethod().method_code === 'sendcloud' &&
+                (!quote.getExtensionAttributes() || !quote.getExtensionAttributes().sendcloud_service_point_id)) {
                 return false;
             }
             return true;

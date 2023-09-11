@@ -50,6 +50,5 @@ class Save extends \Magento\Framework\App\Action\Action
         $this->scopeConfig->reinit();
 
         return $this->_redirect("sendcloud/configuration/index/store/$storeId");
-
     }
 }
