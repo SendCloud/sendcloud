@@ -35,7 +35,10 @@ class AutoGenerateApiUser
         'Magento_Sales::actions_view',
         'Magento_Sales::actions_edit',
         'Magento_Sales::shipment',
-        'Magento_Sales::ship'
+        'Magento_Sales::ship',
+        'Magento_Catalog::catalog',
+        'Magento_Catalog::inventory',
+        'Magento_Catalog::products'
     ];
 
     /** @var RoleFactory */
