@@ -39,6 +39,8 @@ class SaveServicePointsData implements ObserverInterface
             $order->setSendcloudServicePointCity($quote->getSendcloudServicePointCity());
             $order->setSendcloudServicePointCountry($quote->getSendcloudServicePointCountry());
             $order->setSendcloudServicePointPostnumber($quote->getSendcloudServicePointPostnumber());
+        } else if ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloudcheckout') !== false && !$order->getSendcloudData()) {
+            $order->setSendcloudData($quote->getSendcloudCheckoutData());
         }
 
         return $this;
