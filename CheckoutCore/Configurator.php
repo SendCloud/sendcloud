@@ -7,11 +7,6 @@ use SendCloud\SendCloud\CheckoutCore\HTTP\Request;
 use SendCloud\SendCloud\CheckoutCore\Contracts\Facades\CheckoutService as CheckoutServiceInterface;
 use SendCloud\SendCloud\CheckoutCore\Contracts\Validators\RequestValidator;
 
-/**
- * Class Configurator
- *
- * @package SendCloud\SendCloud\CheckoutCore
- */
 class Configurator
 {
     /**

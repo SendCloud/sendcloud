@@ -5,11 +5,6 @@ namespace SendCloud\SendCloud\CheckoutCore\Contracts\Services;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryZone;
 use SendCloud\SendCloud\CheckoutCore\Domain\Search\Query;
 
-/**
- * Interface DeliveryZoneService
- *
- * @package SendCloud\SendCloud\CheckoutCore\Contracts\Services
- */
 interface DeliveryZoneService
 {
     /**

@@ -81,6 +81,10 @@ class OrderItemRepository
     protected function setCustomAttributes($orderItem)
     {
         try {
+            $this->logger->info(
+                "SendCloud\SendCloud\Plugin\Order\OrderItemRepository: product id: " . $orderItem->getProductId()
+            );
+
             $product = $this->productRepository->getById($orderItem->getProductId());
             $countryOfManufacture = $product->getData(self::COUNTRY_OF_MANUFACTURE);
             $hsCode = $product->getData(self::HS_CODE);

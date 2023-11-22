@@ -4,5 +4,8 @@
         <route id="SendCloud_SendCloud" frontName="sendcloud">
             <module name="SendCloud_SendCloud" />
         </route>
+        <route id="sendcloud_support" frontName="sendcloud_support" method="POST">
+            <module name="SendCloud_SendCloud"/>
+        </route>
     </router>
 </config>

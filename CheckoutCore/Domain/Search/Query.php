@@ -2,11 +2,6 @@
 
 namespace SendCloud\SendCloud\CheckoutCore\Domain\Search;
 
-/**
- * Class Query
- *
- * @package SendCloud\SendCloud\CheckoutCore\Domain\Search
- */
 class Query
 {
     /**

@@ -4,11 +4,6 @@ namespace SendCloud\SendCloud\CheckoutCore\Utility;
 
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Identifiable;
 
-/**
- * Class ArrayToHashMap
- *
- * @package SendCloud\SendCloud\CheckoutCore\Utility
- */
 class ArrayToHashMap
 {
     /**

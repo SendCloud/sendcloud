@@ -2,11 +2,6 @@
 
 namespace SendCloud\SendCloud\CheckoutCore\Domain\Interfaces;
 
-/**
- * Interface Comparable
- *
- * @package SendCloud\SendCloud\CheckoutCore\Domain\Contracts
- */
 interface Comparable
 {
     /**

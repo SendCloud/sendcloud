@@ -9,7 +9,6 @@ use SendCloud\SendCloud\CheckoutCore\DTO\DataTransferObject;
  *
  * Internal request representation used to bridge an integration's request and the library.
  *
- * @package SendCloud\SendCloud\CheckoutCore\HTTP
  */
 class Request extends DataTransferObject
 {

@@ -5,11 +5,6 @@ namespace SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Zone;
 use SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Method\DeliveryMethod;
 use SendCloud\SendCloud\CheckoutCore\DTO\DataTransferObject;
 
-/**
- * Class DeliveryZone
- *
- * @package SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Zone
- */
 class DeliveryZone extends DataTransferObject
 {
     /**

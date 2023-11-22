@@ -7,11 +7,6 @@ use SendCloud\SendCloud\CheckoutCore\Contracts\Storage\CheckoutStorage;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryMethod;
 use SendCloud\SendCloud\CheckoutCore\Utility\ArrayToHashMap;
 
-/**
- * Class DeliveryMethodService
- *
- * @package SendCloud\SendCloud\CheckoutCore\Services
- */
 class DeliveryMethodService implements BaseService
 {
     /**

@@ -6,11 +6,6 @@ use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\DTOInstantiable;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Identifiable;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Updateable;
 
-/**
- * Class DeliveryZone
- *
- * @package SendCloud\SendCloud\CheckoutCore\Domain\Delivery
- */
 class DeliveryZone implements DTOInstantiable, Updateable, Identifiable
 {
     /**

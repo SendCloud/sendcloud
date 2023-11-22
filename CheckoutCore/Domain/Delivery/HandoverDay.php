@@ -5,11 +5,6 @@ namespace SendCloud\SendCloud\CheckoutCore\Domain\Delivery;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Comparable;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\DTOInstantiable;
 
-/**
- * Class HandoverDay
- *
- * @package SendCloud\SendCloud\CheckoutCore\Domain\Delivery
- */
 class HandoverDay implements Comparable, DTOInstantiable
 {
     /**

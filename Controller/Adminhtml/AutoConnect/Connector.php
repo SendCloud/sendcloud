@@ -74,6 +74,7 @@ class Connector extends Action
      */
     public function execute()
     {
+        $this->logger->info("Connector request: ". json_encode($this->getRequest()->getParams()));
         $password = $this->generatePassword();
         $store = null;
         if ($this->getRequest()->getParam('store')) {

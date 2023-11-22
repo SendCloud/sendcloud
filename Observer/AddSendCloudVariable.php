@@ -6,6 +6,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Sales\Api\Data\OrderInterface;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 class AddSendCloudVariable implements ObserverInterface
 {
@@ -16,20 +17,30 @@ class AddSendCloudVariable implements ObserverInterface
 
     private $order = null;
 
-    public function __construct(Json $serializer)
+    /**
+     * @var SendCloudLogger
+     */
+    private $logger;
+
+    public function __construct(Json $serializer, SendCloudLogger $logger)
     {
         $this->serializer = $serializer;
+        $this->logger = $logger;
     }
 
     public function execute(Observer $observer)
     {
         $transportObject = $observer->getEvent()->getData('transportObject');
         if ($transportObject === null) {
+            $this->logger->info("There is no transport object.");
+
             return;
         }
 
         $this->order = $transportObject->getOrder();
         if ($this->order === null) {
+            $this->logger->info("There is no order.");
+
             return;
         }
 
@@ -38,6 +49,8 @@ class AddSendCloudVariable implements ObserverInterface
         } else if ($this->order->getSendcloudCheckoutData()) {
             $this->getCheckoutData($transportObject);
         }
+
+        $this->logger->info("Transport object: " . json_encode($transportObject));
     }
 
     private function getServicePointVariables($transportObject)
@@ -61,6 +74,7 @@ class AddSendCloudVariable implements ObserverInterface
         $order = $this->order;
 
         $checkoutData = $this->serializer->unserialize($order->getSendcloudData());
+        $this->logger->info("Checout data: " . json_encode($checkoutData));
 
         if (empty($checkoutData)) {
             return;

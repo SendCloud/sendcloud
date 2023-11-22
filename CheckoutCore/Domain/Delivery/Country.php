@@ -6,11 +6,6 @@ use SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Zone\Location;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Comparable;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\DTOInstantiable;
 
-/**
- * Class Country
- *
- * @package SendCloud\SendCloud\CheckoutCore\Domain\Delivery
- */
 class Country implements Comparable, DTOInstantiable
 {
     /**

@@ -9,11 +9,6 @@ use SendCloud\SendCloud\CheckoutCore\Exceptions\ValidationException;
 use SendCloud\SendCloud\CheckoutCore\HTTP\Request;
 use SendCloud\SendCloud\CheckoutCore\SchemaProviders\CheckoutConfigurationSchemaProvider;
 
-/**
- * Class UpdateRequestValidator
- *
- * @package SendCloud\SendCloud\CheckoutCore\Validators
- */
 class UpdateRequestValidator implements RequestValidator
 {
     /**

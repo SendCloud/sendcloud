@@ -4,11 +4,6 @@ namespace SendCloud\SendCloud\CheckoutCore\DTO;
 
 use SendCloud\SendCloud\CheckoutCore\Exceptions\DTO\DTOValidationException;
 
-/**
- * Class Validator
- *
- * @package SendCloud\SendCloud\CheckoutCore\DTO
- */
 class Validator
 {
     /**

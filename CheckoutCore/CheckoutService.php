@@ -17,11 +17,6 @@ use SendCloud\SendCloud\CheckoutCore\Exceptions\Domain\FailedToDeleteCheckoutCon
 use SendCloud\SendCloud\CheckoutCore\Exceptions\Domain\FailedToUpdateCheckoutConfigurationException;
 use SendCloud\SendCloud\CheckoutCore\Exceptions\HTTP\HttpException;
 
-/**
- * Class CheckoutService
- *
- * @package SendCloud\SendCloud\CheckoutCore\Facades
- */
 class CheckoutService implements BaseService
 {
     /**

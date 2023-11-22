@@ -8,11 +8,6 @@ use SendCloud\SendCloud\CheckoutCore\Contracts\Services\DeliveryZoneService as B
 use SendCloud\SendCloud\CheckoutCore\Contracts\Storage\CheckoutStorage;
 use SendCloud\SendCloud\CheckoutCore\Utility\ArrayToHashMap;
 
-/**
- * Class DeliveryZoneService
- *
- * @package SendCloud\SendCloud\CheckoutCore\Services
- */
 class DeliveryZoneService implements BaseService
 {
     /**

@@ -38,6 +38,8 @@ class CheckoutOrderRepository
      */
     public function afterGet(MagentoOrderRepository $subject, OrderInterface $order)
     {
+        $this->logger->info("SendCloud\SendCloud\Plugin\Order\CheckoutOrderRepository::afterGet(): order: " . $order->getSendcloudData());
+
         $this->loadSendCloudExtensionAttributes($order);
 
         return $order;
@@ -51,6 +53,7 @@ class CheckoutOrderRepository
     public function afterGetList(MagentoOrderRepository $subject, OrderSearchResultInterface $orderCollection)
     {
         foreach ($orderCollection->getItems() as $order) {
+            $this->logger->info("SendCloud\SendCloud\Plugin\Order\CheckoutOrderRepository::afterGetList(): order: " . $order->getSendcloudData());
             $this->loadSendCloudExtensionAttributes($order);
         }
 

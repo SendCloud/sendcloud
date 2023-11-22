@@ -4,18 +4,36 @@ namespace SendCloud\SendCloud\Block\Checkout;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class Config
  */
 class Config extends Template
 {
+    private SendCloudLogger $sendCloudLogger;
+
+    /**
+     * Config Constructor.
+     *
+     * @param Template\Context $context
+     * @param array $data
+     */
+    public function __construct(SendCloudLogger $sendCloudLogger, Template\Context $context, array $data = [])
+    {
+        parent::__construct($context, $data);
+        $this->sendCloudLogger = $sendCloudLogger;
+    }
+
     /**
      * @return mixed
      */
     public function getScriptUrl()
     {
-        return $this->_scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+        $scriptUrl = $this->_scopeConfig->getValue('sendcloud/sendcloud/script_url', ScopeInterface::SCOPE_STORE);
+        $this->sendCloudLogger->info("Script url: " . $scriptUrl);
+
+        return $scriptUrl;
     }
 
     /**
@@ -23,7 +41,10 @@ class Config extends Template
      */
     public function getLocale()
     {
-        return $this->_scopeConfig->getValue('general/locale/code', ScopeInterface::SCOPE_STORE);
+        $locale = $this->_scopeConfig->getValue('general/locale/code', ScopeInterface::SCOPE_STORE);
+        $this->sendCloudLogger->info("Locale: " . $locale);
+
+        return $locale;
     }
 
     /**

@@ -5,6 +5,7 @@
     <preference for="Magento\Sales\Block\Order\Info" type="SendCloud\SendCloud\Block\Order\Info"/>
     <preference for="SendCloud\SendCloud\Api\CheckoutConfigurationInterface" type="SendCloud\SendCloud\Model\CheckoutConfiguration" />
     <preference for="SendCloud\SendCloud\CheckoutCore\Contracts\Storage\CheckoutStorage" type="SendCloud\SendCloud\Checkout\Storage\CheckoutStorage" />
+    <preference for="SendCloud\SendCloud\Api\ConfigInterface" type="SendCloud\SendCloud\Model\Config" />
 
     <type name="SendCloud\SendCloud\Logger\SendCloudHandler">
         <arguments>

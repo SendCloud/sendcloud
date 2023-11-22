@@ -8,11 +8,6 @@ use SendCloud\SendCloud\CheckoutCore\API\Checkout\Checkout;
 use SendCloud\SendCloud\CheckoutCore\Exceptions\Domain\FailedToDeleteCheckoutConfigurationException;
 use SendCloud\SendCloud\CheckoutCore\Exceptions\Domain\FailedToUpdateCheckoutConfigurationException;
 
-/**
- * Interface CheckoutService
- *
- * @package SendCloud\SendCloud\CheckoutCore\Contracts\Facades
- */
 interface CheckoutService
 {
     /**

@@ -60,7 +60,7 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
         $this->scopeConfig = $scopeConfig;
         $this->writer = $writer;
         $this->configuratorFactory =
-            new CheckoutConfiguratorFactory($sendcloudDeliveryZone, $sendcloudDeliveryMethod, $storeManager, $helper);
+            new CheckoutConfiguratorFactory($sendcloudDeliveryZone, $sendcloudDeliveryMethod, $storeManager, $helper, $logger);
         $this->logger = $logger;
         $this->storeManager = $storeManager;
     }
@@ -76,6 +76,11 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
      */
     public function update($store_view_id, $checkout_configuration)
     {
+        $this->logger->info(
+            "SendCloud\SendCloud\Model\CheckoutConfiguration::update(): store_view_id: " . $store_view_id .
+            ", checkout_configuration: " . json_encode($checkout_configuration)
+        );
+
         $request = new Request(['checkout_configuration' => $checkout_configuration], []);
         $this->setStore($store_view_id);
 
@@ -123,6 +128,8 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
      */
     public function delete($store_view_id)
     {
+        $this->logger->info("SendCloud\SendCloud\Model\CheckoutConfiguration::delete(): store_view_id: " . $store_view_id);
+
         $configurator = $this->configuratorFactory->make();
         $this->setStore($store_view_id);
 
@@ -162,6 +169,8 @@ class CheckoutConfiguration implements CheckoutConfigurationInterface
      */
     public function deleteIntegration($store_view_id)
     {
+        $this->logger->info("SendCloud\SendCloud\Model\CheckoutConfiguration::deleteIntegration(): store_view_id: " . $store_view_id);
+
         try {
             $this->delete($store_view_id);
             $this->writer->save(

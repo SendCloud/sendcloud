@@ -13,11 +13,6 @@ use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Identifiable;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Updateable;
 use SendCloud\SendCloud\CheckoutCore\Utility\CollectionComparator;
 
-/**
- * Class DeliveryMethod
- *
- * @package SendCloud\SendCloud\CheckoutCore\Domain\Delivery
- */
 class DeliveryMethod implements DTOInstantiable, Updateable, Identifiable
 {
     /**

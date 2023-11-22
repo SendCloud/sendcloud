@@ -4,11 +4,6 @@ namespace SendCloud\SendCloud\CheckoutCore\Contracts\Services;
 
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryMethod;
 
-/**
- * Interface DeliveryMethodService
- *
- * @package SendCloud\SendCloud\CheckoutCore\Contracts\Services
- */
 interface DeliveryMethodService
 {
     /**

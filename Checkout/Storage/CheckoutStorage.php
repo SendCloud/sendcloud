@@ -5,6 +5,7 @@ namespace SendCloud\SendCloud\Checkout\Storage;
 use SendCloud\SendCloud\CheckoutCore\Contracts\Storage\CheckoutStorage as CheckoutStorageInterface;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryMethod;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryZone;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryMethod;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryZone;
 
@@ -20,16 +21,24 @@ class CheckoutStorage implements CheckoutStorageInterface
     private $sendcloudDeliveryMethodResourceModel;
 
     /**
+     * @var SendCloudLogger
+     */
+    private $logger;
+
+    /**
      * CheckoutStorage constructor.
      * @param SendcloudDeliveryZone $sendcloudDeliveryZoneResourceModel
      * @param SendcloudDeliveryMethod $sendcloudDeliveryMethodResourceModel
+     * @param SendCloudLogger $logger
      */
     public function __construct(
         SendcloudDeliveryZone $sendcloudDeliveryZoneResourceModel,
-        SendcloudDeliveryMethod $sendcloudDeliveryMethodResourceModel
+        SendcloudDeliveryMethod $sendcloudDeliveryMethodResourceModel,
+        SendCloudLogger $logger
     ) {
         $this->sendcloudDeliveryZoneResourceModel = $sendcloudDeliveryZoneResourceModel;
         $this->sendcloudDeliveryMethodResourceModel = $sendcloudDeliveryMethodResourceModel;
+        $this->logger = $logger;
     }
 
     /**
@@ -40,7 +49,12 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function findAllZoneConfigs()
     {
-        return $this->sendcloudDeliveryZoneResourceModel->selectAll();
+        $zones = $this->sendcloudDeliveryZoneResourceModel->selectAll();
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::findAllZoneConfigs(): " . json_encode($zones)
+        );
+
+        return $zones;
     }
 
     /**
@@ -51,6 +65,9 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function deleteSpecificZoneConfigs(array $ids)
     {
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::deleteSpecificZoneConfigs(): " . json_encode($ids)
+        );
         $this->sendcloudDeliveryZoneResourceModel->deleteOne($ids);
     }
 
@@ -71,6 +88,9 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function updateZoneConfigs(array $zones)
     {
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::updateZoneConfigs(): " . json_encode($zones)
+        );
         $this->sendcloudDeliveryZoneResourceModel->update($zones);
     }
 
@@ -81,6 +101,9 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function createZoneConfigs(array $zones)
     {
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::createZoneConfigs(): " . json_encode($zones)
+        );
         $this->sendcloudDeliveryZoneResourceModel->create($zones);
     }
 
@@ -92,7 +115,12 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function findAllMethodConfigs()
     {
-        return $this->sendcloudDeliveryMethodResourceModel->selectAll();
+        $methods = $this->sendcloudDeliveryMethodResourceModel->selectAll();
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::findAllMethodConfigs(): " . json_encode($methods)
+        );
+
+        return $methods;
     }
 
     /**
@@ -103,6 +131,9 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function deleteSpecificMethodConfigs(array $ids)
     {
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::deleteSpecificMethodConfigs(): " . json_encode($ids)
+        );
         $this->sendcloudDeliveryMethodResourceModel->deleteOne($ids);
     }
 
@@ -124,6 +155,11 @@ class CheckoutStorage implements CheckoutStorageInterface
     public function updateMethodConfigs(array $methods)
     {
         $additionalData = $this->getAdditionalData($methods);
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::updateMethodConfigs(): " .
+            "methods: ". json_encode($methods) .
+            "additional data: " . json_encode($additionalData)
+        );
         $this->sendcloudDeliveryMethodResourceModel->update($methods, $additionalData);
     }
 
@@ -135,6 +171,11 @@ class CheckoutStorage implements CheckoutStorageInterface
     public function createMethodConfigs(array $methods)
     {
         $additionalData = $this->getAdditionalData($methods);
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::createMethodConfigs(): " .
+            "methods: ". json_encode($methods) .
+            "additional data: " . json_encode($additionalData)
+        );
         $this->sendcloudDeliveryMethodResourceModel->create($methods, $additionalData);
     }
 
@@ -154,6 +195,10 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function findZoneConfigs(array $ids)
     {
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::createMethodConfigs(): " . json_encode($ids)
+        );
+
         return $this->sendcloudDeliveryZoneResourceModel->find($ids);
     }
 
@@ -165,7 +210,14 @@ class CheckoutStorage implements CheckoutStorageInterface
      */
     public function findMethodInZones(array $zoneIds)
     {
-        return $this->sendcloudDeliveryMethodResourceModel->findInZones($zoneIds);
+        $methods = $this->sendcloudDeliveryMethodResourceModel->findInZones($zoneIds);
+        $this->logger->info(
+            "SendCloud\SendCloud\Checkout\Storage\CheckoutStorage::findMethodInZones(): " .
+            "zones: " . json_encode($zoneIds) .
+            "methods: " . json_encode($methods)
+        );
+
+        return $methods;
     }
 
     /**
