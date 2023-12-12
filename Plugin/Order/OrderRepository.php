@@ -9,9 +9,6 @@ use Magento\Sales\Api\Data\OrderSearchResultInterface;
 use Magento\Sales\Model\OrderRepository as MagentoOrderRepository;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
-/**
- * Class OrderRepository
- */
 class OrderRepository
 {
     /** @var OrderExtensionFactory */

@@ -10,10 +10,6 @@ use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
 use Magento\Authorization\Model\UserContextInterface;
 use Magento\Authorization\Model\ResourceModel\Role\CollectionFactory as RoleCollectionFactory;
 
-/**
- * Class AutoGenerateApiUser
- *
- */
 class AutoGenerateApiUser
 {
 

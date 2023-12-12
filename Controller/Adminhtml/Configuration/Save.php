@@ -39,8 +39,8 @@ class Save extends \Magento\Framework\App\Action\Action
         ReinitableConfigInterface $scopeConfig,
         WriterInterface $writer,
         Context $context,
-        SendCloudLogger $logger)
-    {
+        SendCloudLogger $logger
+    ) {
         parent::__construct($context);
         $this->writer = $writer;
         $this->scopeConfig = $scopeConfig;

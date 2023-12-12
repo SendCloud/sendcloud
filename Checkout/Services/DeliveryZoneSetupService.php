@@ -4,10 +4,6 @@ namespace SendCloud\SendCloud\Checkout\Services;
 
 use SendCloud\SendCloud\CheckoutCore\Contracts\Services\DeliveryZoneSetupService as DeliveryZoneSetupServiceInterface;
 
-/**
- * Class DeliveryZoneSetupService
- * @package SendCloud\SendCloud\Checkout\Services
- */
 class DeliveryZoneSetupService implements DeliveryZoneSetupServiceInterface
 {
 

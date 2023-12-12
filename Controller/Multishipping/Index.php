@@ -28,8 +28,8 @@ class Index extends \Magento\Framework\App\Action\Action
     public function __construct(
         SendcloudDeliveryMethod $sendcloudDeliveryMethod,
         Context $context,
-        SendCloudLogger $logger)
-    {
+        SendCloudLogger $logger
+    ) {
         parent::__construct($context);
         $this->sendcloudDeliveryMethod = $sendcloudDeliveryMethod;
         $this->logger = $logger;

@@ -16,10 +16,6 @@ use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryMethod;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryZone;
 
-/**
- * Class CheckoutServiceFactory
- * @package SendCloud\SendCloud\Checkout\Factories
- */
 class CheckoutServiceFactory implements CheckoutServiceFactoryInterface
 {
     /**
@@ -57,8 +53,7 @@ class CheckoutServiceFactory implements CheckoutServiceFactoryInterface
         SendcloudDeliveryZone $sendcloudDeliveryZone,
         SendcloudDeliveryMethod $sendcloudDeliveryMethod,
         SendCloudLogger $sendCloudLogger
-    )
-    {
+    ) {
         $this->storage = new CheckoutStorage($sendcloudDeliveryZone, $sendcloudDeliveryMethod, $sendCloudLogger);
         $this->deliveryMethodService = new DeliveryMethodService($this->storage);
         $this->deliveryZoneService = new DeliveryZoneService($this->storage);

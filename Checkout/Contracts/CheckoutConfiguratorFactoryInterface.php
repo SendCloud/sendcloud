@@ -7,7 +7,6 @@ use SendCloud\SendCloud\CheckoutCore\Configurator;
 
 /**
  * Interface CheckouConfiguratiorFactoryInterface
- * @package SendCloud\SendCloud\Checkout\Contracts
  */
 interface CheckoutConfiguratorFactoryInterface
 {

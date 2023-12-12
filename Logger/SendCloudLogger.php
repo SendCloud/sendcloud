@@ -7,11 +7,6 @@ use Monolog\Logger;
 use SendCloud\SendCloud\Api\ConfigInterface;
 use Stringable;
 
-/**
- * Class SendCloudLogger
- *
- * @package SendCloud\SendCloud\Logger
- */
 class SendCloudLogger extends Logger
 {
     /**

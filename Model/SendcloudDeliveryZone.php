@@ -4,10 +4,6 @@ namespace SendCloud\SendCloud\Model;
 
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryZone as SendcloudDeliveryZoneResourceModel;
 
-/**
- * Class SendcloudDeliveryZone
- * @package SendCloud\SendCloud\Model
- */
 class SendcloudDeliveryZone extends AbstractDomen
 {
 

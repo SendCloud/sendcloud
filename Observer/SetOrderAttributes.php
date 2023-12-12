@@ -8,9 +8,6 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
-/**
- * Class SetOrderAttributes
- */
 class SetOrderAttributes implements ObserverInterface
 {
     private $quoteRepository;
@@ -67,7 +64,7 @@ class SetOrderAttributes implements ObserverInterface
                     "country" => $quote->getSendcloudServicePointCountry(),
                     "post number" => $quote->getSendcloudServicePointPostnumber()
                 ]));
-        } else if ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloudcheckout') !== false && !$order->getSendcloudData()) {
+        } elseif ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloudcheckout') !== false && !$order->getSendcloudData()) {
             $order->setSendcloudData($quote->getSendcloudCheckoutData());
 
             $this->logger->info("Saved service point info: " . $quote->getSendcloudCheckoutData());

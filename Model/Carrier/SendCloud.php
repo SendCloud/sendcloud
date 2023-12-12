@@ -28,9 +28,6 @@ use SendCloud\SendCloud\Helper\Checkout;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
 
-/**
- * Class SendCloud
- */
 class SendCloud extends Tablerate
 {
 

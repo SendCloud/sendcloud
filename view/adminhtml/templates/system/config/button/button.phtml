@@ -1,6 +1,6 @@
 <div class="pp-buttons-container">
     <button id="<?= /* @escapeNotVerified */ $block->getId() ?>" onclick="return false;">
-        <span><span><span><?= /* @escapeNotVerified */ $block->escapeHtml($block->getButtonLabel());  ?></span></span></span>
+        <span><span><span><?= /* @escapeNotVerified */ $escaper->escapeHtml($block->getButtonLabel());  ?></span></span></span>
     </button>
 </div>
 

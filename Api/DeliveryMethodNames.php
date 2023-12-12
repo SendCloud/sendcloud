@@ -2,10 +2,6 @@
 
 namespace SendCloud\SendCloud\Api;
 
-/**
- * Interface DeliveryMethodNames
- * @package SendCloud\SendCloud\Api
- */
 interface DeliveryMethodNames
 {
     const NAMES = [

@@ -68,7 +68,7 @@ class CheckoutBeforeSaveShippingInformation
     public function afterSaveAddressInformation(
         ShippingInformationManagement $subject,
         PaymentDetails $paymentDetails,
-                                      $cartId,
+        $cartId,
         ShippingInformationInterface $addressInformation
     ) {
         $this->sendcloudLogger->info(

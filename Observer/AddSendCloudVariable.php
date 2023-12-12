@@ -46,7 +46,7 @@ class AddSendCloudVariable implements ObserverInterface
 
         if ($this->order->getSendcloudServicePointId()) {
             $this->getServicePointVariables($transportObject);
-        } else if ($this->order->getSendcloudCheckoutData()) {
+        } elseif ($this->order->getSendcloudCheckoutData()) {
             $this->getCheckoutData($transportObject);
         }
 
@@ -88,7 +88,7 @@ class AddSendCloudVariable implements ObserverInterface
                 $checkoutData['delivery_method_data'] ?
                     $checkoutData['delivery_method_data']['formatted_delivery_date'] :
                     null;
-        } else if ($checkoutData['delivery_method_type'] === 'service_point_delivery') {
+        } elseif ($checkoutData['delivery_method_type'] === 'service_point_delivery') {
             $transportObject['sc_servicepoint_id'] = $checkoutData['delivery_method_data']['service_point']['id'];
             $transportObject['sc_servicepoint_name'] = $checkoutData['delivery_method_data']['service_point']['name'];
             $transportObject['sc_servicepoint_street'] = $checkoutData['delivery_method_data']['service_point']['street'];

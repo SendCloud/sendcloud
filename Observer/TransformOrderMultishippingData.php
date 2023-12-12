@@ -8,9 +8,6 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
-/**
- * Class TransformOrderMultishippingData
- */
 class TransformOrderMultishippingData implements ObserverInterface
 {
     /**

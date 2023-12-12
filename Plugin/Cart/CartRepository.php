@@ -11,9 +11,6 @@ use Magento\Quote\Api\CartRepositoryInterface;
 use SendCloud\SendCloud\Helper\WeightConverter;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
-/**
- * Class CartRepository
- */
 class CartRepository
 {
     /**

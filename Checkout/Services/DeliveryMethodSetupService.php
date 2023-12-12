@@ -4,10 +4,6 @@ namespace SendCloud\SendCloud\Checkout\Services;
 
 use SendCloud\SendCloud\CheckoutCore\Contracts\Services\DeliveryMethodSetupService as DeliveryMethodSetupServiceInterface;
 
-/**
- * Class DeliveryMethodSetupService
- * @package SendCloud\SendCloud\Checkout\Services
- */
 class DeliveryMethodSetupService implements DeliveryMethodSetupServiceInterface
 {
 

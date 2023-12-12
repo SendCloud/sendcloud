@@ -9,11 +9,6 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use SendCloud\SendCloud\Services\BusinessLogic\SupportService;
 
-/**
- * Class Modify
- *
- * @package SendCloud\SendCloud\Controller\Adminhtml\Support
- */
 class Modify extends Action implements HttpPostActionInterface
 {
     /**
@@ -44,8 +39,7 @@ class Modify extends Action implements HttpPostActionInterface
         JsonFactory $resultJsonFactory,
         SupportService $supportService,
         RequestInterface $request
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;
         $this->supportService = $supportService;

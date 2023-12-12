@@ -7,9 +7,6 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
-/**
- * Class SaveServicePointsData
- */
 class SaveServicePointsData implements ObserverInterface
 {
     private $quoteRepository;
@@ -58,7 +55,7 @@ class SaveServicePointsData implements ObserverInterface
                     "country" => $quote->getSendcloudServicePointCountry(),
                     "post number" => $quote->getSendcloudServicePointPostnumber()
                 ]));
-        } else if ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloudcheckout') !== false && !$order->getSendcloudData()) {
+        } elseif ($order->getShippingMethod() && strpos($order->getShippingMethod(), 'sendcloudcheckout') !== false && !$order->getSendcloudData()) {
             $order->setSendcloudData($quote->getSendcloudCheckoutData());
 
             $this->logger->info("Saved service point info: " . $quote->getSendcloudCheckoutData());

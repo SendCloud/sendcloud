@@ -7,11 +7,6 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\App\Cache\Manager;
 
-/**
- * Class Config
- *
- * @package SendCloud\SendCloud\Model
- */
 class Config implements ConfigInterface
 {
     const MIN_LOG_LEVEL_PATH = 'sendcloud/general/minimal_log_level';
@@ -42,8 +37,7 @@ class Config implements ConfigInterface
         WriterInterface $configWriter,
         ScopeConfigInterface $scopeConfig,
         Manager $cacheManager
-    )
-    {
+    ) {
         $this->configWriter = $configWriter;
         $this->scopeConfig = $scopeConfig;
         $this->cacheManager = $cacheManager;

@@ -11,9 +11,6 @@ use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Helper\Checkout;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
-/**
- * Class BeforeSaveShippingInformation
- */
 class BeforeSaveShippingInformation
 {
     /**
@@ -66,7 +63,7 @@ class BeforeSaveShippingInformation
     public function afterSaveAddressInformation(
         ShippingInformationManagement $subject,
         PaymentDetails $paymentDetails,
-                                      $cartId,
+        $cartId,
         ShippingInformationInterface $addressInformation
     ) {
         $this->sendcloudLogger->info(
