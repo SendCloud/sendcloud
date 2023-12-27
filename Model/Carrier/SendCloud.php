@@ -191,7 +191,7 @@ class SendCloud extends Tablerate
         }
 
         $method = $this->createShippingMethod($amount, $amount);
-        if ($this->getConfigData('free_shipping_enable') &&
+        if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') &&
             $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
             $method->setPrice('0.00');
             $method->setCost('0.00');
