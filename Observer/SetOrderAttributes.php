@@ -8,6 +8,9 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
+/**
+ * Class SetOrderAttributes
+ */
 class SetOrderAttributes implements ObserverInterface
 {
     private $quoteRepository;

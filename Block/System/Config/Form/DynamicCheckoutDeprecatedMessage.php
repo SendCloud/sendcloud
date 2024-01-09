@@ -4,6 +4,11 @@ namespace SendCloud\SendCloud\Block\System\Config\Form;
 
 use Magento\Config\Block\System\Config\Form\Field;
 
+/**
+ * Class DynamicCheckoutDeprecatedMessage
+ *
+ * @package SendCloud\SendCloud\Block\System\Config\Form
+ */
 class DynamicCheckoutDeprecatedMessage extends Field
 {
     protected $_template = 'system/config/form/general_message.phtml';

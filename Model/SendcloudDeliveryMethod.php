@@ -4,6 +4,10 @@ namespace SendCloud\SendCloud\Model;
 
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryMethod as SendcloudDeliveryMethodResourceModel;
 
+/**
+ * Class SendcloudDeliveryMethod
+ * @package SendCloud\SendCloud\Model
+ */
 class SendcloudDeliveryMethod extends AbstractDomen
 {
 

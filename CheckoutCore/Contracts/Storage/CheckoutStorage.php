@@ -5,6 +5,11 @@ namespace SendCloud\SendCloud\CheckoutCore\Contracts\Storage;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryMethod;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryZone;
 
+/**
+ * Interface CheckoutStorage
+ *
+ * @package SendCloud\SendCloud\CheckoutCore\Contracts\Storage
+ */
 interface CheckoutStorage
 {
     /**

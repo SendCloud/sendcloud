@@ -9,6 +9,10 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use SendCloud\SendCloud\Model\SendcloudDeliveryZone;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryZone as SendcloudResourceDeliveyZoneResourceModel;
 
+/**
+ * Class Collection
+ * @package SendCloud\SendCloud\Model\ResourceModel\SendclooudDeliveryZone
+ */
 class Collection extends AbstractCollection implements SearchResultInterface
 {
     /**

@@ -1,11 +1,11 @@
 <div class="admin__field">
     <div class="admin__field-label modal-field-label">
         <b><?= /* @escapeNotVerified */
-            $escaper->escapeHtml($block->getFreeShipping()); ?></b>
+            $block->escapeHtml($block->getFreeShipping()); ?></b>
     </div>
     <div class="admin__field-label modal-field-label">
         <b><?= /* @escapeNotVerified */
-            $escaper->escapeHtml($block->getDefaultRate()); ?></b>
+            $block->escapeHtml($block->getDefaultRate()); ?></b>
     </div>
 </div>
 <?php if ($block->getRates()): ?>

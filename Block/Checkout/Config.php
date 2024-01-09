@@ -6,6 +6,9 @@ use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
+/**
+ * Class Config
+ */
 class Config extends Template
 {
     private SendCloudLogger $sendCloudLogger;

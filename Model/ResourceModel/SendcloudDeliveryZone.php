@@ -9,6 +9,10 @@ use Magento\Store\Model\StoreManagerInterface;
 use SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Zone\DeliveryZone as DeliveryZoneDTO;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryZone;
 
+/**
+ * Class SendcloudDeliveryZone
+ * @package SendCloud\SendCloud\Model\ResourceModel
+ */
 class SendcloudDeliveryZone extends AbstractDomen
 {
     /**

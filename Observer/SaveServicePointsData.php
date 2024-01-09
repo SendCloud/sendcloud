@@ -7,6 +7,9 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
+/**
+ * Class SaveServicePointsData
+ */
 class SaveServicePointsData implements ObserverInterface
 {
     private $quoteRepository;

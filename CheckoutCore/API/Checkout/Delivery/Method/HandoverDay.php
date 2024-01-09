@@ -4,6 +4,11 @@ namespace SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Method;
 
 use SendCloud\SendCloud\CheckoutCore\DTO\DataTransferObject;
 
+/**
+ * Class HandoverDay
+ *
+ * @package SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Method
+ */
 class HandoverDay extends DataTransferObject
 {
     /**

@@ -1,12 +1,16 @@
 <?php
 namespace SendCloud\SendCloud\Logger;
 
-use DateTimeZone;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use SendCloud\SendCloud\Api\ConfigInterface;
 use Stringable;
 
+/**
+ * Class SendCloudLogger
+ *
+ * @package SendCloud\SendCloud\Logger
+ */
 class SendCloudLogger extends Logger
 {
     /**
@@ -21,11 +25,10 @@ class SendCloudLogger extends Logger
      * @param string             $name
      * @param HandlerInterface[] $handlers
      * @param callable[]         $processors
-     * @param DateTimeZone|null  $timezone
      */
-    public function __construct(ConfigInterface $config, string $name, array $handlers = [], array $processors = [], ?DateTimeZone $timezone = null)
+    public function __construct(ConfigInterface $config, string $name, array $handlers = [], array $processors = [])
     {
-        parent::__construct($name, $handlers, $processors, $timezone);
+        parent::__construct($name, $handlers, $processors);
         $this->config = $config;
     }
 
@@ -33,7 +36,9 @@ class SendCloudLogger extends Logger
      * Adds a log record at the DEBUG level.
      *
      * @param string|Stringable $message
-     * @param mixed[]           $context
+     * @param array $context
+     *
+     * @return void
      */
     public function debug($message, array $context = []): void
     {
@@ -46,7 +51,9 @@ class SendCloudLogger extends Logger
      * Adds a log record at the INFO level.
      *
      * @param string|Stringable $message
-     * @param mixed[]           $context
+     * @param array $context
+     *
+     * @return void
      */
     public function info($message, array $context = []): void
     {
@@ -59,7 +66,9 @@ class SendCloudLogger extends Logger
      * Adds a log record at the NOTICE level.
      *
      * @param string|Stringable $message
-     * @param mixed[]           $context
+     * @param array $context
+     *
+     * @return void
      */
     public function notice($message, array $context = []): void
     {
@@ -72,7 +81,9 @@ class SendCloudLogger extends Logger
      * Adds a log record at the WARNING level.
      *
      * @param string|Stringable $message
-     * @param mixed[]           $context
+     * @param array $context
+     *
+     * @return void
      */
     public function warning($message, array $context = []): void
     {
@@ -85,7 +96,9 @@ class SendCloudLogger extends Logger
      * Adds a log record at the ERROR level.
      *
      * @param string|Stringable $message
-     * @param mixed[]           $context
+     * @param array $context
+     *
+     * @return void
      */
     public function error($message, array $context = []): void
     {
@@ -98,7 +111,9 @@ class SendCloudLogger extends Logger
      * Adds a log record at the CRITICAL level.
      *
      * @param string|Stringable $message
-     * @param mixed[]           $context
+     * @param array $context
+     *
+     * @return void
      */
     public function critical($message, array $context = []): void
     {
@@ -111,7 +126,9 @@ class SendCloudLogger extends Logger
      * Adds a log record at the ALERT level.
      *
      * @param string|Stringable $message The log message
-     * @param mixed[]           $context The log context
+     * @param array $context The log context
+     *
+     * @return void
      */
     public function alert($message, array $context = []): void
     {

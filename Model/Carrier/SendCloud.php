@@ -28,6 +28,9 @@ use SendCloud\SendCloud\Helper\Checkout;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
 
+/**
+ * Class SendCloud
+ */
 class SendCloud extends Tablerate
 {
 
@@ -191,7 +194,7 @@ class SendCloud extends Tablerate
         }
 
         $method = $this->createShippingMethod($amount, $amount);
-        if ($this->getConfigData('free_shipping_enable') &&
+        if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') &&
             $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
             $method->setPrice('0.00');
             $method->setCost('0.00');

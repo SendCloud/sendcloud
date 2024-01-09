@@ -5,6 +5,7 @@ namespace SendCloud\SendCloud\Api;
 /**
  * Interface ConfigInterface
  *
+ * @package SendCloud\SendCloud\Api
  */
 interface ConfigInterface
 {

@@ -8,6 +8,10 @@ use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManager;
 use Magento\Backend\Model\View\Result\Redirect;
 
+/**
+ * Class CurrencyConfigurationChange
+ * @package SendCloud\SendCloud\Plugin
+ */
 class CurrencyConfigurationChange
 {
     /**

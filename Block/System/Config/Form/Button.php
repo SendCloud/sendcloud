@@ -2,6 +2,10 @@
 
 namespace SendCloud\SendCloud\Block\System\Config\Form;
 
+/**
+ * Class Button
+ *
+ */
 class Button extends \Magento\Config\Block\System\Config\Form\Field
 {
     protected $_template = 'system/config/button/button.phtml';

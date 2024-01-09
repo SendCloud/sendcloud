@@ -4,6 +4,9 @@ namespace SendCloud\SendCloud\Logger;
 use Monolog\Logger;
 use Magento\Framework\Logger\Handler\Base;
 
+/**
+ * Class SendCloudHandler
+ */
 class SendCloudHandler extends Base
 {
 

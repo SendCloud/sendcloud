@@ -8,6 +8,10 @@ use Magento\Store\Model\StoreManagerInterface;
 use SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Method\DeliveryMethod as DeliveryMethodDTO;
 use SendCloud\SendCloud\CheckoutCore\Domain\Delivery\DeliveryMethod;
 
+/**
+ * Class SendcloudDeliveryMethod
+ * @package SendCloud\SendCloud\Model\ResourceModel
+ */
 class SendcloudDeliveryMethod extends AbstractDomen
 {
     const SERVICE_POINT_DELIVERY = 'service_point_delivery';

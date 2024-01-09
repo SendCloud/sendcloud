@@ -5,6 +5,10 @@ namespace SendCloud\SendCloud\Model;
 use Magento\Framework\Model\AbstractModel;
 use SendCloud\SendCloud\Model\ResourceModel\AbstractDomen as AbstractDomenResourceModel;
 
+/**
+ * Class AbstractDomen
+ * @package SendCloud\SendCloud\Model
+ */
 class AbstractDomen extends AbstractModel
 {
 

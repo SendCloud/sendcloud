@@ -4,6 +4,11 @@ namespace SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Method;
 
 use SendCloud\SendCloud\CheckoutCore\DTO\DataTransferObject;
 
+/**
+ * Class ShippingProduct
+ *
+ * @package SendCloud\SendCloud\CheckoutCore\API\Checkout\Delivery\Method
+ */
 class ShippingProduct extends DataTransferObject
 {
     /**

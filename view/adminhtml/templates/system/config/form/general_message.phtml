@@ -1,6 +1,6 @@
 <?php if (!empty($block->getText())): ?>
     <div class="general_message">
         <?= /* @escapeNotVerified */
-        $escaper->escapeHtml($block->getText()); ?>
+        $block->escapeHtml($block->getText()); ?>
     </div>
 <?php endif; ?>

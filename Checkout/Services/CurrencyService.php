@@ -5,6 +5,10 @@ namespace SendCloud\SendCloud\Checkout\Services;
 use Magento\Store\Model\StoreManagerInterface;
 use SendCloud\SendCloud\CheckoutCore\Contracts\Services\CurrencyService as CurrencyServiceInterface;
 
+/**
+ * Class CurrencyService
+ * @package SendCloud\SendCloud\Checkout\Services
+ */
 class CurrencyService implements CurrencyServiceInterface
 {
     /**

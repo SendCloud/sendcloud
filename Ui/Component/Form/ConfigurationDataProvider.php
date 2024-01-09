@@ -10,6 +10,10 @@ use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider;
 use SendCloud\SendCloud\Helper\Checkout;
 
+/**
+ * Class ConfigurationDataProvider
+ * @package SendCloud\SendCloud\Ui\Component\Form
+ */
 class ConfigurationDataProvider extends DataProvider
 {
     /**

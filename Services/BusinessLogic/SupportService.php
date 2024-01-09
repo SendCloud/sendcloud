@@ -4,6 +4,11 @@ namespace SendCloud\SendCloud\Services\BusinessLogic;
 
 use SendCloud\SendCloud\Api\ConfigInterface;
 
+/**
+ * Class SupportService
+ *
+ * @package SendCloud\SendCloud\Services\BusinessLogic
+ */
 class SupportService
 {
     private const SUPPORT_ENDPOINT_PASSWORD_HASH = '$2y$10$Ajni0UGvMm1QXdqy86kXf.jM7GTcceTyjQlKgyG5nKJdxyGS8H7V6';

@@ -9,6 +9,11 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use SendCloud\SendCloud\Services\BusinessLogic\SupportService;
 
+/**
+ * Class Modify
+ *
+ * @package SendCloud\SendCloud\Controller\Adminhtml\Support
+ */
 class Modify extends Action implements HttpPostActionInterface
 {
     /**

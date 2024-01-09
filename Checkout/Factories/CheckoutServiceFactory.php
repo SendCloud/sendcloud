@@ -16,6 +16,10 @@ use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryMethod;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryZone;
 
+/**
+ * Class CheckoutServiceFactory
+ * @package SendCloud\SendCloud\Checkout\Factories
+ */
 class CheckoutServiceFactory implements CheckoutServiceFactoryInterface
 {
     /**

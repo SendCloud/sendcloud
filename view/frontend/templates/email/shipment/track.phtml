@@ -22,26 +22,26 @@ $_url = 'https://tracking.sendcloud.sc/forward?';
         <table class="shipment-track">
             <thead>
             <tr>
-                <th><?= $escaper->escapeHtml(__('Shipped By')) ?></th>
-                <th><?= $escaper->escapeHtml(__('Tracking Number')) ?></th>
+                <th><?= $block->escapeHtml(__('Shipped By')) ?></th>
+                <th><?= $block->escapeHtml(__('Tracking Number')) ?></th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($trackCollection as $_item): ?>
                 <tr>
-                    <td><?= $escaper->escapeHtml($_item->getTitle()) ?>:</td>
+                    <td><?= $block->escapeHtml($_item->getTitle()) ?>:</td>
                     <td>
                         <?php if ($_item->isCustom()): ?>
                             <a href="<?= $_url .
                                 'carrier=' . strtolower($_item->getTitle()) .
-                                '&code=' . $escaper->escapeHtml($_item->getNumber()) .
+                                '&code=' . $block->escapeHtml($_item->getNumber()) .
                                 '&destination=' . $_countryId .
                                 '&verification=' . $_postcode ?>"
                                 target="_blank">
                         <?php else: ?>
-                            <a href="<?= $escaper->escapeUrl($block->getTrackingUrl()->getUrl($_item)) ?>" target="_blank">
+                            <a href="<?= $block->escapeUrl($block->getTrackingUrl()->getUrl($_item)) ?>" target="_blank">
                         <?php endif; ?>
-                            <?= $escaper->escapeHtml($_item->getNumber()) ?>
+                            <?= $block->escapeHtml($_item->getNumber()) ?>
                         </a>
                     </td>
                 </tr>

@@ -2,6 +2,11 @@
 
 namespace SendCloud\SendCloud\CheckoutCore\Exceptions;
 
+/**
+ * Class ValidationException
+ *
+ * @package SendCloud\SendCloud\CheckoutCore\Exceptions
+ */
 class ValidationException extends BaseException
 {
     /**

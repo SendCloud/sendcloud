@@ -6,6 +6,11 @@ use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\Comparable;
 use SendCloud\SendCloud\CheckoutCore\Domain\Interfaces\DTOInstantiable;
 use SendCloud\SendCloud\CheckoutCore\Utility\CollectionComparator;
 
+/**
+ * Class ShippingProduct
+ *
+ * @package SendCloud\SendCloud\CheckoutCore\Domain\Delivery
+ */
 class ShippingProduct implements Comparable, DTOInstantiable
 {
     /**

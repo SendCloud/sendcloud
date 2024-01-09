@@ -6,6 +6,7 @@ use SendCloud\SendCloud\CheckoutCore\CheckoutService;
 
 /**
  * Interface CheckoutServiceFactory
+ * @package SendCloud\SendCloud\Block\Checkout\Contracts
  */
 interface CheckoutServiceFactoryInterface
 {

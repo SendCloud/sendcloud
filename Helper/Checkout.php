@@ -8,6 +8,9 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 
+/**
+ * Class Checkout
+ */
 class Checkout extends AbstractHelper
 {
     /**
