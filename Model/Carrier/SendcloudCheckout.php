@@ -26,6 +26,7 @@ use SendCloud\SendCloud\CheckoutCore\Services\DeliveryZoneService;
 use SendCloud\SendCloud\Helper\Checkout;
 use Magento\Directory\Helper\Data;
 use SendCloud\SendCloud\Helper\WeightConverter;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
 {
@@ -71,6 +72,10 @@ class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
      * @var Data
      */
     private $magentoHelper;
+    /**
+     * @var SendCloudLogger
+     */
+    private $sendcloudLogger;
 
     /**
      * @param Data $magentoHelper
@@ -96,6 +101,7 @@ class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
         MethodFactory $rateMethodFactory,
         DeliveryZoneService $deliveryZoneService,
         DeliveryMethodService $deliveryMethodService,
+        SendCloudLogger $sendCloudLogger,
         array $data = []
     ) {
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
@@ -106,6 +112,7 @@ class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
         $this->rateMethodFactory = $rateMethodFactory;
         $this->deliveryZoneService = $deliveryZoneService;
         $this->deliveryMethodService = $deliveryMethodService;
+        $this->sendcloudLogger = $sendCloudLogger;
     }
 
     /**
@@ -117,6 +124,8 @@ class SendcloudCheckout extends AbstractCarrier implements CarrierInterface
      */
     public function collectRates(RateRequest $request)
     {
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Model\Carrier\SendcloudCheckout::collectRates request: " . json_encode($request->toArray()));
+
         if (!$this->getConfigFlag('active')) {
             return false;
         }

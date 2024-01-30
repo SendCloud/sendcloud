@@ -106,7 +106,7 @@
 "Wed","woe"
 "Wednesday","Woensdag"
 "You can check the status of your order by <a href='%account_url'>logging into your account</a>.","Je kunt de status van je order bekijken door <a href='%account_url'>in te loggen op je account</a>."
-"Your %store_name order confirmation","Je orderbevestiging van %sstore_name"
+"Your %store_name order confirmation","Je orderbevestiging van %store_name"
 "Your %store_name order has shipped ","Je %store_name order is verzonden"
 "Your Order <span class='no-link'>#%increment_id</span>","Je order <span class='no-link'>#%increment_id</span>"
 "Your Shipment #%shipment_id for Order #%order_id","Je zending #%shipment_id voor order #%order_id"

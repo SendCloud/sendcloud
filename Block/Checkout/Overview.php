@@ -5,6 +5,7 @@ namespace SendCloud\SendCloud\Block\Checkout;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Quote\Model\Quote\Address;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 class Overview extends \Magento\Multishipping\Block\Checkout\Overview
 {
@@ -13,7 +14,13 @@ class Overview extends \Magento\Multishipping\Block\Checkout\Overview
      */
     private $serializer;
 
+    /**
+     * SendCloudLogger
+     */
+    private $sendcloudLogger;
+
     public function __construct(
+        SendCloudLogger $sendCloudLogger,
         Json $serializer,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Multishipping\Model\Checkout\Type\Multishipping $multishipping,
@@ -33,6 +40,7 @@ class Overview extends \Magento\Multishipping\Block\Checkout\Overview
             $data
         );
         $this->serializer = $serializer;
+        $this->sendcloudLogger = $sendCloudLogger;
     }
 
     /**
@@ -43,6 +51,8 @@ class Overview extends \Magento\Multishipping\Block\Checkout\Overview
      */
     public function getShippingAddressSendcloudData($address)
     {
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Block\Checkout\Overview::getShippingAddressSendcloudData(): " . json_encode($address->toArray()));
+
         $quote = $this->getQuote();
         $multishippingData = $this->serializer->unserialize($quote->getData('sendcloud_multishipping_data'));
         if ($multishippingData && array_key_exists($address->getId(), $multishippingData)) {

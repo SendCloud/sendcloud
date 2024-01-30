@@ -6,6 +6,7 @@ use http\Exception\RuntimeException;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class TransformOrderMultishippingData
@@ -17,9 +18,15 @@ class TransformOrderMultishippingData implements ObserverInterface
      */
     private $serializer;
 
-    public function __construct(Json $serializer)
+    /**
+     * @var SendCloudLogger
+     */
+    private $logger;
+
+    public function __construct(Json $serializer, SendCloudLogger $logger)
     {
         $this->serializer = $serializer;
+        $this->logger = $logger;
     }
 
     /**
@@ -35,6 +42,7 @@ class TransformOrderMultishippingData implements ObserverInterface
         $multishippingData = $this->serializer->unserialize($quote->getData('sendcloud_multishipping_data'));
         if ($multishippingData && array_key_exists($addressId, $multishippingData)) {
             $order->setSendcloudData($this->serializer->serialize($multishippingData[$addressId]));
+            $this->logger->info("Sendcloud data: " . $this->serializer->serialize($multishippingData[$addressId]));
         }
 
         return $this;

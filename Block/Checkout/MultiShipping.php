@@ -3,11 +3,14 @@
 namespace SendCloud\SendCloud\Block\Checkout;
 
 use Magento\Directory\Helper\Data;
+use Magento\Framework\Filter\DataObject\GridFactory;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
 use Magento\Multishipping\Block\Checkout\Shipping;
 use Magento\Store\Model\ScopeInterface;
 use SendCloud\SendCloud\Helper\WeightConverter;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Plugin\Quote\Address\Rate;
 
 class MultiShipping extends Shipping
@@ -18,15 +21,22 @@ class MultiShipping extends Shipping
     private $magentoHelper;
 
     /**
+     * SendCloudLogger
+     */
+    private $sendcloudLogger;
+
+    /**
+     * @param SendCloudLogger $sendCloudLogger
      * @param Data $magentoHelper
-     * @param Template\Context $context
-     * @param \Magento\Framework\Filter\DataObject\GridFactory $filterGridFactory
+     * @param Context $context
+     * @param GridFactory $filterGridFactory
      * @param \Magento\Multishipping\Model\Checkout\Type\Multishipping $multishipping
      * @param \Magento\Tax\Helper\Data $taxHelper
      * @param PriceCurrencyInterface $priceCurrency
      * @param array $data
      */
     public function __construct(
+        SendCloudLogger $sendCloudLogger,
         Data $magentoHelper,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Filter\DataObject\GridFactory $filterGridFactory,
@@ -37,6 +47,7 @@ class MultiShipping extends Shipping
     ) {
         parent::__construct($context, $filterGridFactory, $multishipping, $taxHelper, $priceCurrency, $data);
         $this->magentoHelper = $magentoHelper;
+        $this->sendcloudLogger = $sendCloudLogger;
     }
 
     public function getMethods()
@@ -55,6 +66,9 @@ class MultiShipping extends Shipping
                 }
             }
         }
+
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Block\Checkout\MultiShipping::getMethods(): " . json_encode($codes));
+
         return $codes;
     }
 
@@ -70,6 +84,8 @@ class MultiShipping extends Shipping
             $data['weight_in_grams'] = WeightConverter::convertWeightToGrams($address->getWeight(), $this->magentoHelper->getWeightUnit());
             $formated[$address->getData('address_id')] = $data;
         }
+
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Block\Checkout\MultiShipping::getAddressesFormated(): " . json_encode($formated));
 
         return $formated;
     }

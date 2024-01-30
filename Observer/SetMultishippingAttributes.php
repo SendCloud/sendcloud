@@ -6,6 +6,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class SetOrderAttributes
@@ -17,9 +18,19 @@ class SetMultishippingAttributes implements ObserverInterface
      */
     private $serializer;
 
-    public function __construct(Json $serializer)
+    /**
+     * @var SendCloudLogger
+     */
+    private $logger;
+
+    /**
+     * @param Json $serializer
+     * @param SendCloudLogger $logger
+     */
+    public function __construct(Json $serializer, SendCloudLogger $logger)
     {
         $this->serializer = $serializer;
+        $this->logger = $logger;
     }
 
     /**
@@ -35,6 +46,8 @@ class SetMultishippingAttributes implements ObserverInterface
         $multishippingExtensionData = null;
 
         if ($shippingMethods === null) {
+            $this->logger->info("Shipping methods missing.");
+
             return $this;
         }
 
@@ -44,11 +57,15 @@ class SetMultishippingAttributes implements ObserverInterface
                     throw new LocalizedException(__('Sendcloud checkout data missing'));
                 }
                 $shippingMethodData = $this->serializer->unserialize($shippingMethodsData[$key]);
+                $this->logger->info("Shipping method data: " . json_encode($shippingMethodData));
                 $this->velidateData($shippingMethodData);
                 $multishippingExtensionData[$key] = $shippingMethodData;
             }
         }
         $quote->setSendcloudMultishippingData($this->serializer->serialize($multishippingExtensionData));
+        $this->logger->info(
+            "Sendcloud multishipping data: " . $this->serializer->serialize($multishippingExtensionData)
+        );
 
         return $this;
     }

@@ -10,6 +10,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\Data\ShippingMethodInterface;
 use Magento\Quote\Model\QuoteRepository;
 use SendCloud\SendCloud\Helper\Checkout;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 
 /**
  * Class BeforeSaveShippingInformation
@@ -32,20 +33,28 @@ class CheckoutBeforeSaveShippingInformation
     private $helper;
 
     /**
+     * SendCloudLogger
+     */
+    private $sendcloudLogger;
+
+    /**
      * BeforeSaveShippingInformation constructor.
      *
      * @param RequestInterface $request
      * @param QuoteRepository $quoteRepository
      * @param Checkout $helper
+     * @param SendCloudLogger $sendCloudLogger
      */
     public function __construct(
         RequestInterface $request,
         QuoteRepository $quoteRepository,
-        Checkout $helper
+        Checkout $helper,
+        SendCloudLogger $sendCloudLogger
     ) {
         $this->request = $request;
         $this->quoteRepository = $quoteRepository;
         $this->helper = $helper;
+        $this->sendcloudLogger = $sendCloudLogger;
     }
 
     /**
@@ -62,6 +71,11 @@ class CheckoutBeforeSaveShippingInformation
         $cartId,
         ShippingInformationInterface $addressInformation
     ) {
+        $this->sendcloudLogger->info(
+            "SendCloud\SendCloud\Plugin\CheckoutBeforeSaveShippingInformation::afterSaveAddressInformation(): payment details:" .
+            json_encode($paymentDetails->toArray()) . ", cart id: " . $cartId
+        );
+
         $extensionAttributes = $addressInformation->getExtensionAttributes();
         if ($extensionAttributes === null) {
             return $paymentDetails;
@@ -76,6 +90,11 @@ class CheckoutBeforeSaveShippingInformation
         $sendCloudCheckoutData = $this->removeAccessTokenFromCheckoutData($extensionAttributes->getSendcloudCheckoutData());
         $quote->setSendcloudCheckoutData($sendCloudCheckoutData);
         $this->quoteRepository->save($quote);
+
+        $this->sendcloudLogger->info(
+            "SendCloud\SendCloud\Plugin\CheckoutBeforeSaveShippingInformation::afterSaveAddressInformation(): quote: " .
+            json_encode($quote->toArray())
+        );
 
         return $paymentDetails;
     }

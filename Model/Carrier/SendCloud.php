@@ -24,7 +24,6 @@ use Magento\Shipping\Model\Rate\Result;
 use Magento\Shipping\Model\Rate\ResultFactory;
 use Magento\Shipping\Model\Simplexml\ElementFactory;
 use Magento\Shipping\Model\Tracking\Result\StatusFactory;
-use Psr\Log\LoggerInterface;
 use SendCloud\SendCloud\Helper\Checkout;
 use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\ResourceModel\Carrier\ServicepointrateFactory;
@@ -56,6 +55,11 @@ class SendCloud extends Tablerate
     private $helper;
 
     /**
+     * @var SendCloudLogger
+     */
+    private $sendcloudLogger;
+
+    /**
      * SendCloud constructor.
      * @param ScopeConfigInterface $scopeConfig
      * @param ErrorFactory $rateErrorFactory
@@ -80,6 +84,7 @@ class SendCloud extends Tablerate
     ) {
         $this->helper = $helper;
         $this->_servicepiontrateFactory = $servicepointrateFactory;
+        $this->sendcloudLogger = $sendCloudLogger;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
@@ -96,6 +101,8 @@ class SendCloud extends Tablerate
      */
     public function getAllowedMethods()
     {
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Model\Carrier\Sendcloud::getAllowedMethods: " . $this->getConfigData('name'));
+
         return ['sendcloud' => $this->getConfigData('name')];
     }
 
@@ -104,6 +111,8 @@ class SendCloud extends Tablerate
      */
     public function getRate(RateRequest $request)
     {
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Model\Carrier\Sendcloud::getRate() request: " . json_encode($request->toArray()));
+
         return $this->_servicepiontrateFactory->create()->getRate($request);
     }
 
@@ -112,6 +121,8 @@ class SendCloud extends Tablerate
      */
     public function getCode($type, $code = '')
     {
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Model\Carrier\Sendcloud::getCode(): type: " . $type . ', code: ' . $code);
+
         $codes = [
             'condition_name' => [
                 'package_fixed' => __('Fixed fee shipping price')
@@ -143,6 +154,8 @@ class SendCloud extends Tablerate
      */
     public function collectRates(RateRequest $request)
     {
+        $this->sendcloudLogger->info("SendCloud\SendCloud\Model\Carrier\Sendcloud::collectRates() request: " . json_encode($request->toArray()));
+
         if (!$this->getConfigFlag('active')) {
             return false;
         }
@@ -181,7 +194,7 @@ class SendCloud extends Tablerate
         }
 
         $method = $this->createShippingMethod($amount, $amount);
-        if ($this->getConfigData('free_shipping_enable') &&
+        if ($this->getConfigData('free_shipping_enable') && $this->getConfigData('free_shipping_subtotal') &&
             $this->getConfigData('free_shipping_subtotal') <= $request->getBaseSubtotalInclTax()) {
             $method->setPrice('0.00');
             $method->setCost('0.00');

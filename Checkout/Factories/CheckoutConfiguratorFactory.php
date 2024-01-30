@@ -12,6 +12,7 @@ use SendCloud\SendCloud\CheckoutCore\Configurator;
 use SendCloud\SendCloud\CheckoutCore\Validators\NullRequestValidator;
 use SendCloud\SendCloud\CheckoutCore\Validators\UpdateRequestValidator;
 use SendCloud\SendCloud\Helper\Data;
+use SendCloud\SendCloud\Logger\SendCloudLogger;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryMethod;
 use SendCloud\SendCloud\Model\ResourceModel\SendcloudDeliveryZone;
 
@@ -37,9 +38,10 @@ class CheckoutConfiguratorFactory implements CheckoutConfiguratorFactoryInterfac
         SendcloudDeliveryZone $sendcloudDeliveryZone,
         SendcloudDeliveryMethod $sendcloudDeliveryMethod,
         StoreManagerInterface $storeManager,
-        Data $helper
+        Data $helper,
+        SendCloudLogger $sendCloudLogger
     ) {
-        $this->serviceFactory = new CheckoutServiceFactory($sendcloudDeliveryZone, $sendcloudDeliveryMethod);
+        $this->serviceFactory = new CheckoutServiceFactory($sendcloudDeliveryZone, $sendcloudDeliveryMethod, $sendCloudLogger);
         $this->updateRequestValidator = new UpdateRequestValidator($helper->getVersion(), new CurrencyService($storeManager));
         $this->deleteRequestValidator = new NullRequestValidator();
     }
