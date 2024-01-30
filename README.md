@@ -1,5 +1,8 @@
 # SendCloud Magento 2 module
 
+## OUTDATED REPOSITORY
+Please note that this repository is not in use anymore. Please refer to the new [Magento 2 repository](https://gitlab.com/sendcloud-public/sendcloud-magento).
+
 ## Requirements
 This module requires Magento2 CE version 2.3 or higher.
 ## Installation
